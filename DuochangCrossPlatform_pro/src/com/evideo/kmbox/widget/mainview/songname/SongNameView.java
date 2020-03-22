@@ -20,8 +20,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+
 import com.evideo.kmbox.BaseApplication;
+
 import android.widget.TextView;
+
 import com.evideo.kmbox.R;
 import com.evideo.kmbox.exception.DCNoResultException;
 import com.evideo.kmbox.model.dao.data.Song;
@@ -63,12 +66,12 @@ import com.evideo.kmbox.widget.mainview.MainViewManager;
  * [功能说明]
  */
 public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>,
-    IPlayListListener, IFavoriteListListener,IOrderSongResultListener,ITopSongResultListener {
-    
+        IPlayListListener, IFavoriteListListener, IOrderSongResultListener, ITopSongResultListener {
+
     private static final int PAGE_SIZE = 50;
-    
+
     private SearchWidget mSearchWidget;
-    
+
     private OrderSongListAdapter mAdapter;
     private SongListView mListView;
     private AnimLoadingView mLoadingView;
@@ -89,7 +92,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         initSearchWidget();
         initView();
     }
-   
+
     public boolean resumeFocus() {
 //        EvLog.e("resumeFocus mDatas.size():" + mDatas.size());
         if (mDatas.size() > 0) {
@@ -101,13 +104,12 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         }
         return false;
     }
-    
-   
-    
+
+
     private void initSearchWidget() {
         mSearchWidget = (SearchWidget) findViewById(R.id.song_name_search);
         mSearchWidget.getKeyboardView().setOnFocusChangeListener(new OnFocusChangeListener() {
-            
+
             @Override
             public void onFocusChange(View arg0, boolean arg1) {
                 if (arg1) {
@@ -116,11 +118,11 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                 }
             }
         });
-        
+
         mSearchWidget.setFirstTitle(getString(R.string.main_song_name_title));
-        
+
         mSearchWidget.setBtnClickListener(new ISearchBtnClickListener() {
-            
+
             @Override
             public void onClickBtn(int index) {
                 if (index == SearchWidget.SEARCH_BTN_123) {
@@ -145,7 +147,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                     if (!TextUtils.isEmpty(content)) {
                         String spell = content.substring(0, content.length() - 1);
                         mSearchWidget.setSearchTextSize(TextUtils.isEmpty(spell) ? mTextHintSize
-                                        : mTextCommonSize);
+                                : mTextCommonSize);
                         mSearchWidget.setSearchText(spell);
                         onSearchContentChanged(spell);
 
@@ -155,9 +157,9 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                 }
             }
         });
-       
+
         mSearchWidget.setItemClickListener(new ISearchItemClickListener() {
-            
+
             @Override
             public void onClickItem(Key key) {
                 if (key != null && key.enable) {
@@ -168,39 +170,40 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
 //                    EvLog.i("SearchContent " + sb.toString());
                 }
             }
-        });        
-        
+        });
+
         mSearchWidget.setRightEdgeListener(new IRightEdgeListener() {
-            
+
             @Override
             public void onRightEdge() {
                 mListView.requestFocus();
             }
         });
     }
+
     private void initView() {
         mTextHintSize = (int) DimensionsUtil.getDimension(mActivity, R.dimen.px39);
         mTextCommonSize = (int) DimensionsUtil.getDimension(mActivity, R.dimen.px39);
 //        mSearchBtnPadding = (int) DimensionsUtil.getDimension(mActivity, R.dimen.px19);
-        
+
         mSongNum = SongManager.getInstance().getCountByFuzzySpell("", !NetUtils.isNetworkConnected(BaseApplication.getInstance().getBaseContext()));
         mPageLoadPresenter = new OrderSongPageLoadPresenter(PAGE_SIZE, this, "");
         mPageLoadPresenter.setOffLineSearch(!NetUtils.isNetworkConnected(BaseApplication.getInstance().getBaseContext()));
-        mLoadingView = (AnimLoadingView)findViewById(R.id.song_name_loading_widget);
-       
+        mLoadingView = (AnimLoadingView) findViewById(R.id.song_name_loading_widget);
+
         mListView = (SongListView) findViewById(R.id.order_song_song_lv);
 
-        
+
         mAdapter = new OrderSongListAdapter(mActivity, mListView, mDatas);
         mAdapter.setSongNameSpecWidth(BaseApplication.getInstance().getBaseContext().getResources().getDimensionPixelSize(R.dimen.px590));
-        
+
         mListView.setAdapter(mAdapter);
 
         mListView.setOnItemClickCallback(new OnItemClickCallback() {
-            
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
-                    long id, int itemState) {
+                                    long id, int itemState) {
                 Song song = (Song) parent.getAdapter().getItem(position);
                 if (song == null) {
                     return;
@@ -208,26 +211,34 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                 if (itemState == SongListView.ITEM_STATE_NORMAL) {
                     /*mSearchWidget.setSearchText("");
                     mSearchWidget.getKeyboardView().updateKeyboardState("");*/
-                    SongOperationManager.getInstance().orderSong(song.getId(),SongNameView.this);
+                    mListView.requestFocus();
+                    SongOperationManager.getInstance().orderSong(song.getId(), SongNameView.this);
+                    operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_TOP) {
                    /* mSearchWidget.setSearchText("");
                     mSearchWidget.getKeyboardView().updateKeyboardState("");*/
-                    SongOperationManager.getInstance().topSong(song.getId(),SongNameView.this);
+                    SongOperationManager.getInstance().topSong(song.getId(), SongNameView.this);
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_FAVORITE) {
-                    
+
                     if (FavoriteListManager.getInstance().isAlreadyExists(song.getId())) {
                         if (FavoriteListManager.getInstance().delSong(song.getId())) {
-                            UmengAgentUtil.onEventFavoriteAction(mActivity, 
+                            mListView.resetUi();
+                            operateSelectItem(parent, view, position, id);
+                            UmengAgentUtil.onEventFavoriteAction(mActivity,
                                     EventConst.ID_CLICK_ORDER_SONG_VIEW_FAVORITE, false);
-                        }                      
+                        }
                         return;
-                    } else if (FavoriteListManager.getInstance().addSong(song.getId())) {  
+                    } else if (FavoriteListManager.getInstance().addSong(song.getId())) {
 //                        mListView.startFavoriteAnimnation(position);
-                        UmengAgentUtil.onEventFavoriteAction(mActivity, 
+                        mListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
+                        UmengAgentUtil.onEventFavoriteAction(mActivity,
                                 EventConst.ID_CLICK_ORDER_SONG_VIEW_FAVORITE, true);
                         return;
                     }
-                } 
+                }
 
 //                if (!TextUtils.isEmpty(mSearchContentTv.getText())) {
 //                    mSearchContentTv.setText("");
@@ -242,48 +253,29 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
 //                }
             }
         });
-        
+
         mListView.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
-                    int position, long id) {
-                if (mAdapter == null || mPageLoadPresenter == null) {
-                    return;
-                }
-                
-                Song item = (Song) parent.getAdapter().getItem(position);
-                
-                if (item == null) {
-                    return;
-                }
-                
-                if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
-                    mListView.highlightFavoriteIcon();
-                } else {
-                    mListView.restoreFavoriteIcon();
-                }
-//                mAdapter.notifyDataSetChanged();
-                
-                if (position <= (mAdapter.getCount() - 1) && position > (mAdapter.getCount() - 8)) {
-                    mPageLoadPresenter.loadNextPage();
-                }  
+                                       int position, long id) {
+                operateSelectItem(parent, view, position, id);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        
+
         mListView.setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
-            
+
             @Override
             public void onRightEdgeKeyDown() {
                 if (MainViewManager.getInstance().getStatusBar() != null) {
                     MainViewManager.getInstance().getStatusBar().setSelectedNumFocus();
                 }
             }
-            
+
             @Override
             public void onLeftEdgeKeyDown() {
                 mSearchWidget.getKeyboardView().setSelection(5);
@@ -299,9 +291,9 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                 MainViewManager.getInstance().getStatusBar().requestFocus();
             }
         });
-        
+
         mListView.setOnFocusChangeListener(new OnFocusChangeListener() {
-            
+
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
@@ -312,10 +304,37 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                 }
             }
         });
-        
+
 //        mPageLoadPresenter.loadData();
     }
-    
+
+    private void operateSelectItem(AdapterView<?> parent, View view,
+                                   int position, long id) {
+
+        if (mAdapter == null || mPageLoadPresenter == null) {
+            return;
+        }
+
+        Song item = (Song) parent.getAdapter().getItem(position);
+
+        if (item == null) {
+            return;
+        }
+
+        if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
+            mListView.highlightFavoriteIcon();
+        } else {
+            mListView.restoreFavoriteIcon();
+        }
+//                mAdapter.notifyDataSetChanged();
+
+        if (position <= (mAdapter.getCount() - 1) && position > (mAdapter.getCount() - 8)) {
+            mPageLoadPresenter.loadNextPage();
+        }
+
+    }
+
+
     private void onSearchContentChanged(String content) {
         String spell = changeNum2Letter(content);
         if (!mCurSpell.equals(spell)) {
@@ -323,7 +342,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
             loadData();
         }
     }
-    
+
     private void loadData() {
         if (mPageLoadPresenter != null) {
             mPageLoadPresenter.stopTask();
@@ -332,7 +351,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         mPageLoadPresenter.setOffLineSearch(!NetUtils.isNetworkConnected(BaseApplication.getInstance().getBaseContext()));
         mPageLoadPresenter.loadData();
     }
-    
+
     private String changeNum2Letter(String content) {
         if (TextUtils.isEmpty(content)) {
             return "";
@@ -374,8 +393,8 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         }
 //        EvLog.d("changeNum2Letter after " + new String(chars));
         return new String(chars);
-    } 
-    
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -402,7 +421,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         mListView.resetState();
         mListView.setSelection(0);
     }
-    
+
     private void showLoadingView() {
         if (mLoadingView.getVisibility() != View.VISIBLE) {
             mLoadingView.setVisibility(View.VISIBLE);
@@ -410,7 +429,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         mLoadingView.startAnim();
         mListView.setVisibility(View.GONE);
     }
-    
+
     private void showLoadingErrorView(int resid) {
         if (mLoadingView.getVisibility() != View.VISIBLE) {
             mLoadingView.setVisibility(View.VISIBLE);
@@ -419,7 +438,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         mLoadingView.showLoadFail(resid);
         mListView.setVisibility(View.GONE);
     }
-    
+
     private void showListView() {
         if (mLoadingView.getVisibility() != View.GONE) {
             mLoadingView.stopAnim();
@@ -427,7 +446,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         }
         mListView.setVisibility(View.VISIBLE);
         if (mDatas.size() >= SongManager.getInstance().getCountByFuzzySpell(mCurSpell,
-        		!NetUtils.isNetworkConnected(BaseApplication.getInstance().getBaseContext()))) {
+                !NetUtils.isNetworkConnected(BaseApplication.getInstance().getBaseContext()))) {
             mListView.showFootView(R.string.loading_song_no_more);
         } else {
             mListView.removeFootLoadingView();
@@ -445,7 +464,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
 
     @Override
     public void onPostLoadData(Exception e, boolean isReset, boolean isNext,
-            List<Song> datas) {
+                               List<Song> datas) {
 //        EvLog.d("songNameView updateList isReset: " + isReset + " isNext: " + isNext);
         if (e != null) {
             handleException(e, isReset);
@@ -471,7 +490,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                 mListView.setAdapter(mAdapter);
                 mListView.setSelection(0);
             }
-        } 
+        }
     }
 
     private void handleException(Exception e, boolean isReset) {
@@ -509,6 +528,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         }, KmConfig.ORDER_SONG_DELAY_DURATION);
     }
 */
+
     /**
      * {@inheritDoc}
      */
@@ -517,7 +537,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         super.onAttachedToWindow();
         PlayListManager.getInstance().registerListener(this);
         FavoriteListManager.getInstance().registerListener(this);
-        
+
         if (mDatas.size() == 0) {
             mPageLoadPresenter.loadData();
         }
@@ -535,7 +555,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
             mListView.highlightFavoriteIcon();
         } else {
             mListView.restoreFavoriteIcon();
-        } 
+        }
         mAdapter.refreshOrderedState();
     }
 
@@ -570,13 +590,13 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
                     mListView.restoreFavoriteIcon();
                 }
             }
-        }); 
+        });
     }
 
     @Override
     public void onPlayListChange() {
         BasePresenter.runInUI(new Runnable() {
-            
+
             @Override
             public void run() {
                 if (mAdapter != null) {
@@ -612,7 +632,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
     @Override
     public void onTopSongFailed(int songId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -621,7 +641,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
     @Override
     public void onOrderSongFailed(int songId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -638,7 +658,7 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
         mSearchWidget.getKeyboardView().requestFocus();
         return true;
     }
-   
+
     @Override
     public boolean onSmallMVRightKey() {
         if (mListView != null && mListView.getVisibility() == View.VISIBLE) {

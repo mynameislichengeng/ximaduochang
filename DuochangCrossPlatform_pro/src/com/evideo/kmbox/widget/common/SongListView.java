@@ -86,6 +86,12 @@ public class SongListView extends ListView implements android.widget.AdapterView
         mItemState = ITEM_STATE_NORMAL;
     }
 
+    public void resetUi() {
+        mItemState = ITEM_STATE_NORMAL;
+//        mFavoriteIcon = getResources().getDrawable(R.drawable.ic_favorite);
+        invalidate();
+    }
+
     /**
      * [设置点歌视图]
      *
@@ -229,12 +235,12 @@ public class SongListView extends ListView implements android.widget.AdapterView
 
     private void drawNormalSelector(Canvas canvas) {
 //        if (mItemState == ITEM_STATE_NORMAL) {
-            final Drawable selector = mFocusFrame;
-            selector.setBounds(mListSelectorRect.left - mTvLayoutPaddingLeft,
-                    mListSelectorRect.top - mTvLayoutPaddingTop,
-                    mListSelectorRect.right - mIconSideLen * 2 - mTvLayoutPaddingRight,
-                    mListSelectorRect.bottom + mTvLayoutPaddingBottom);
-            selector.draw(canvas);
+        final Drawable selector = mFocusFrame;
+        selector.setBounds(mListSelectorRect.left - mTvLayoutPaddingLeft,
+                mListSelectorRect.top - mTvLayoutPaddingTop,
+                mListSelectorRect.right - mIconSideLen * 2 - mTvLayoutPaddingRight,
+                mListSelectorRect.bottom + mTvLayoutPaddingBottom);
+        selector.draw(canvas);
 //        }
     }
 
@@ -323,24 +329,28 @@ public class SongListView extends ListView implements android.widget.AdapterView
 
             case MotionEvent.ACTION_DOWN:
 //                log("onTouchEvent(MotionEvent ev)---MotionEvent.ACTION_DOWN");
-                float x = ev.getX();
-                float y = ev.getY();
+//                float x = ev.getX();
+//                float y = ev.getY();
 //                log("onTouchEvent(MotionEvent ev)---position-down位置--x: " + x + ", y:" + y);
-                if (TouchEventManager.isTouchCommon(topTouchPostionParam, ev)) {
-                    log("\n----选择了----topButton置顶按钮--\n");
-                    if (mItemState != ITEM_STATE_TOP) {
-                        mItemState = ITEM_STATE_TOP;
-                        invalidate();
-                        return true;
-                    }
-                } else if (TouchEventManager.isTouchCommon(favoriteTouchPostionParam, ev)) {
-                    log("\n----选择了----favoriteButton按钮\n");
-                    if (mItemState != ITEM_STATE_FAVORITE) {
-                        mItemState = ITEM_STATE_FAVORITE;
-                        invalidate();
-                        return true;
+                if (isFocused()) {
+                    if (TouchEventManager.isTouchCommon(topTouchPostionParam, ev)) {
+                        log("\n----选择了----topButton置顶按钮--\n");
+
+                        if (mItemState != ITEM_STATE_TOP) {
+                            mItemState = ITEM_STATE_TOP;
+                            invalidate();
+                            return true;
+                        }
+                    } else if (TouchEventManager.isTouchCommon(favoriteTouchPostionParam, ev)) {
+                        log("\n----选择了----favoriteButton按钮\n");
+                        if (mItemState != ITEM_STATE_FAVORITE) {
+                            mItemState = ITEM_STATE_FAVORITE;
+                            invalidate();
+                            return true;
+                        }
                     }
                 }
+
                 break;
             case MotionEvent.ACTION_MOVE:
 //                log("onTouchEvent(MotionEvent ev)---MotionEvent.ACTION_MOVE");
@@ -391,11 +401,6 @@ public class SongListView extends ListView implements android.widget.AdapterView
         invalidate();
     }
 
-    public void restoreUi() {
-        mItemState = ITEM_STATE_NORMAL;
-//        mFavoriteIcon = getResources().getDrawable(R.drawable.ic_favorite);
-        invalidate();
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

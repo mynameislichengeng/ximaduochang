@@ -217,12 +217,12 @@ public class SongMenuDetailsView extends AbsBaseView
                 if (itemState == SongListView.ITEM_STATE_NORMAL) {
 //                    orderSongDelayed(song, false);
                     SongOperationManager.getInstance().orderSong(song.getId(), SongMenuDetailsView.this);
-                    selectItem(parent, view, position, id);
+                    operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_TOP) {
                     SongOperationManager.getInstance().topSong(song.getId(), SongMenuDetailsView.this);
 
-                    mListView.restoreUi();
-                    selectItem(parent, view, position, id);
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
 
                 } else if (itemState == SongListView.ITEM_STATE_FAVORITE) {
 
@@ -230,16 +230,14 @@ public class SongMenuDetailsView extends AbsBaseView
                         if (FavoriteListManager.getInstance().delSong(song.getId())) {
                             onUmengAgentFavoriteSong(false);
                         }
-
-                        mListView.restoreUi();
-                        selectItem(parent, view, position, id);
+                        mListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                         return;
                     } else if (FavoriteListManager.getInstance().addSong(song.getId())) {
 //                        mListView.startFavoriteAnimnation(position);
                         onUmengAgentFavoriteSong(true);
-
-                        mListView.restoreUi();
-                        selectItem(parent, view, position, id);
+                        mListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                         return;
                     }
                 }
@@ -253,7 +251,7 @@ public class SongMenuDetailsView extends AbsBaseView
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 Log.d("gsp", TAG + ">>onItemSelected---");
-                selectItem(parent, view, position, id);
+                operateSelectItem(parent, view, position, id);
 
             }
 
@@ -312,8 +310,8 @@ public class SongMenuDetailsView extends AbsBaseView
     }
 
 
-    private void selectItem(AdapterView<?> parent, View view,
-                            int position, long id) {
+    private void operateSelectItem(AdapterView<?> parent, View view,
+                                   int position, long id) {
         try {
             Thread.sleep(5);
         } catch (Exception e) {
