@@ -64,11 +64,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * [歌星详情]
  */
 public class SingerDetailsView extends AbsBaseView implements
-        IPageLoadCallback<Song>, ILoadCacheDataCallback<Song>, IPlayListListener, 
-        IFavoriteListListener,IOrderSongResultListener,ITopSongResultListener {
+        IPageLoadCallback<Song>, ILoadCacheDataCallback<Song>, IPlayListListener,
+        IFavoriteListListener, IOrderSongResultListener, ITopSongResultListener {
     private Singer mSinger = null;
 
-    /** [分页加载数据一页的数量] */
+    /**
+     * [分页加载数据一页的数量]
+     */
     private static final int PAGE_SIZE = 20;
     private static final int PAGE_LOAD_EDGE_COUNT = 8;
     private static final String INVALID_SINGER_NAME = "";
@@ -80,7 +82,7 @@ public class SingerDetailsView extends AbsBaseView implements
     private SingerCoverPresenter mCoverPresenter;
     private ArrayList<Song> mDatas = null;
 
-//    private VerticalSeekBar mSeekBar;
+    //    private VerticalSeekBar mSeekBar;
     private View mLoadingView;
     private TextView mLoadingErrorTv;
     private View mSinerItemView;
@@ -91,7 +93,9 @@ public class SingerDetailsView extends AbsBaseView implements
 
     // private SongMenu mFirstSongMenu;
 
-    /** [歌单简介视图] */
+    /**
+     * [歌单简介视图]
+     */
     RoundRectImageView mCoverIv;
     TextView mNameTv;
     TextView mDescriptionTv;
@@ -116,7 +120,7 @@ public class SingerDetailsView extends AbsBaseView implements
                 .findViewById(R.id.singer_details_item_cover);
         Bitmap bmp = BitmapUtil.getBitmapByResId(BaseApplication.getInstance(), R.drawable.singer_default_large);
         mCoverIv.setImageBitmap(bmp);
-        
+
         mCoverIv.setRadius(mItemCoverRoundRectRadius);
         mNameTv = (TextView) mSinerItemView
                 .findViewById(R.id.singer_details_item_name_tv);
@@ -166,9 +170,10 @@ public class SingerDetailsView extends AbsBaseView implements
         fillIntroductionViewData();
         showSingerCover();
     }
-    
+
     /**
      * [返回相应的singer]
+     *
      * @return singer类
      */
     public Singer getSinger() {
@@ -190,28 +195,37 @@ public class SingerDetailsView extends AbsBaseView implements
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id, int itemState) {
+                                    int position, long id, int itemState) {
                 Song song = (Song) parent.getAdapter().getItem(position);
                 if (song == null) {
                     return;
                 }
-              
+
                 if (itemState == SongListView.ITEM_STATE_NORMAL) {
+                    mListView.requestFocus();
                     SongOperationManager.getInstance().orderSong(song.getId(), SingerDetailsView.this);
+                    operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_TOP) {
                     SongOperationManager.getInstance().topSong(song.getId(), SingerDetailsView.this);
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
+
                 } else if (itemState == SongListView.ITEM_STATE_FAVORITE) {
 
                     if (FavoriteListManager.getInstance().isAlreadyExists(
                             song.getId())) {
                         if (FavoriteListManager.getInstance().delSong(
                                 song.getId())) {
+                            mListView.resetUi();
+                            operateSelectItem(parent, view, position, id);
                             onUmengAgentFavoriteSong(false);
                         }
                         return;
-                    } else if (FavoriteListManager.getInstance().addSong( 
+                    } else if (FavoriteListManager.getInstance().addSong(
                             song.getId())) {
                         // mListView.startFavoriteAnimnation(position);
+                        mListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                         onUmengAgentFavoriteSong(true);
                         return;
                     }
@@ -224,28 +238,8 @@ public class SingerDetailsView extends AbsBaseView implements
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
-                    int position, long id) {
-
-                Song item = (Song) parent.getAdapter().getItem(position);
-                if (item == null) {
-                    return;
-                }
-
-                if (FavoriteListManager.getInstance().isAlreadyExists(
-                        item.getId())) {
-                    mListView.highlightFavoriteIcon();
-                } else {
-                    mListView.restoreFavoriteIcon();
-                }
-
-                // updateSeekBar(position);
-                if (mDatas.size() >= mTotalNum) {
-                    return;
-                }
-                if (position <= (mAdapter.getCount() - 1)
-                        && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
-                    mPageLoadPresenter.loadNextPage();
-                }
+                                       int position, long id) {
+                operateSelectItem(parent, view, position, id);
             }
 
             @Override
@@ -273,16 +267,16 @@ public class SingerDetailsView extends AbsBaseView implements
             }
 
         });
-        
+
         mListView.setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
-            
+
             @Override
             public void onRightEdgeKeyDown() {
                 if (MainViewManager.getInstance().getStatusBar() != null) {
                     MainViewManager.getInstance().getStatusBar().setSelectedNumFocus();
                 }
             }
-            
+
             @Override
             public void onLeftEdgeKeyDown() {
                 MainViewManager.getInstance().setSmallMvFocus();
@@ -303,6 +297,33 @@ public class SingerDetailsView extends AbsBaseView implements
         mLoadingView.setVisibility(View.GONE);
         mLoadingErrorTv.setVisibility(View.GONE);
         mListView.setVisibility(View.GONE);
+    }
+
+    private void operateSelectItem(AdapterView<?> parent, View view,
+                                   int position, long id) {
+
+
+        Song item = (Song) parent.getAdapter().getItem(position);
+        if (item == null) {
+            return;
+        }
+
+        if (FavoriteListManager.getInstance().isAlreadyExists(
+                item.getId())) {
+            mListView.highlightFavoriteIcon();
+        } else {
+            mListView.restoreFavoriteIcon();
+        }
+
+        // updateSeekBar(position);
+        if (mDatas.size() >= mTotalNum) {
+            return;
+        }
+        if (position <= (mAdapter.getCount() - 1)
+                && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
+            mPageLoadPresenter.loadNextPage();
+        }
+
     }
 
     private void onUmengAgentOrderSong() {
@@ -356,7 +377,7 @@ public class SingerDetailsView extends AbsBaseView implements
         // }
         return null;
     }
-    
+
     private void loadData(String singerName) {
         if (INVALID_SINGER_NAME.equals(singerName) || singerName == null) {
             showLoadingErrorView(R.string.error_loading_song_no_result);
@@ -550,7 +571,7 @@ public class SingerDetailsView extends AbsBaseView implements
 
     @Override
     public void onPostLoadData(Exception e, boolean isReset, boolean isNext,
-            List<Song> datas) {
+                               List<Song> datas) {
         if (e != null) {
             handleException(e, isReset);
         }
@@ -573,7 +594,7 @@ public class SingerDetailsView extends AbsBaseView implements
     public void onPreLoadCacheData() {
         // TODO Auto-generated method stub
     }
-    
+
     /**
      * [功能说明]歌星头像异步任务类
      */
@@ -638,13 +659,13 @@ public class SingerDetailsView extends AbsBaseView implements
     @Override
     public void onTopSongFailed(int songId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void onOrderSongFailed(int songId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override

@@ -17,8 +17,10 @@ import java.util.List;
 import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnKeyListener;
@@ -59,13 +61,15 @@ import com.evideo.kmbox.widget.mainview.MainViewManager;
 public class SingerView extends AbsBaseView implements
         IPageLoadCallback<Singer> {
 
+    private final String TAG = SingerView.class.getSimpleName();
+
     private static final int PAGE_SIZE = 50;
     private static final int PAGE_LOAD_EDGE_COUNT = 20;
     private static final int PAGE_SIZE_SINGER = 20;
     private static final int SINGER_TYPE_COUNT = 8;
 
     private SearchWidget mSearchWidget;
-    
+
     private MaskFocusTextView[] mSingerTypes;
     private CustomSelectorGridView mSingerGv;
     private SingerGridViewAdapter mAdapter;
@@ -84,8 +88,9 @@ public class SingerView extends AbsBaseView implements
     private int mPreTabIndex = 0;
     private int mSingerItemPadding = 0;
     private int mSearchBtnPadding = 0;
-    
+
     private AnimLoadingView mLoadingView;
+
     /**
      * @param activity
      * @param backViewId
@@ -99,7 +104,7 @@ public class SingerView extends AbsBaseView implements
     }
 
     private void initDimens() {
-        mFadingEdgeLength = (int) DimensionsUtil.getDimension(mActivity, 
+        mFadingEdgeLength = (int) DimensionsUtil.getDimension(mActivity,
                 R.dimen.singer_gridview_fading_edge_length);
         mTextHintSize = (int) DimensionsUtil.getDimension(mActivity, R.dimen.px39);
         mTextCommonSize = (int) DimensionsUtil.getDimension(mActivity, R.dimen.px39);
@@ -111,22 +116,22 @@ public class SingerView extends AbsBaseView implements
         mSearchBtnPadding = (int) DimensionsUtil.getDimension(mActivity, R.dimen.px19);
     }
 
-    public boolean resumeFocus() {
-        if (mSearchWidget != null && mSearchWidget.getKeyboardView() != null) {
-            mSearchWidget.getKeyboardView().requestFocus();
-            return true;
-        }
-        return false;
-    }
-    
+//    public boolean resumeFocus() {
+//        if (mSearchWidget != null && mSearchWidget.getKeyboardView() != null) {
+//            mSearchWidget.getKeyboardView().requestFocus();
+//            return true;
+//        }
+//        return false;
+//    }
+
     private void initSearchKeyboardView() {
         mPageLoadPresenter = new PickSingerPageLoadPresenter(PAGE_SIZE_SINGER, this, "", mCurTabIndex);
-        
+
         mSearchWidget = (SearchWidget) findViewById(R.id.singer_search);
         mSearchWidget.setFirstTitle(getString(R.string.main_singer_title));
 
         mSearchWidget.getKeyboardView().setOnFocusChangeListener(new OnFocusChangeListener() {
-            
+
             @Override
             public void onFocusChange(View arg0, boolean arg1) {
                 if (arg1) {
@@ -140,7 +145,7 @@ public class SingerView extends AbsBaseView implements
         });
 
         mSearchWidget.setBtnClickListener(new ISearchBtnClickListener() {
-            
+
             @Override
             public void onClickBtn(int index) {
                 if (index == SearchWidget.SEARCH_BTN_123) {
@@ -165,7 +170,7 @@ public class SingerView extends AbsBaseView implements
                     if (!TextUtils.isEmpty(content)) {
                         String spell = content.substring(0, content.length() - 1);
                         mSearchWidget.setSearchTextSize(TextUtils.isEmpty(spell) ? mTextHintSize
-                                        : mTextCommonSize);
+                                : mTextCommonSize);
                         mSearchWidget.setSearchText(spell);
                         onSearchContentChanged(spell);
 
@@ -175,9 +180,9 @@ public class SingerView extends AbsBaseView implements
                 }
             }
         });
-     
+
         mSearchWidget.setItemClickListener(new ISearchItemClickListener() {
-            
+
             @Override
             public void onClickItem(Key key) {
                 if (key != null && key.enable) {
@@ -190,7 +195,7 @@ public class SingerView extends AbsBaseView implements
             }
         });
         mSearchWidget.setRightEdgeListener(new IRightEdgeListener() {
-            
+
             @Override
             public void onRightEdge() {
                 moveFocusToRightRect();
@@ -218,22 +223,24 @@ public class SingerView extends AbsBaseView implements
         mSingerTypes[5] = (MaskFocusTextView) findViewById(R.id.singer_type_chinese_bands);
         mSingerTypes[6] = (MaskFocusTextView) findViewById(R.id.singer_type_foreign_singers);
         mSingerTypes[7] = (MaskFocusTextView) findViewById(R.id.singer_type_foreign_bands);
-        
+
         int id = MainViewManager.getInstance().getStatusBar().getSelectedNumId();
         mSingerTypes[7].setNextFocusRightId(id);
-        
-        mLoadingView = (AnimLoadingView)findViewById(R.id.singer_loading_widget);
+
+        mLoadingView = (AnimLoadingView) findViewById(R.id.singer_loading_widget);
 
         OnFocusChangeListener listener = new OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View arg0, boolean arg1) {
+                log("-----onFocusChange()----");
                 if (!(arg0 instanceof MaskFocusTextView)
                         || !(arg0.getTag() instanceof Integer)) {
                     return;
                 }
 
                 int index = (Integer) arg0.getTag();
+                log("index:" + index);
                 if (!arg1) {
                     mPreTabIndex = index;
                     return;
@@ -248,9 +255,10 @@ public class SingerView extends AbsBaseView implements
         };
 
         View.OnKeyListener keyListener = new OnKeyListener() {
-            
+
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                log("onKey(View v, int keyCode, KeyEvent event)----event.getAction:" + event.getAction() + ">>keyCode: " + keyCode);
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     if (event.getRepeatCount() >= 1) {
                         EvLog.i("reject long click event");
@@ -261,7 +269,7 @@ public class SingerView extends AbsBaseView implements
                         MainViewManager.getInstance().getStatusBar().requestFocus();
                         return true;
                     } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                        if (mCurTabIndex == (mSingerTypes.length-1)) {
+                        if (mCurTabIndex == (mSingerTypes.length - 1)) {
 //                            mFocusViewBeforeMoveToSelectedNum = v;
                             MainViewManager.getInstance().getStatusBar().setSelectedNumFocus();
                             return true;
@@ -285,6 +293,57 @@ public class SingerView extends AbsBaseView implements
                 return false;
             }
         };
+
+//        OnTouchListener onTouchListener = new OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                log("--onTouch()---");
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//
+//                        log("--onTouch()---MotionEvent.ACTION_DOWN----tag:" + v.getTag());
+//
+//                        v.requestFocus();
+//                        return true;
+//                    case MotionEvent.ACTION_MOVE:
+//                        log("--onTouch()---MotionEvent.ACTION_MOVE----");
+//
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        log("--onTouch()---MotionEvent.ACTION_UP----");
+//
+//                        break;
+//
+//                }
+//                return false;
+//            }
+//        };
+
+        OnClickListener onClickListener = new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                if (!(arg0 instanceof MaskFocusTextView)
+                        || !(arg0.getTag() instanceof Integer)) {
+                    return;
+                }
+
+                int index = (Integer) arg0.getTag();
+
+//                if (!arg1) {
+//                    mPreTabIndex = index;
+//                    return;
+//                }
+                mCurTabIndex = index;
+                setTabChecked(index);
+//                if (mCurTabIndex != mPreTabIndex) {
+                onTabSelected(index);
+                LogAnalyzeManager.onEvent(mActivity, EventConst.ID_CLICK_ALL_SINGER_TYPE_LIST);
+//                }
+            }
+        };
+
+
         for (int i = 0; i < mSingerTypes.length; i++) {
             mSingerTypes[i].setFocusFrame(R.drawable.focus_frame_new);
             mSingerTypes[i].setTextColor(BaseApplication.getInstance().getBaseContext().getResources().getColor(R.color.white));
@@ -297,6 +356,8 @@ public class SingerView extends AbsBaseView implements
                     mTabViewPadding + 2, mTabViewPadding);
             mSingerTypes[i].setOnFocusChangeListener(listener);
             mSingerTypes[i].setOnKeyListener(keyListener);
+            mSingerTypes[i].setOnClickListener(onClickListener);
+//            mSingerTypes[i].setOnTouchListener(onTouchListener);
 //            mSingerTypes[i].setNextFocusDownId(R.id.singer_gv);
         }
 
@@ -306,7 +367,7 @@ public class SingerView extends AbsBaseView implements
         mSingerGv.setEnableSquareSelector(true);
         mSingerGv.setCustomSelectorDrawable(BaseApplication.getInstance().getBaseContext().getResources().getDrawable(R.drawable.singer_icon_frame));
         mSingerGv.setSelectorPadding( // 左、上、右、下
-                  getResources().getDimensionPixelSize(R.dimen.singer_order_padding_left)
+                getResources().getDimensionPixelSize(R.dimen.singer_order_padding_left)
                 , getResources().getDimensionPixelSize(R.dimen.singer_order_padding_top)
                 , getResources().getDimensionPixelSize(R.dimen.singer_order_padding_right)
                 , getResources().getDimensionPixelSize(R.dimen.singer_order_padding_bottom));
@@ -316,8 +377,8 @@ public class SingerView extends AbsBaseView implements
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                    long arg3) {
-
+                                    long arg3) {
+                log("----setOnItemClickListener--onItemClick---");
                 SingerGridViewAdapter adapter = (SingerGridViewAdapter) arg0
                         .getAdapter();
                 if (adapter == null) {
@@ -337,7 +398,8 @@ public class SingerView extends AbsBaseView implements
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
-                    int arg2, long arg3) {
+                                       int arg2, long arg3) {
+                log("----setOnItemSelectedListener--onItemSelected---");
                 if (mAdapter == null || mPageLoadPresenter == null) {
                     return;
                 }
@@ -376,20 +438,20 @@ public class SingerView extends AbsBaseView implements
             }
         });*/
         mSingerGv.setEdgeListener(new IEdgeListener() {
-            
+
             @Override
             public boolean onRightEdge() {
                 MainViewManager.getInstance().getStatusBar().setSelectedNumFocus();
                 return true;
             }
-            
+
             @Override
             public boolean onLeftEdge() {
                 mSearchWidget.getKeyboardView().setSelection(5);
                 mSearchWidget.getKeyboardView().requestFocus();
                 return true;
             }
-            
+
             @Override
             public boolean onDownEdge() {
                 MainViewManager.getInstance().setSmallMvFocus();
@@ -415,7 +477,7 @@ public class SingerView extends AbsBaseView implements
         mCurTabIndex = index;
         highlightFonts(mSingerTypes[mCurTabIndex]);
         for (int i = 0; i < mSingerTypes.length; i++) {
-            if (i == index){
+            if (i == index) {
                 continue;
             }
             restoreFonts(mSingerTypes[i]);
@@ -426,13 +488,13 @@ public class SingerView extends AbsBaseView implements
         loadData(index);
 //        EvLog.i("Singer Type Selected: " + index);
     }
-    
+
     private void restoreFonts(MaskFocusTextView view) {
         if (view == null) {
             return;
         }
         view.setTextColor(BaseApplication.getInstance().getBaseContext().getResources().getColor(R.color.white));
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX,mNormalTabTvSize);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mNormalTabTvSize);
     }
 
     private void highlightFonts(MaskFocusTextView view) {
@@ -440,7 +502,7 @@ public class SingerView extends AbsBaseView implements
             return;
         }
         view.setTextColor(BaseApplication.getInstance().getBaseContext().getResources().getColor(R.color.text_yellow));
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX,mHighlightTabTvSize);
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mHighlightTabTvSize);
     }
 
     private void onSearchContentChanged(String content) {
@@ -518,12 +580,13 @@ public class SingerView extends AbsBaseView implements
             mSingerTypes[0].requestFocus();
         }*/
     }
-    
-    
+
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -551,7 +614,7 @@ public class SingerView extends AbsBaseView implements
             mSearchWidget.getKeyboardView().requestFocus();
         }
     }
-    
+
     private void showLoadingView() {
         if (mLoadingView.getVisibility() != View.VISIBLE) {
             mLoadingView.setVisibility(View.VISIBLE);
@@ -592,7 +655,7 @@ public class SingerView extends AbsBaseView implements
      */
     @Override
     public void onPostLoadData(Exception e, boolean isReset, boolean isNext,
-            List<Singer> datas) {
+                               List<Singer> datas) {
         EvLog.d("SingerView updateGridView isReset: " + isReset + " isNext: "
                 + isNext);
         if (e != null) {
@@ -654,8 +717,9 @@ public class SingerView extends AbsBaseView implements
      */
     public interface ISingerClickListener {
         /**
-         * [歌星点击动作] 
-         * @param singer 歌星项
+         * [歌星点击动作]
+         *
+         * @param singer     歌星项
          * @param backViewId 后退界面
          */
         public void onSingerItemClick(Singer singer, int backViewId);
@@ -665,9 +729,8 @@ public class SingerView extends AbsBaseView implements
 
     /**
      * [设置singerItem监听]
-     * 
-     * @param listener
-     *            监听器
+     *
+     * @param listener 监听器
      */
     public void setSingerClickListener(ISingerClickListener listener) {
         mListener = listener;
@@ -679,7 +742,7 @@ public class SingerView extends AbsBaseView implements
             mDatas.clear();
         }
     }
-    
+
 
     @Override
     public boolean onSmallMVUpKey() {
@@ -699,10 +762,15 @@ public class SingerView extends AbsBaseView implements
 
     @Override
     public boolean onStatusBarDownKey() {
+        log("onStatusBarDownKey()");
         if (mCurTabIndex < 0 || mCurTabIndex >= mSingerTypes.length) {
             mCurTabIndex = 0;
         }
         mSingerTypes[mCurTabIndex].requestFocus();
         return true;
+    }
+
+    private void log(String tag) {
+        Log.d("gsp", TAG + ">>>" + tag);
     }
 }
