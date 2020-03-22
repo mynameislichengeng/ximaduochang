@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <com.evideo.kmbox.widget.common.AutoEnlargeTextView
+        android:id="@+id/search_history_item_sn"
+        android:layout_width="@dimen/px140"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px21"
+        android:paddingTop="@dimen/px21"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/px39" />
+
+    <com.evideo.kmbox.widget.common.CircleImageView
+        android:id="@+id/search_history_singer_cover"
+        android:layout_width="@dimen/px105"
+        android:layout_height="@dimen/px105"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/px30"
+        android:visibility="gone"
+        android:textColor="@color/white"
+         />
+    
+    <com.evideo.kmbox.widget.common.AutoEnlargeTextView
+        android:id="@+id/search_history_singer_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px21"
+        android:paddingTop="@dimen/px21"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/px39" />
+
+   <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingRight="@dimen/px25"
+        android:gravity="right|center_vertical" >
+
+        <com.evideo.kmbox.widget.common.AutoEnlargeTextView
+            android:id="@+id/search_history_singer_song_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/text_light_gray"
+            android:textSize="@dimen/px27"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+</LinearLayout>

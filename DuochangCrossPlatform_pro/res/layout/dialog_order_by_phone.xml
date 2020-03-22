@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+    
+	
+	<FrameLayout
+        android:layout_marginLeft="@dimen/px624"
+        android:layout_marginTop="@dimen/px184"
+        android:layout_width="@dimen/px388"
+        android:layout_height="@dimen/px388" >
+
+        <ImageView
+            android:id="@+id/qr_code_iv"
+            android:layout_width="@dimen/px388"
+            android:layout_height="@dimen/px388"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/qr_code_logo"
+            android:layout_width="@dimen/px80"
+            android:layout_height="@dimen/px80"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</FrameLayout>

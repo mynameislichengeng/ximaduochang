@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/px8"
+    android:clipChildren="false"
+    android:id="@+id/main_status_bar"
+     >
+
+    <ImageView
+        android:id="@+id/imageview_km_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px29"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/px75"
+        />
+
+	<TextView
+		android:id="@+id/songbook_update_db"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@+id/imageview_km_icon"
+		android:layout_alignBottom="@+id/imageview_km_icon"
+		android:textColor="@color/white"
+		android:layout_marginLeft="@dimen/px40"
+		android:padding="@dimen/px10"
+		android:textSize="@dimen/px26"
+		android:visibility="invisible"/>
+
+    <com.evideo.kmbox.widget.common.RoundImageView
+        android:id="@+id/imageview_km_memberpic"
+        android:layout_width="@dimen/px150"
+        android:layout_height="@dimen/px150"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/px15"
+        android:layout_marginLeft="@dimen/px75"
+        android:padding="@dimen/px6"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/imageview_km_membername"
+        android:layout_width="@dimen/px159"
+        android:layout_height="@dimen/px30"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/px75"
+        android:layout_marginTop="@dimen/px165"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:singleLine="true"
+        android:textSize="@dimen/px23" />
+
+    <!-- 搜索 -->
+    <com.evideo.kmbox.widget.common.MaskFocusLinearLayout 
+        android:id="@+id/status_bar_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/status_bar_search_bg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/px36"
+        android:gravity="center"
+        MaskFocusView:focusFrame="@drawable/status_bar_search_bg_focused"
+        MaskFocusView:focusPaddingLeft="@dimen/px21"
+   		MaskFocusView:focusPaddingRight="@dimen/px21"
+		MaskFocusView:focusPaddingTop="@dimen/px21"
+   		MaskFocusView:focusPaddingBottom="@dimen/px21"
+		android:descendantFocusability="blocksDescendants"
+        >
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_status_bar_search"
+            />
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/px26"
+            android:text="@string/search"
+            android:layout_marginLeft="@dimen/px18"
+            />
+        
+    </com.evideo.kmbox.widget.common.MaskFocusLinearLayout>
+
+  	<com.evideo.kmbox.widget.common.MaskFocusLinearLayout
+  	    android:layout_width="wrap_content"
+  	    android:layout_height="wrap_content"
+  	    android:focusable="true"
+  	    android:id="@+id/status_bar_unicom_pay"
+  	    MaskFocusView:focusFrame="@drawable/ic_pay_focus"
+  	    MaskFocusView:focusPaddingBottom="@dimen/px21"
+        MaskFocusView:focusPaddingLeft="@dimen/px21"
+        MaskFocusView:focusPaddingRight="@dimen/px21"
+        MaskFocusView:focusPaddingTop="@dimen/px21"
+        android:background="@drawable/ic_unicom_pay"
+  	    android:layout_marginTop="@dimen/px35"
+  	    android:layout_toRightOf="@id/status_bar_search"
+  	    />
+        
+    <com.evideo.kmbox.widget.StatusBarMsgView 
+        android:id="@+id/status_bar_msg_view"
+        android:layout_width="@dimen/px1320"
+        android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/status_bar_search"
+		android:layout_centerHorizontal="true" />
+  
+<!--   -->
+  <!--   <TextView
+        android:id="@+id/debug_time_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/imageview_wifi_state"
+        android:layout_marginTop="@dimen/px43"
+        android:gravity="center"
+        android:text="Time"
+        android:visibility="gone"
+        android:textColor="@color/red"
+        android:textSize="@dimen/px28" /> -->
+
+    <ImageView
+        android:id="@+id/imageview_wifi_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/right_gap"
+        android:layout_marginTop="@dimen/px32" />
+    
+    <View 
+        android:id="@+id/right_gap"
+        android:layout_alignParentRight="true"
+        android:layout_width="@dimen/px225"
+        android:layout_height="@dimen/px2"
+        />
+    
+    <com.evideo.kmbox.widget.common.MaskFocusLinearLayout 
+        android:id="@+id/status_bar_selected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selected_num_bg"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/px33"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        MaskFocusView:focusFrame="@drawable/selected_num_bg_focused"
+        MaskFocusView:focusPaddingLeft="@dimen/px21"
+   		MaskFocusView:focusPaddingRight="@dimen/px21"
+		MaskFocusView:focusPaddingTop="@dimen/px21"
+   		MaskFocusView:focusPaddingBottom="@dimen/px21"
+   		android:focusable="true"
+        >
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px26"
+            android:text="@string/tip_ordered_num"
+            android:layout_marginLeft="@dimen/px33"
+            />
+        
+        <TextView 
+            android:id="@+id/status_bar_selected_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_yellow"
+            android:textSize="@dimen/px29"
+            android:layout_marginLeft="@dimen/px23"
+            />
+        
+    </com.evideo.kmbox.widget.common.MaskFocusLinearLayout>
+
+</RelativeLayout>

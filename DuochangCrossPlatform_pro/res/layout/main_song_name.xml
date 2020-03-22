@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px750"
+    android:layout_marginTop="@dimen/px150"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+        
+     <com.evideo.kmbox.widget.SearchWidget
+        android:id="@+id/song_name_search"
+        android:layout_marginTop="@dimen/px10"
+        android:layout_width="@dimen/px720"
+        android:layout_height="@dimen/px764"
+        android:gravity="top"
+        />
+	
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+		<com.evideo.kmbox.widget.common.AnimLoadingView
+           android:id="@+id/song_name_loading_widget"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:visibility="gone"
+           />
+
+        <com.evideo.kmbox.widget.common.SongListView
+            android:id="@+id/order_song_song_lv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px700"
+            android:drawSelectorOnTop="true"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px63"
+            android:paddingTop="@dimen/px20"
+            android:nextFocusDown="@id/order_song_song_lv"
+            android:scrollbars="@null" />
+
+    </FrameLayout>
+		
+</LinearLayout>
+ 

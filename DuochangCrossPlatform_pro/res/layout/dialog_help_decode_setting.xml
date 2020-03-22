@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/toast_bg"
+    android:layout_width="@dimen/px1200"
+    android:layout_height="@dimen/px700"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px80"
+        android:text="@string/decode_set"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px50" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px20"
+        android:layout_gravity="center"
+        android:text="@string/decode_setting_hint_text"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/px30" />
+
+    <RadioButton
+        android:id="@+id/use_vlc_decode_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px80"
+        android:layout_marginLeft="@dimen/px450"
+        android:text="@string/use_vlc_decode"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px35" />
+
+    <RadioButton
+        android:id="@+id/use_mediaplayer_decode_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px80"
+        android:layout_marginLeft="@dimen/px450"
+        android:text="@string/use_media_decode"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px35" />
+  
+
+    <com.evideo.kmbox.widget.common.MaskFocusButton
+        android:id="@+id/soft_decode_commit_btn"
+        android:layout_width="@dimen/px350"
+        android:layout_height="@dimen/px80"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px50"
+        MaskFocusView:focusPaddingBottom="@dimen/px18"
+        MaskFocusView:focusPaddingLeft="@dimen/px18"
+        MaskFocusView:focusPaddingRight="@dimen/px18"
+        MaskFocusView:focusPaddingTop="@dimen/px18"
+        android:background="@drawable/search_abc_bg"
+        android:focusable="true"
+        android:paddingLeft="@dimen/px23"
+        android:paddingRight="@dimen/px23"
+        android:text="@string/ensure"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/px40" />
+
+</LinearLayout>

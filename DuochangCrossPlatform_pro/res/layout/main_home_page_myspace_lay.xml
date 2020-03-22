@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:id="@+id/home_page_my_space_bg"
+	>  
+    
+    <View 
+        android:layout_height="@dimen/px0"
+        android:layout_width="@dimen/px1"
+        android:layout_weight="1"/>
+    
+    <com.evideo.kmbox.widget.common.CircleImageView
+        android:id="@+id/memberImage"
+        android:layout_width="@dimen/px120"
+        android:layout_height="@dimen/px120"
+        android:layout_gravity="bottom"
+        android:layout_marginRight="@dimen/px20"
+        android:layout_marginBottom="@dimen/px20"
+        android:src="@drawable/singer_default" >
+    	</com.evideo.kmbox.widget.common.CircleImageView>
+	        
+</LinearLayout>

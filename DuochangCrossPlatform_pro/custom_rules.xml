@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    scue:
+      classes.jar 与 android.jar 有冲突，应先加载 classes.jar
+      分析${sdk.dir}/tools/ant/build.xml得，应修改project.target.class.path
+-->
+<project name="custom_rules">
+    <target name="-pre-compile">
+        <echo message="CLASSPATH.OLD=${toString:project.target.class.path}"></echo>
+        <path id="project.target.class.path">
+        <pathelement location="android_framework/classes.jar"></pathelement>
+        <pathelement location="${sdk.dir}/platforms/android-19/android.jar"></pathelement>
+        </path>
+        <echo message="CLASSPATH.NEW=${toString:project.target.class.path}"></echo>
+    </target>
+</project>

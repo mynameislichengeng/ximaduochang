@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="@dimen/px720"
+        android:layout_height="@dimen/px700"
+        android:layout_marginLeft="@dimen/px62"
+        android:layout_marginTop="@dimen/px160"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px60"
+            android:layout_marginLeft="@dimen/px18"
+            android:text="@string/freesong_page_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px40" />
+
+        <ImageView
+            android:id="@+id/mv_show_rect"
+            android:layout_width="@dimen/px714"
+            android:layout_height="@dimen/px544"
+            android:layout_marginTop="@dimen/px20"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/freesong_page_songname_tv"
+            android:layout_width="@dimen/px690"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px18"
+            android:layout_marginTop="@dimen/px30"
+            android:singleLine="true"
+            android:text="qqqqqq"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px40" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/list_show_rect"
+        android:layout_width="@dimen/px1000"
+        android:layout_height="@dimen/px650"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginTop="@dimen/px200" >
+
+        <com.evideo.kmbox.widget.common.AnimLoadingView
+            android:id="@+id/free_song_loading_widget"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" />
+
+        <com.evideo.kmbox.widget.common.SongListView
+            android:id="@+id/free_song_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawSelectorOnTop="true"
+            android:scrollbars="@null" />
+    </FrameLayout>
+
+</LinearLayout>
+

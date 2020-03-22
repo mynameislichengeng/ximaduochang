@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ListMarqueeTextView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+    
+    <!-- xmlns:ListMarqueeTextView="http://schemas.android.com/apk/res/com.evideo.ktvhome.song" -->
+    
+    <com.evideo.kmbox.widget.common.AutoEnlargeTextView
+		android:layout_width="@dimen/px60"
+		android:layout_height="wrap_content"
+		android:paddingTop="@dimen/px21"
+		android:paddingBottom="@dimen/px21"
+		android:textColor="@color/text_white"
+		android:gravity="center"
+		android:textSize="@dimen/px39"
+        />
+
+    
+   <!-- <ImageView 
+	  android:id="@+id/song_list_item_tip_icon"
+	  android:layout_width="@dimen/px113"
+	  android:layout_height="wrap_content"
+	  android:src="@drawable/selected_song_playing"
+	  android:visibility="gone"
+	  android:scaleType="center"
+	  /> -->
+    
+    <com.evideo.kmbox.widget.common.AutoEnlargeTextView
+		android:id="@+id/song_list_item_sn"
+		android:layout_width="@dimen/px113"
+		android:layout_height="wrap_content"
+		android:paddingTop="@dimen/px21"
+		android:paddingBottom="@dimen/px21"
+		android:textColor="@color/text_white"
+		android:gravity="center"
+		android:textSize="@dimen/px39"
+        />
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical">
+            
+	        <com.evideo.kmbox.widget.common.ListMarqueeTextView
+	            android:id="@+id/song_list_item_song_name"
+	            android:layout_width="@dimen/px300"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:gravity="center_vertical"
+	            android:textSize="@dimen/px39"
+	            android:textColor="@color/white"
+	            android:singleLine="true"
+	            android:ellipsize="end"
+	            ListMarqueeTextView:specWidth="@dimen/px750"
+	            />
+	
+	        <com.evideo.kmbox.widget.common.AutoShowTextView
+	            android:id="@+id/song_list_item_singer_below"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/song_list_item_song_name"
+	            android:layout_alignParentLeft="true"
+	            android:gravity="center_vertical"
+	            android:textSize="@dimen/px27"
+	            android:textColor="@color/text_light_gray"
+	            android:maxWidth="@dimen/px203"
+	            android:singleLine="true"
+	            android:ellipsize="end"
+	            android:visibility="gone"
+	            />
+
+		</RelativeLayout>	
+
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical">
+
+           <com.evideo.kmbox.widget.common.AutoHideTextView
+		      android:id="@+id/song_list_item_singer"
+		      android:layout_width="@dimen/px168"
+		      android:layout_height="wrap_content"
+		      android:textSize="@dimen/px27"
+		      android:textColor="@color/text_light_gray"
+		      android:gravity="left|center_vertical"
+		      android:layout_alignParentRight="true"
+		      android:singleLine="true"
+		      android:ellipsize="end"
+		      android:visibility="visible"
+		      android:layout_marginRight="@dimen/px15"
+		      />  
+			<View
+			    android:layout_toRightOf="@id/song_list_item_singer"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    />
+           
+        </RelativeLayout>
+		      
+
+    </LinearLayout>
+    
+</LinearLayout>

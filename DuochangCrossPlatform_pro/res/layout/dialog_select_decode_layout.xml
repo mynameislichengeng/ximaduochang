@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical" >
+ 
+    <TextView 
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px60"
+        android:layout_marginTop="@dimen/px60"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px45"
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+    
+    <TextView 
+        android:id="@+id/content_tv"	    
+		android:layout_width="@dimen/px1200"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:gravity="center"
+		style="@style/dialog_content_text_style"
+		android:layout_marginTop="@dimen/px40"
+		android:textSize="@dimen/px40"
+		android:paddingLeft="@dimen/px60"
+		android:paddingRight="@dimen/px60"
+        />
+    
+        
+        <com.evideo.kmbox.widget.common.MaskFocusButton 
+            android:id="@+id/dialog_ok"
+            android:layout_width="@dimen/px300"
+            android:layout_height="@dimen/px100"
+            style="@style/btn_confirm_style"
+            android:layout_gravity="center"
+			android:gravity="center"
+            android:layout_marginTop="@dimen/px30"
+            android:background="@drawable/btn_blue_bg"
+            android:text="@string/confirm"
+            android:textSize="@dimen/px40"
+            android:layout_marginBottom="@dimen/px50"
+            />
+
+</LinearLayout>

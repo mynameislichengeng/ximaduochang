@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/qrcode_panel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/wx_ordersong_small_view_bg"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/phone_order_qrcode_img"
+        android:layout_width="@dimen/px240"
+        android:layout_height="@dimen/px240"
+        android:layout_marginTop="@dimen/px16"
+        android:layout_marginLeft="@dimen/px16"
+        />
+
+    <!-- <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/px20" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px40"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/px40"
+            android:layout_height="@dimen/px40"
+            android:scaleType="fitXY"
+            android:src="@drawable/wx_icon" />
+
+        <View
+            android:layout_width="@dimen/px20"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="@string/wechat_order_song"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/px26" />
+    </LinearLayout>
+ -->
+</LinearLayout>

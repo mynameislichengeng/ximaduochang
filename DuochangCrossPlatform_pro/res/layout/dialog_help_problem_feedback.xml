@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/px1250"
+    android:layout_height="@dimen/px750"
+    android:background="@drawable/toast_bg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px70"
+        android:text="@string/problem_feedback_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px50" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px170"
+        android:layout_marginTop="@dimen/px20"
+        android:text="@string/problem_type_title"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/px36" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px170"
+        android:layout_marginTop="@dimen/px20"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/problem_charge_cx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:focusable="true"
+            android:nextFocusDown="@+id/phone_num_edit_text"
+            android:text="@string/problem_type_charge"
+            android:textColor="@color/white_1"
+            android:textSize="@dimen/px36" />
+
+        <CheckBox
+            android:id="@+id/problem_cut_song_cx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px20"
+            android:checked="false"
+            android:focusable="true"
+            android:nextFocusDown="@+id/phone_num_edit_text"
+            android:text="@string/problem_type_cutsong"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px36" />
+
+        <CheckBox
+            android:id="@+id/problem_others"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px20"
+            android:checked="false"
+            android:focusable="true"
+            android:nextFocusDown="@+id/phone_num_edit_text"
+            android:text="@string/problem_type_other"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px36" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px170"
+        android:layout_marginTop="@dimen/px20"
+        android:text="@string/problem_contect"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/px36" />
+
+    <EditText
+        android:id="@+id/phone_num_edit_text"
+        android:layout_width="@dimen/px900"
+        android:layout_height="@dimen/px80"
+        android:layout_marginLeft="@dimen/px170"
+        android:layout_marginTop="@dimen/px20"
+        android:focusable="true"
+        android:nextFocusUp="@id/problem_charge_cx"
+        android:text="@string/please_input_phonenum"
+        android:textColor="@color/gray"
+        android:maxLength="12"
+        android:textSize="@dimen/px36" />
+		<!-- android:cursorVisible="true"
+		android:textCursorDrawable="@drawable/cursor" -->
+    <com.evideo.kmbox.widget.common.MaskFocusButton
+        android:id="@+id/problem_commit_btn"
+        android:layout_width="@dimen/px500"
+        android:layout_height="@dimen/px80"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px40"
+        MaskFocusView:focusPaddingBottom="@dimen/px18"
+        MaskFocusView:focusPaddingLeft="@dimen/px18"
+        MaskFocusView:focusPaddingRight="@dimen/px18"
+        MaskFocusView:focusPaddingTop="@dimen/px18"
+        android:background="@drawable/search_abc_bg"
+        android:focusable="true"
+        android:paddingLeft="@dimen/px23"
+        android:paddingRight="@dimen/px23"
+        android:text="@string/problem_commit"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/px36" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px20"
+        android:text="@string/connect_promise"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/px30" />
+
+</LinearLayout>

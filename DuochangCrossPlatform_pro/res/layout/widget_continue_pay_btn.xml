@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+   <Button
+        android:id="@+id/btn_pay"
+        android:background="@drawable/btn_pay_selector"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/lly_bg" 
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+        <TextView 
+            android:id="@+id/tv_product_name"
+            android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:textSize="@dimen/px50"
+			android:layout_marginTop="@dimen/px100"
+			android:textColor="@color/continue_pay_dialog_text_color"/>
+        
+        <TextView
+            android:id="@+id/tv_price_now"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px262"
+            android:gravity="center"
+            android:textColor="@color/continue_pay_dialog_price_text_color"
+            android:textSize="@dimen/px74" />
+        
+          <TextView
+              android:id="@+id/tv_price"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/px18"
+              android:gravity="center"
+              android:textColor="@color/continue_pay_dialog_price_text_color"
+              android:textSize="@dimen/px33" />
+
+     </LinearLayout>
+     
+
+</FrameLayout>

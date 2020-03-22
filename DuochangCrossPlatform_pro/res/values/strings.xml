@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">好乐多唱K歌</string>
+    <string name="action_settings">Settings</string>
+    <string name="toast_switch_song_text">再次按下，切到下一首歌曲</string>
+    <string name="toast_nobroadcastsong_text">本地歌曲空空如也，赶紧点歌吧!</string>
+    <string name="toast_network_error">网络异常,请检查网络!</string>
+
+    <!-- 回放错误提示 -->
+
+    <!-- 歌曲下载阶段提示 -->
+    <string name="toast_down_stage_prepare_getmedia">开始准备播放链</string>
+    <string name="toast_down_stage_getmedia">正在获取播放链</string>
+    <string name="toast_down_prepare_downmedia">开始准备缓存</string>
+    <string name="toast_down_media_down_finish">歌曲缓存完成</string>
+    <string name="toast_down_media_down_error">歌曲缓存出错</string>
+
+    <!-- 歌曲错误提示 -->
+    <string name="error_code">错误码:</string>
+    <string name="toast_play_error_item_null">该歌曲信息丢失</string>
+    <string name="toast_play_error_item_media_null">该歌曲文件信息丢失</string>
+    <string name="toast_play_error_item_media_url_null">该歌曲播放链信息丢失</string>
+    <string name="toast_play_error_item_media_localpath_null">该歌曲缓存文件不存在</string>
+    <string name="toast_play_error_broadcastsong_notexist_local">该公播歌曲缓存文件不存在</string>
+    <string name="toast_play_error_unknow">该歌曲发生未知错误</string>
+    <string name="toast_play_error_decode_error">解码器出错</string>
+
+    <string name="dialog_title_mediaplayer_error">原生解码器播放异常</string>
+    <string name="dialog_content_mediaplayer_error">原生解码器操作音轨失败\n已自动为您切换通用解码器,请重新进入多唱</string>
+
+    <string name="toast_getmedia_error_unknow">播放链请求发生未知错误</string>
+    <string name="toast_getmedia_error_send_get_medialist_failed">发送播放链请求失败</string>
+    <string name="toast_getmedia_error_catch_json_exception">请求播放链发生协议异常</string>
+    <string name="toast_getmedia_error_catch_unknow_exception">请求播放链发生异常</string>
+    <string name="toast_getmedia_error_server_response_error">服务器拒绝播放链请求</string>
+    <string name="toast_getmedia_error_list_null">云端不存在该歌曲播放链</string>
+    <string name="toast_getmedia_error_list_invalid">播放链请求列表无效</string>
+
+    <string name="toast_down_error_media_url_can_not_get_size_and_name">播放链无法获取文件信息</string>
+    <string name="toast_down_error_space_sufficient">下载空间不足</string>
+    <string name="toast_down_error_connect_failed">播放链连接失败</string>
+    <string name="toast_down_error_write_failed">歌曲文件下载写入失败,请清理本地存储空间</string>
+    <string name="toast_down_error_read_timeout">歌曲文件读取超时,网络不给力呀</string>
+    <string name="toast_down_error_url_contentlen_invlaid">播放链文件长度为0</string>
+    <string name="toast_down_error_item_null">歌曲文件丢失</string>
+    <string name="toast_down_error_item_media_null">歌曲文件信息丢失</string>
+    <string name="toast_down_error_media_url_null">歌曲文件播放地址丢失</string>
+    <string name="toast_down_error_unknow">下载歌曲发生未知错误</string>
+
+    <string name="toast_erc_downfailed">评分文件下载失败,暂时无法评分</string>
+
+    <string name="topsonghint_broadcast">随机播放:</string>
+    <string name="topsonghint_playing">在播:</string>
+    <string name="topsonghint_nextsong">&#160;&#160;&#160;&#160;下一首:</string>
+    <string name="topsonghint_no_song">亲~已经没有歌了，快去点歌吧!</string>
+
+    <string name="playerhint_buffering">努力缓冲中:</string>
+
+    <string name="playerhint_loading">加载中:%1$s%%&#160;(%2$d&#160;%3$s)</string>
+
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="delete">删除</string>
+    <string name="exit">狠心离去</string>
+    <string name="stay">继续演唱</string>
+
+    <string name="exit_app_tip">是否退出</string>
+
+    <string name="loading_data">数据加载中&#8230;</string>
+
+    <!-- 引导界面 -->
+
+    <!-- 主界面菜单 -->
+
+    <string name="settings_about_updating_progress_tip">更新中&#8230;%s%%</string>
+
+    <!-- 一下两个是联通定制版本盛音天承的需求 -->
+    <string name="settings_debugopt_slide_btn_on">开</string>
+    <string name="settings_debugopt_slide_btn_off">关</string>
+
+    <!-- 点歌 -->
+
+    <!-- 歌单 -->
+    <string name="song_menu">歌单</string>
+    <string name="song_menu_child">童真童趣</string>
+    <string name="song_menu_child_description">坐上时光机，一起回童年</string>
+    <string name="song_menu_drama">梨园戏曲</string>
+    <string name="song_menu_drama_description">生旦净末丑，张口回白首</string>
+
+    <string name="song_menu_new_song">最新歌曲</string>
+    <string name="song_menu_new_song_description">心之所欲，无所不有</string>
+
+    <string name="loading_song">歌曲加载中&#8230;</string>
+    <string name="loading_song_no_more">没有想要的歌？ \n扫描左侧二维码告诉我们吧</string>
+
+    <string name="volumectrl_music">音  乐</string>
+
+    <string name="playctrl_grade_close">关闭</string>
+    <string name="playctrl_org_mode">原唱</string>
+    <string name="playctrl_acc_mode">伴唱</string>
+    <string name="playctrl_cut_song">切歌</string>
+    <string name="playctrl_state_play">播放</string>
+    <string name="playctrl_state_pause">暂停</string>
+    <string name="playctrl_replay_song">重唱</string>
+    <string name="playctrl_play_list">已点</string>
+
+    <!-- 全局搜索 -->
+    <string name="global_search_title">搜索</string>
+    <string name="global_search_everybody_search">大家都在唱</string>
+    <string name="global_search_search_history">搜索历史</string>
+    <string name="global_search_singer_num">已为你找到&#160;%s&#160;位歌星</string>
+    <string name="global_search_song_num">已为你找到&#160;%s&#160;首歌曲</string>
+    <string name="global_search_singer_song_num">%s&#160;首歌曲</string>
+    <!-- 歌星 -->
+    <string name="singer_view_tv">歌星</string>
+    <string name="singer_view_all_singers">所有歌星</string>
+    <string name="singer_view_mainland_male">大陆男星</string>
+    <string name="singer_view_mainland_femail">大陆女星</string>
+    <string name="singer_view_hongkong_taiwan_male">港台男星</string>
+    <string name="singer_view_hongkong_taiwan_female">港台女星</string>
+    <string name="singer_view_chinese_bands">中国组合</string>
+    <string name="singer_view_foreign_singers">外国歌星</string>
+    <string name="singer_view_foreign_bands">外国组合</string>
+    <string name="singer_view_search_by_spell">查找  “周杰伦” 输入 “ZJL”</string>
+    <string name="default_singer_name">佚名</string>
+
+    <!-- 排行  -->
+    <!-- 应用 -->
+
+    <!-- 曲库管理 -->
+    <string name="songbook_update_db_from_datacenter">正在更新曲库(%s%%)&#8230;可能占用较多资源</string>
+    <string name="songbook_update_db_from_datacenter_mainview">正在更新曲库(%s%%)&#8230;</string>
+    <string name="songbook_update_db_from_datacenter_successed">更新成功</string>
+    <string name="songbook_update_db_from_datacenter_failed">更新数据库失败:&#160;%s</string>
+    <string name="songbook_predict_remain_time">预计还要%s</string>
+    <string name="songbook_adding_songs">正在加载歌曲到曲库，请稍候......</string>
+
+    <!-- 时间 -->
+    <string name="day">天</string>
+    <string name="hour">小时</string>
+    <string name="minute">分</string>
+    <string name="second">秒</string>
+
+    <!-- 扫描进度说明 -->
+
+    <!-- km通信 errormessage -->
+
+    <string name="nouser">游客</string>
+    <string name="nosinger">佚名</string>
+    <string name="unknownsong">未知歌曲</string>
+
+    <!-- 麦克风特效 -->
+
+    <!-- 麦克风效果模式 -->
+
+    <!-- 麦克风类型 -->
+
+    <!-- 错误提示 -->
+    <string name="error_loading_data">数据加载失败,请稍后再试</string>
+    <string name="error_loading_song">歌曲加载失败\n请稍后再试</string>
+    <string name="error_loading_song_network">网络异常\n请检查网络</string>
+    <string name="error_list_foot_loading_song">歌曲加载失败，请稍后再试</string>
+    <string name="error_list_foot_loading_song_network">网络异常，请检查网络</string>
+    <string name="error_loading_song_no_result">暂无歌曲</string>
+
+    <!-- 调试 -->
+
+    <!-- 数据中心 -->
+
+    <!-- 数据中心错误 -->
+    <string name="datacenter_communication_unknow_host">网络错误</string>
+    <string name="cannot_connect_to_datacenter">无法连接到数据中心服务器</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="no_serial_number">获取序列号失败，请联系经销商</string>
+
+    <!--已点已唱收藏列表  -->
+    <string name="tip_ordered_num">已点</string>
+    <string name="tip_favorite_num">收藏</string>
+    <string name="selected_list_title"><Data><![CDATA[<font color="#ffffff">已点歌曲&#160;</font>
+        <font color="#d3d376">%s</font><font color="#ffffff">&#160;首</font>]]></Data></string>
+    <string name="favorite_list_title"><Data><![CDATA[<font color="#ffffff">收藏歌曲&#160;</font>
+        <font color="#d3d376">%s</font><font color="#ffffff">&#160;首</font>]]></Data></string>
+    <!-- 百度推送消息 -->
+
+    <!-- 远程请求歌曲信息失败 -->
+    <string name="request_song_info_from_datacenter_failed">歌曲信息获取失败</string>
+
+    <!-- 音效器升级 -->
+
+    <!-- 应用中心 -->
+
+    <!-- 弹出框 -->
+
+    <!-- 回放 -->
+    <string name="playback_tv_hint">回放中&#160;</string>
+    <string name="playback_tv_over_hint">回放结束</string>
+
+    <!-- 分享 -->
+
+
+    <!--加歌对话  -->
+    <!-- 联系客服 -->
+
+    <!-- dialog add song -->
+
+    <!-- dialog add song complete -->
+    <!-- dialog add song fail -->
+
+
+    <string name="main_view_bottom_tip">按遥控器“1”键\n快速进入MV</string>
+    <string name="main_view_bottom_offline_tip">离线模式只显示本地歌曲</string>
+    <string name="mv_selected_list_title"><Data><![CDATA[<font color="#ffffff">已点&#160;</font>
+        <font color="#ffeb18">%s</font>]]></Data></string>
+
+    <string name="home_page">首页</string>
+    <string name="search">搜索</string>
+
+    <!-- 手机点歌 -->
+    <string name="keyboard_in_123">123</string>
+    <string name="clean">清空</string>
+    <string name="ordered_list_title"><Data><![CDATA[<font color="#ffffff">已点&#160;</font>
+        <font color="#ffeb18">%s</font>]]></Data></string>
+
+
+    <string name="main_singer_title">歌星</string>
+    <string name="main_song_name_title">歌名</string>
+    <string name="main_top_song_title">排行</string>
+    <string name="playing_flag">播</string>
+    <string name="song_name_in_orderlist_playing">(在播)</string>
+    <string name="song_name_in_orderlist">(约%s)</string>
+
+    <string name="main_my_song_selected_tab">已点列表</string>
+    <string name="main_my_song_sung_tab">已唱历史</string>
+    <string name="main_my_space_user_info">个人中心</string>
+    <string name="main_my_space_favorite_tab">我的收藏</string>
+    <string name="main_my_space_sung_list_header_hint">温馨提示：系统仅保存50条已唱历史</string>
+    <string name="main_my_space_user_nickname">昵称</string>
+
+
+    <string name="data_loading_string">数据加载中...</string>
+
+    <string name="dc_commu_failed">服务器通信失败</string>
+
+    <string name="huodong_invalid_error">非法活动</string>
+    <string name="get_online_free_song_failed">获取在线免费试听歌曲失败,请检查网络</string>
+
+
+    <string name="unicom_pay_failed">订购失败:%1$d</string>
+    <string name="pay_cancel">支付取消</string>
+
+    <string name="unicom_pay_success">订购成功</string>
+    <string name="unicom_pay_error_init_failed">订购初始化失败，无法订购</string>
+    <string name="huodong_singer_not_exist">活动歌星不存在</string>
+    <string name="get_online_free_song_list">正在获取在线免费试听歌曲</string>
+    <string name="pay_redem_edit_hint_tip">请输入欢唱码</string>
+
+    <string name="not_support_adjust_mic_vol">暂不支持麦克风音量调节</string>
+
+    <string name="freesong_page_title">免费试唱</string>
+    <string name="cutsong_too_quick">亲,不要那么快切歌呀</string>
+
+    <string name="huannet_charge_price_hint">原价%s元</string>
+    <string name="huannet_charge_now_price_hint">&#160;现价&#160;<Data><![CDATA[<font color="#d3d376">%s</font>]]></Data>元</string>
+    <string name="continue_pay">去续订</string>
+    <string name="continue_pay_content_text">VIP到期时间:&#160;%s,去续订？</string>
+    <string name="charge_valid_time_hint">VIP倒计时:&#160;<Data><![CDATA[<font color="#d3d376">%s</font>]]></Data></string>
+    <string name="charge_serialnum_hint">订单流水号:%s</string>
+    <string name="getting_pay_price">正在获取订购价格,请稍候......</string>
+    <string name="get_pay_price_failed">获取订购价格失败,请检查网络</string>
+    <string name="get_pay_notify_url_failed">服务器繁忙,请稍候重试</string>
+    <string name="problem_feedback_title">问题反馈</string>
+    <string name="problem_type_title">问题类型</string>
+    <string name="problem_contect">联系方式</string>
+    <string name="problem_commit">提交</string>
+    <string name="problem_type_charge">&#160;已订购无法使用</string>
+    <string name="problem_type_cutsong">&#160;播放一会儿就切歌</string>
+    <string name="problem_type_other">&#160;其他问题</string>
+    <string name="please_input_phonenum">请留下您的手机号码</string>
+    <string name="connect_promise">我们会在一个工作日内与您联系,感谢使用!</string>
+
+    <string name="problem_select_type">亲,请选择问题类型</string>
+    <string name="problem_input_phone_num">亲,请输入手机号码,方便我们跟您联系</string>
+    <string name="problem_input_phone_num_len_invalid">亲,手机号码长度不足</string>
+    <string name="problem_input_phone_num_len_too_long">亲,手机号码长度最长不超过12位</string>
+    <string name="problem_input_phone_num_format_invalid">亲,输入的手机号码不合法</string>
+    <string name="problem_already_uploading_log">亲,已经正在上传日志文件...</string>
+    <string name="problem_uploading_log">正在上传日志,请稍等</string>
+
+    <string name="upload_log_failed_header">上传日志失败:</string>
+    <string name="upload_log_error_invalid_input_params">输入参数有误,请检查手机号码与错误类型</string>
+    <string name="upload_log_error_ftp_params">服务器返回参数错误</string>
+    <string name="upload_log_error_send_failed">请求上传信息失败</string>
+    <string name="upload_log_error_zip_failed">压缩日志文件失败</string>
+    <string name="upload_log_error_upload_failed">上传失败</string>
+    <string name="decode_setting_hint_text">如视频播放不正常,可尝试切换解码器</string>
+    <string name="decode_set">解码设置</string>
+
+    <string name="use_vlc_decode">&#160;使用通用解码器V</string>
+    <string name="use_media_decode">&#160;使用原生解码器</string>
+    <string name="ensure">确定</string>
+    <string name="soft_decode_commit">退出重新进入APP方可生效哦</string>
+    <string name="customer_service_phone">客服电话:</string>
+    <string name="select_decode_hint">如出现播放异常,请进入设置中心进行解码设置\n</string>
+    <string name="select_decode_happy">祝您使用愉快\n</string>
+    <string name="select_decode_use_ijk">根据您的智能设备版本,自动为您选择通用解码器\n</string>
+    <string name="select_decode_use_org">您的智能设备版本较低,自动为您选择原生解码器\n</string>
+    <string name="select_decode_title">欢迎您使用好乐多唱K歌\n</string>
+    <string name="continus_cutsong">发现您的好乐多唱K歌已连续异常切歌,请尝试以下方案:\n1.&#160;请检查网络连接是否正常,网速是否正常\n2.&#160;进入帮助中心,应用设置,切换一下解码器\n3.&#160;以上如果都无法解决,请联系我们的客服\n</string>
+    <string name="auth_failed_check_net">检查订购关系失败,请检查您的网络\n</string>
+    <string name="crash_error_out_of_memory">内存不足,&#160;请清理缓存!\n</string>
+    <string name="crash_error_full_of_disk">空间已满,&#160;请清理空间!\n</string>
+    <string name="crash_error_other">APP罢工一会儿,&#160;请重新进入!\n</string>
+    <string name="contact_qq">联系QQ:</string>
+
+
+    <string name="network_check_title">网络检测</string>
+    <string name="network_check_step1">网络连接检测</string>
+    <string name="network_check_step2">本地IP地址检测</string>
+    <string name="network_check_step4">DNS解析检测</string>
+    <string name="network_check_step5">Internet检测</string>
+    <string name="network_check_step6">多唱数据中心检测</string>
+    <string name="network_check_step7">云曲库检测</string>
+
+    <string name="network_check_error_hint_step1">网络连接不可用，请检查网络连接情况。</string>
+    <string name="network_check_error_hint_step2">IP地址错误，请检查DHCP服务是否开启或手动分配IP地址。</string>
+    <string name="network_check_error_hint_step4">DNS错误，请检查DNS服务器地址是否正确且有效。</string>
+    <string name="network_check_error_hint_step5">无法连接到Internet，请检查网络连接是否已正确配置。</string>
+    <string name="network_check_error_hint_step6_noresponse">连接多唱数据中心超时，请稍后重试。</string>
+    <string name="network_check_error_hint_step6_wrong_errorcode">多唱数据中心通讯出错(错误：%s)，请联系客服。</string>
+    <string name="network_check_error_hint_step7_error_url">无效的点播链，请联系客服。</string>
+    <string name="network_check_error_hint_step7_timeout">连接超时,请稍后重试。</string>
+    <string name="network_check_error_hint_step7_errorresponse">连接出错，请稍后重试。</string>
+    <string name="network_check_error_hint_step7_download_error">下载出错，请稍后重试(错误：%s)。</string>
+    <string name="about_text">约</string>
+
+    <string name="network_check_unchecked">未检测</string>
+    <string name="network_check_ischecking">检测中</string>
+    <string name="network_check_checked_correct">正常</string>
+    <string name="network_check_checked_error">异常</string>
+
+    <string name="network_check_start_check">开始诊断</string>
+    <string name="network_check_abort">取消</string>
+    <string name="network_check_cancel">正在取消</string>
+    <string name="network_check_recheck">重新诊断</string>
+
+    <string name="network_check_initial_tip">点击按钮开始测试</string>
+    <string name="network_check_hint_ischecking">进行中&#160;&#8230;</string>
+    <string name="network_check_everything_ok">网络连接正常，祝您使用愉快。</string>
+
+    <string name="help_image_tx">使用帮助</string>
+    <string name="help_decode_tx">解码设置</string>
+    <string name="help_db_tx">重置曲库</string>
+    <string name="help_net_tx">网络检测</string>
+    <string name="help_problem_tx">问题反馈</string>
+    <string name="help_contact_tx">联系我们</string>
+    <string name="db_reset_confirm_tx">重置曲库已唱收藏数据会丢失,确定重置么？</string>
+    <string name="db_reset_toast_tx">曲库已重置,请退出重新进入APP</string>
+
+    <string name="switch_test_dc_dialog_tx">是否切换到测试数据中心?</string>
+    <string name="switch_formal_dc_dialog_tx">是否切换到正式数据中心?</string>
+    <string name="switch_test_dc_tx">切换到测试数据中心成功,请退出重新进入APP</string>
+    <string name="switch_formal_dc_tx">切换到正式数据中心成功,请退出重新进入APP</string>
+    <string name="user_info_vip_remain">VIP剩余时间</string>
+    <string name="contact_version_header">版本号:V</string>
+    <string name="contact_sn_header">&#160;&#160;序列号:</string>
+    <string name="contact_channel_header">&#160;&#160;渠道号:</string>
+
+    <string name="dc_is_login">连接服务器中,请稍后...</string>
+
+    <string name="retry_get_data">再试一次</string>
+    <string name="user_center_no_select_data">暂无已点数据</string>
+    <string name="user_center_no_sung_data">暂无已唱数据</string>
+    <string name="user_center_no_favorite_data">暂无收藏数据</string>
+    <string name="songmenu_total_size"><Data><![CDATA[<font color="#ffffff">共&#160;</font>
+        <font color="#d3d376">%s</font><font color="#ffffff">&#160;首</font>]]></Data></string>
+
+    <string name="huannet_price_hint">(原价:&#160;%s元)</string>
+</resources>

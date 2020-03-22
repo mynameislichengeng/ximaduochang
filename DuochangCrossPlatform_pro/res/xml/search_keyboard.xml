@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Keyboard xmlns:keyboard="http://schemas.android.com/apk/res-auto"
+    keyboard:rowNum="6"
+    keyboard:columnNum="6">
+    
+    <Key keyboard:code="65" keyboard:keyLabel="A" keyboard:keyPosition="0" keyboard:keyRow="0" keyboard:keyColumn="0" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="66" keyboard:keyLabel="B" keyboard:keyPosition="1" keyboard:keyRow="0" keyboard:keyColumn="1" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="67" keyboard:keyLabel="C" keyboard:keyPosition="2" keyboard:keyRow="0" keyboard:keyColumn="2" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="68" keyboard:keyLabel="D" keyboard:keyPosition="3" keyboard:keyRow="0" keyboard:keyColumn="3" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="69" keyboard:keyLabel="E" keyboard:keyPosition="4" keyboard:keyRow="0" keyboard:keyColumn="4" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="70" keyboard:keyLabel="F" keyboard:keyPosition="5" keyboard:keyRow="0" keyboard:keyColumn="5" keyboard:keyEnable="true"></Key>
+    
+    <Key keyboard:code="71" keyboard:keyLabel="G" keyboard:keyPosition="6" keyboard:keyRow="1" keyboard:keyColumn="0" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="72" keyboard:keyLabel="H" keyboard:keyPosition="7" keyboard:keyRow="1" keyboard:keyColumn="1" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="73" keyboard:keyLabel="I" keyboard:keyPosition="8" keyboard:keyRow="1" keyboard:keyColumn="2" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="74" keyboard:keyLabel="J" keyboard:keyPosition="9" keyboard:keyRow="1" keyboard:keyColumn="3" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="75" keyboard:keyLabel="K" keyboard:keyPosition="10" keyboard:keyRow="1" keyboard:keyColumn="4" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="76" keyboard:keyLabel="L" keyboard:keyPosition="11" keyboard:keyRow="1" keyboard:keyColumn="5" keyboard:keyEnable="true"></Key>
+    
+    <Key keyboard:code="77" keyboard:keyLabel="M" keyboard:keyPosition="12" keyboard:keyRow="2" keyboard:keyColumn="0" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="78" keyboard:keyLabel="N" keyboard:keyPosition="13" keyboard:keyRow="2" keyboard:keyColumn="1" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="79" keyboard:keyLabel="O" keyboard:keyPosition="14" keyboard:keyRow="2" keyboard:keyColumn="2" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="80" keyboard:keyLabel="P" keyboard:keyPosition="15" keyboard:keyRow="2" keyboard:keyColumn="3" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="81" keyboard:keyLabel="Q" keyboard:keyPosition="16" keyboard:keyRow="2" keyboard:keyColumn="4" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="82" keyboard:keyLabel="R" keyboard:keyPosition="17" keyboard:keyRow="2" keyboard:keyColumn="5" keyboard:keyEnable="true"></Key>
+    
+    <Key keyboard:code="83" keyboard:keyLabel="S" keyboard:keyPosition="18" keyboard:keyRow="3" keyboard:keyColumn="0" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="84" keyboard:keyLabel="T" keyboard:keyPosition="19" keyboard:keyRow="3" keyboard:keyColumn="1" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="85" keyboard:keyLabel="U" keyboard:keyPosition="20" keyboard:keyRow="3" keyboard:keyColumn="2" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="86" keyboard:keyLabel="V" keyboard:keyPosition="21" keyboard:keyRow="3" keyboard:keyColumn="3" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="87" keyboard:keyLabel="W" keyboard:keyPosition="22" keyboard:keyRow="3" keyboard:keyColumn="4" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="88" keyboard:keyLabel="X" keyboard:keyPosition="23" keyboard:keyRow="3" keyboard:keyColumn="5" keyboard:keyEnable="true"></Key>
+    
+    <Key keyboard:code="89" keyboard:keyLabel="Y" keyboard:keyPosition="24" keyboard:keyRow="4" keyboard:keyColumn="0" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="90" keyboard:keyLabel="Z" keyboard:keyPosition="25" keyboard:keyRow="4" keyboard:keyColumn="1" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="49" keyboard:keyLabel="1" keyboard:keyPosition="26" keyboard:keyRow="4" keyboard:keyColumn="2" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="50" keyboard:keyLabel="2" keyboard:keyPosition="27" keyboard:keyRow="4" keyboard:keyColumn="3" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="51" keyboard:keyLabel="3" keyboard:keyPosition="28" keyboard:keyRow="4" keyboard:keyColumn="4" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="52" keyboard:keyLabel="4" keyboard:keyPosition="29" keyboard:keyRow="4" keyboard:keyColumn="5" keyboard:keyEnable="true"></Key>
+    
+    <Key keyboard:code="53" keyboard:keyLabel="5" keyboard:keyPosition="30" keyboard:keyRow="5" keyboard:keyColumn="0" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="54" keyboard:keyLabel="6" keyboard:keyPosition="31" keyboard:keyRow="5" keyboard:keyColumn="1" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="55" keyboard:keyLabel="7" keyboard:keyPosition="32" keyboard:keyRow="5" keyboard:keyColumn="2" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="56" keyboard:keyLabel="8" keyboard:keyPosition="33" keyboard:keyRow="5" keyboard:keyColumn="3" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="57" keyboard:keyLabel="9" keyboard:keyPosition="34" keyboard:keyRow="5" keyboard:keyColumn="4" keyboard:keyEnable="true"></Key>
+    <Key keyboard:code="48" keyboard:keyLabel="0" keyboard:keyPosition="35" keyboard:keyRow="5" keyboard:keyColumn="5" keyboard:keyEnable="true"></Key>
+    
+</Keyboard>

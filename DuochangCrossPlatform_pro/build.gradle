@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    project.archivesBaseName = "AppName"
+
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
+    defaultConfig {
+        applicationId "com.evideo.kmbox.shengyintiancheng"
+        minSdkVersion 19
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs/jniLibs'];
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    android {
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
+        }
+        packagingOptions {
+            doNotStrip "*/armeabi/libmg20pbase.so"
+            doNotStrip "*/armeabi-v7a/libmg20pbase.so"
+        }
+    }
+
+    useLibrary 'org.apache.http.legacy'
+}
+
+
+repositories {
+    flatDir {
+        dirs '../IJKPlayerLib/libs', 'libs', '../ChargeProxy/libs'
+    }
+}
+
+dependencies {
+    compile fileTree(include: '*.jar', dir: 'libs')
+    compile project(':ChargeProxy')
+    compile project(':VLCPlayerLib')
+    provided files('android_framework/classes.jar')
+    compile files('libs/shcmsystem-20171027.jar')
+    compile files('libs/SHCMSYSTEM_useraccount.jar')
+    provided files('src/com/evideo/runtime/MiguSDK3.0_405.jar')
+    implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
+    compile 'com.github.ctiao:ndkbitmap-x86:0.9.21'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.67'
+
+
+}

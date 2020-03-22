@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/px150"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <com.evideo.kmbox.widget.mainview.BreadCrumbsWidget
+        android:id="@+id/main_songname_title_crumb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px90"
+        android:gravity="center"
+        />
+
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px730"
+        android:layout_marginTop="@dimen/px20"
+        android:layout_marginRight="@dimen/px120"
+        android:orientation="horizontal"
+        android:gravity="top">
+		
+        
+        <FrameLayout
+            android:id="@+id/song_top_details_item_lay"
+            android:layout_width="@dimen/px405"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/px80"
+            android:focusable="false"
+            android:gravity="top"
+            >
+			
+            <com.evideo.kmbox.widget.common.AnimLoadingView
+	            android:id="@+id/song_top_gv_loading_widget"
+	            android:layout_width="@dimen/px400"
+	            android:layout_height="match_parent"
+	            android:gravity="center"
+	            android:visibility="gone"
+	            />
+			<GridView
+			    android:id="@+id/main_view_song_top_gv"
+			    android:layout_width="@dimen/px400"
+			    android:layout_height="match_parent"
+			    android:layout_marginLeft="@dimen/px60"
+			    android:cacheColorHint="@color/transparent"
+			    android:drawSelectorOnTop="true"
+			    android:gravity="center"
+			    android:horizontalSpacing="@dimen/px43"
+			    android:numColumns="1"
+			    android:scrollbars="@null"
+			    android:listSelector="@color/transparent"
+			    android:verticalSpacing="@dimen/px17" />
+
+		</FrameLayout>
+
+		<FrameLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/px720"
+		    android:paddingLeft="@dimen/px60"
+		    >
+			 <com.evideo.kmbox.widget.common.AnimLoadingView
+	            android:id="@+id/song_top_list_loading_widget"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:gravity="center"
+	            />
+		    <com.evideo.kmbox.widget.common.SongListView 
+				android:id="@+id/main_view_song_top_details_lv"
+		        android:layout_width="match_parent"
+		        android:layout_height="@dimen/px650"
+		        android:layout_marginTop="@dimen/px20"
+		        android:scrollbars="@null"
+		        android:nextFocusLeft="@id/main_view_song_top_gv"
+		        android:nextFocusDown="@id/main_view_song_top_details_lv"
+				android:drawSelectorOnTop="true"
+		        />
+		</FrameLayout>
+
+	</LinearLayout>
+
+</FrameLayout>
+

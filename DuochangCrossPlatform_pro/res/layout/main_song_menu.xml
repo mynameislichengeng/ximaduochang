@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:layout_marginTop="@dimen/px140"
+    android:gravity="top">
+     
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/song_menu"
+        android:textColor="@color/white"
+        android:layout_marginLeft="@dimen/px88"
+        android:textSize="@dimen/px39"
+        android:layout_gravity="left"
+        android:gravity="left"/>
+      <com.evideo.kmbox.widget.common.AnimLoadingView
+        android:id="@+id/song_menu_loading_widget"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px800"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+    <com.evideo.kmbox.widget.common.CustomSelectorGridView
+        android:id="@+id/song_menu_gv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px650"
+		android:cacheColorHint="@color/transparent"
+		android:horizontalSpacing="@dimen/px50"
+		android:verticalSpacing="@dimen/px45"
+		android:layout_marginTop="@dimen/px55"
+		android:layout_marginLeft="@dimen/px80"
+		android:layout_marginRight="@dimen/px80"
+		android:scrollbars="@null"
+		android:drawSelectorOnTop="true"
+        android:numColumns="3"
+        android:nextFocusRight="@id/song_menu_gv"
+        android:gravity="center"/>
+</FrameLayout>

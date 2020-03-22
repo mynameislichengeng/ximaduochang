@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px760"
+    android:layout_marginTop="@dimen/px150"
+    android:clipChildren="false"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.evideo.kmbox.widget.SearchWidget
+        android:id="@+id/global_search_widget"
+        android:layout_width="@dimen/px720"
+        android:layout_height="@dimen/px764"
+        android:layout_marginTop="@dimen/px10"
+        android:gravity="top" />
+
+    <FrameLayout
+        android:id="@+id/search_view_right_view"
+        android:layout_width="@dimen/px1176"
+        android:layout_height="@dimen/px770"
+        android:clipChildren="false" >
+
+        <com.evideo.kmbox.widget.common.AnimLoadingView
+            android:id="@+id/song_loading_lay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/search_result_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="true"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px63"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/singer_search_result_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px45"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px37" />
+
+            <com.evideo.kmbox.widget.common.SmoothHorizontalScrollView
+                android:id="@+id/search_view_scroller_view"
+                android:layout_width="@dimen/px1170"
+                android:layout_height="@dimen/px210"
+                android:layout_marginTop="@dimen/px10"
+                android:clipChildren="false"
+                android:scrollbars="none" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:orientation="horizontal" >
+
+                    <com.evideo.kmbox.widget.common.CustomSelectorGridView
+                        android:id="@+id/search_view_singer_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/px215"
+                        android:layout_gravity="center_vertical"
+                        android:cacheColorHint="@color/transparent"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:descendantFocusability="afterDescendants"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:numColumns="auto_fit"
+                        android:paddingLeft="@dimen/px30"
+                        android:paddingRight="@dimen/px30"
+                        android:scrollbars="@null" >
+                    </com.evideo.kmbox.widget.common.CustomSelectorGridView>
+                </LinearLayout>
+            </com.evideo.kmbox.widget.common.SmoothHorizontalScrollView>
+
+            <TextView
+                android:id="@+id/song_search_result_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px70"
+                android:layout_gravity="center_vertical|left"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px38" />
+            
+
+                <com.evideo.kmbox.widget.mainview.globalsearch.SearchSongListView
+                    android:id="@+id/order_song_song_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px400"
+                    android:focusable="true"
+                    android:scrollbars="@null" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_result_view_default"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clipChildren="true"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px30"
+            android:paddingRight="@dimen/px63" >
+
+            <TextView
+                android:id="@+id/search_view_right_up_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/px45"
+                android:text="@string/global_search_everybody_search"
+                android:textColor="@color/white"
+                android:textSize="@dimen/px37" />
+
+            <com.evideo.kmbox.widget.mainview.globalsearch.AutoTextViewContainer
+                android:id="@+id/search_view_everybody_search_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px200"
+                android:clipChildren="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/px30"
+                android:paddingRight="@dimen/px30" />
+
+            <LinearLayout
+                android:id="@+id/search_view_mid_lay"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px70"
+                android:layout_marginTop="@dimen/px5"
+                android:clipChildren="false"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/search_view_right_mid_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
+                    android:text="@string/global_search_search_history"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/px38" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:focusable="false"
+                    android:gravity="right" >
+
+                    <com.evideo.kmbox.widget.common.MaskFocusButton
+                        android:id="@+id/search_view_clear_history_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/px20"
+                        android:background="@drawable/global_search_clear_history"
+                        android:gravity="center"
+                        android:nextFocusRight="@id/search_view_clear_history_btn"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/px35" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.evideo.kmbox.widget.mainview.globalsearch.SearchHistoryListView
+                android:id="@+id/search_history_lv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px430"
+                android:nextFocusDown="@id/search_history_lv"
+                android:nextFocusUp="@id/search_view_clear_history_btn"
+                android:scrollbars="@null"
+                android:visibility="visible" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

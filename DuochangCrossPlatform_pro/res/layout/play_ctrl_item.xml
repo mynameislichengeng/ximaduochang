@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/play_ctrl_item_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px53"
+        android:src="@drawable/playctrl_icon_grade"
+        />
+
+    <TextView
+        android:id="@+id/play_ctrl_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/playctrl_grade_close"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px36" />
+
+</LinearLayout>

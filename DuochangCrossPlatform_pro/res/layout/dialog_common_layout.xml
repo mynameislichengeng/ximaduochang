@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical" >
+    
+    <View 
+        android:id="@+id/dialog_title_top_gap"
+        android:layout_width="@dimen/px1000"
+        android:layout_height="@dimen/px60"
+        />
+    
+    <TextView 
+        android:id="@+id/dialog_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px60"
+        android:textColor="@color/dialog_title_color"
+        android:textSize="@dimen/px45"
+        android:gravity="center"
+        android:text="111"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+    
+    <TextView 
+        android:id="@+id/dialog_content_tv"	    
+		android:layout_width="@dimen/px1100"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:gravity="center"
+		style="@style/dialog_content_text_style"
+		android:layout_marginTop="@dimen/px36"
+		android:layout_marginBottom="@dimen/px96"
+		android:textSize="@dimen/px45"
+		android:paddingLeft="@dimen/px60"
+		android:paddingRight="@dimen/px60"
+        />
+    
+    <FrameLayout
+	  	android:id="@+id/dialog_content_layout"
+	  	android:layout_width="fill_parent"
+	  	android:layout_height="fill_parent"
+	  	android:visibility="gone"
+	  	/>
+    
+    <LinearLayout 
+        android:id="@+id/dialog_btn_lay"
+        android:layout_width="@dimen/px1000"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:layout_gravity="center_horizontal"
+		android:orientation="horizontal"
+		android:layout_marginBottom="@dimen/px66"
+		android:clipChildren="false"
+		android:clipToPadding="false"
+        >
+        
+        <com.evideo.kmbox.widget.common.MaskFocusButton 
+            android:id="@+id/dialog_cancel"
+            android:layout_width="@dimen/px300"
+            android:layout_height="@dimen/px98"
+            style="@style/btn_cancel_style"
+            android:text="@string/cancel"
+            android:textSize="@dimen/px34"
+            />
+        
+        <View 
+            android:id="@+id/dialog_btn_gap"
+            android:layout_width="@dimen/px50"
+            android:layout_height="@dimen/px1"
+            />
+        
+        <com.evideo.kmbox.widget.common.MaskFocusButton 
+            android:id="@+id/dialog_ok"
+            android:layout_width="@dimen/px300"
+            android:layout_height="@dimen/px98"
+            style="@style/btn_confirm_style"
+            android:text="@string/confirm"
+            android:textSize="@dimen/px34"
+            />
+        
+    </LinearLayout>
+
+</LinearLayout>

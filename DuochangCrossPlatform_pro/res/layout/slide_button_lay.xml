@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/px787"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/slide_button_lay"
+      >
+        <TextView 
+	        android:id="@+id/desc_slide"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="left|center_vertical"
+	        android:layout_marginLeft="@dimen/px45"
+	        android:textColor="@color/white"
+	        />
+      
+             <com.evideo.kmbox.widget.common.SlideSwitch 
+		        android:id="@+id/slide_btn"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="right|center_vertical"
+		        android:layout_marginRight="@dimen/px45"
+		        android:focusable="false"
+		        android:clickable="false"
+		        />
+</LinearLayout>

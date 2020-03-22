@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/px750"
+	android:layout_marginTop="@dimen/px165"
+	android:gravity="center_vertical"
+	android:orientation="horizontal">
+
+    <com.evideo.kmbox.widget.SearchWidget
+        android:id="@+id/singer_search"
+        android:layout_width="@dimen/px720"
+        android:layout_height="@dimen/px764"
+        android:gravity="top"
+        />
+    
+   	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:clipChildren="false"
+	    android:orientation="vertical"
+		>
+	    
+	    	<LinearLayout
+	    	    android:id="@+id/singer_type_lay"
+	    	    android:layout_width="match_parent"
+	    	    android:layout_height="@dimen/px70"
+	    	    android:orientation="horizontal"
+	    	    android:clipChildren="false"
+	    	    android:background="@color/transparent_song_menu_item_background"
+	    	    android:gravity="center_vertical"
+				android:paddingRight="@dimen/px30">
+            
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_all_singers"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_all_singers"
+	    	        />
+
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_mainland_male"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_mainland_male"
+	    	        />
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_mainland_female"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_mainland_femail"
+	    	        />
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_hongkong_taiwan_male"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_hongkong_taiwan_male"
+	    	        />
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_hongkong_taiwan_female"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_hongkong_taiwan_female"
+	    	        />
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_chinese_bands"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_chinese_bands"
+	    	        />
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_foreign_singers"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_foreign_singers"
+	    	        />
+	    	    <com.evideo.kmbox.widget.common.MaskFocusTextView 
+	    	        android:id="@+id/singer_type_foreign_bands"
+	    	        android:layout_width="0dp"
+	    	        android:layout_weight="1"
+	    	        android:layout_height="@dimen/px61"
+	    	        android:gravity="center"
+	    	        android:focusable="true"
+	    	        android:text="@string/singer_view_foreign_bands"
+	    	        />
+
+	    	</LinearLayout>
+
+	    	<LinearLayout
+	    	    android:layout_width="match_parent"
+	    	    android:layout_height="match_parent"
+	    	    android:orientation="vertical" >
+
+	    	  <com.evideo.kmbox.widget.common.AnimLoadingView
+	            android:id="@+id/singer_loading_widget"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:gravity="center"
+	            android:visibility="gone"
+	            />
+	    	    <com.evideo.kmbox.widget.common.CustomSelectorGridView
+	    	        android:id="@+id/singer_gv"
+	    	        android:layout_width="match_parent"
+	    	        android:layout_height="match_parent"
+	    	        android:layout_gravity="center_horizontal"
+	    	        android:layout_marginTop="@dimen/px20"
+	    	        android:cacheColorHint="@color/transparent"
+	    	        android:drawSelectorOnTop="true"
+	    	        android:gravity="center_horizontal"
+	    	        android:horizontalSpacing="@dimen/px53"
+	    	        android:nextFocusDown="@id/singer_gv"
+	    	        android:nextFocusRight="@id/singer_gv"
+	    	        android:numColumns="5"
+	    	        android:paddingLeft="@dimen/px30"
+	    	        android:paddingRight="@dimen/px30"
+	    	        android:paddingTop="@dimen/px30"
+	    	        android:scrollbars="@null"
+	    	        android:verticalSpacing="@dimen/px47" />
+	    	 
+	    	</LinearLayout>
+	    </LinearLayout>
+</LinearLayout>

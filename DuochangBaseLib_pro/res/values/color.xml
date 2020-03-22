@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pay_win_bg">#4D4D4D</color>
+    <color name="white_1">#ffbbbbbb</color>
+    <color name="transparent_background">#80000000</color>
+    <color name="transparent_home_background">#50000000</color>
+    <color name="lyric_highlight_color">#ff0000ff</color>
+    <color name="lyric_preview_color">#ff787878</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="blue">#0000ff</color>
+    <color name="light_blue">#4487d2</color>
+    <color name="orange">#ee9c3f</color>
+
+    <!-- 二维码背景色 -->
+    <color name="qr_bg">#30ffffff</color>
+</resources>

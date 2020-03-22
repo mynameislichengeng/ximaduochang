@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.evideo.kmbox.widget.common.MaskFocusLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/song_menu_item_lay"
+    android:layout_width="@dimen/px554"
+    android:layout_height="wrap_content"
+    android:background="@drawable/song_menu_item_round_rect_bg"
+    android:focusable="false"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+    
+    <com.evideo.kmbox.widget.common.RoundRectImageView
+        android:id="@+id/song_menu_item_cover"
+        android:layout_width="@dimen/px194"
+        android:layout_height="@dimen/px194"
+        android:src="@drawable/song_menu_item_cover_default"
+        android:layout_gravity="left|center_vertical"
+        />
+    
+    <LinearLayout 
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="@dimen/px194"
+		android:paddingLeft="@dimen/px27"
+        android:orientation="vertical">
+        
+        <TextView 
+            android:id="@+id/song_menu_item_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/px36"
+            android:paddingRight="@dimen/px65"
+            android:paddingTop="@dimen/px51"
+            android:singleLine="true"
+		    android:ellipsize="end"
+            />
+        
+        <TextView 
+            android:id="@+id/song_menu_item_description_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_light_gray"
+            android:paddingRight="@dimen/px35"
+            android:paddingTop="@dimen/px8"
+            android:textSize="@dimen/px23"
+            android:maxLines="2"
+		    android:ellipsize="end"
+            />
+        
+    </LinearLayout>
+
+</com.evideo.kmbox.widget.common.MaskFocusLinearLayout>

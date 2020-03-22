@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/px1320"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/px24" >
+    
+    <!-- <LinearLayout 
+        android:layout_width="@dimen/status_bar_msg_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+        
+        <ImageView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_status_bar_msg"
+            />
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/status_bar_msg_text_size"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="打开手机邓丽君法律上科技的"
+            />
+        
+    </LinearLayout> -->
+    
+    <TextView
+        android:id="@+id/status_bar_msg_tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+    
+     <!-- android:textSize="@dimen/status_bar_msg_text_size" -->
+    <TextView
+        android:id="@+id/status_bar_msg_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

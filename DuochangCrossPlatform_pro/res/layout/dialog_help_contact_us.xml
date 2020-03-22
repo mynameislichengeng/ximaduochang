@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/px1200"
+    android:layout_height="@dimen/px800"
+    android:background="@drawable/toast_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/px70"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/about_qr_iv"
+            android:layout_width="220px"
+            android:layout_height="324px"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:focusable="false"
+             />
+
+        <ImageView
+            android:id="@+id/about_qq_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:layout_marginLeft="@dimen/px80"
+            android:focusable="false"
+             />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px20"
+        android:text="@string/customer_service_phone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px30" />
+
+    <TextView
+        android:id="@+id/version_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px20"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px30" />
+</LinearLayout>

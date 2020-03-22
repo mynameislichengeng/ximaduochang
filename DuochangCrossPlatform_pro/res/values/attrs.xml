@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WifiEncryptionState">
+        <attr name="state_encrypted" format="boolean" />
+    </declare-styleable>
+    
+    <declare-styleable name="Keyboard">
+        <attr name="rowNum" format="integer"></attr>
+        <attr name="columnNum" format="integer"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="Keyboard_Key">
+        <!-- The unicode value or comma-separated values that this key outputs. -->
+        <attr name="code" format="integer|string" />
+        <!-- The label to display on the key. -->
+        <attr name="keyLabel" format="string" />
+        <!-- The icon to display on the key instead of the label. -->
+        <attr name="keyIcon" format="reference" />
+        <!-- The row of the key -->
+        <attr name="keyRow" format="integer" />
+        <!-- The position of the key -->
+        <attr name="keyPosition" format="integer" />
+        <!-- The column of the key -->
+        <attr name="keyColumn" format="integer" />
+        <!-- The enable value of the key -->
+        <attr name="keyEnable" format="boolean" />
+    </declare-styleable>
+    
+    <declare-styleable name="MaskFocusView">
+        <attr name="focusPaddingLeft" format="dimension"></attr>
+        <attr name="focusPaddingRight" format="dimension"></attr>
+        <attr name="focusPaddingTop" format="dimension"></attr>
+        <attr name="focusPaddingBottom" format="dimension"></attr>
+        <attr name="selectPaddingLeft" format="dimension"></attr>
+        <attr name="selectPaddingRight" format="dimension"></attr>
+        <attr name="selectPaddingTop" format="dimension"></attr>
+        <attr name="selectPaddingBottom" format="dimension"></attr>
+        <attr name="focusFrame" format="reference|color"></attr>
+        <attr name="focusOnTop" format="boolean"></attr>
+    </declare-styleable>
+    
+    <declare-styleable name="ListMarqueeTextView">
+        <attr name="specWidth" format="dimension"></attr>
+    </declare-styleable>
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+</resources>

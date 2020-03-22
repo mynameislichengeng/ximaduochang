@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- <GridView 
+        android:id="@+id/gview"
+        android:layout_marginTop="@dimen/px180"
+        android:layout_marginLeft="@dimen/px260"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="@dimen/px400"  
+        android:gravity="center"  
+        android:horizontalSpacing="@dimen/px80"  
+        android:numColumns="3"  
+        android:stretchMode="columnWidth"  
+        android:verticalSpacing="@dimen/px80" >  
+        >
+    </GridView> -->
+    
+   <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px75"
+        android:layout_marginTop="@dimen/px170"
+        android:orientation="horizontal" >
+
+        <com.evideo.kmbox.widget.mainview.about.SingleHelpBtn
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             />
+
+        <com.evideo.kmbox.widget.mainview.about.SingleHelpBtn
+            android:id="@+id/decode_setting"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.evideo.kmbox.widget.mainview.about.SingleHelpBtn
+            android:id="@+id/db_setting"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px75"
+        android:layout_marginTop="@dimen/px10"
+        android:orientation="horizontal" >
+
+        <com.evideo.kmbox.widget.mainview.about.SingleHelpBtn
+            android:id="@+id/net_check"
+           	android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.evideo.kmbox.widget.mainview.about.SingleHelpBtn
+            android:id="@+id/problem_feedback"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.evideo.kmbox.widget.mainview.about.SingleHelpBtn
+            android:id="@+id/contact_us"
+            android:layout_marginLeft="@dimen/px20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

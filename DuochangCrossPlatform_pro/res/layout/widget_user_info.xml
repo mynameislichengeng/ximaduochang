@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+     xmlns:CircleImageView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/px930"
+    android:layout_height="@dimen/px610"
+    android:background="@drawable/user_info_bg"
+    android:layout_marginTop="@dimen/px50"
+    android:paddingLeft="@dimen/px200"
+    android:paddingRight="@dimen/px200"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+	<!-- android:background="@drawable/my_space_private_info_bg" -->
+    <com.evideo.kmbox.widget.common.CircleImageView
+            android:id="@+id/memberImage"
+            android:layout_width="@dimen/px160"
+            android:layout_height="@dimen/px160"
+            android:layout_gravity="center_horizontal"
+            CircleImageView:civ_border_color="@color/circle_image_border_gray"
+            CircleImageView:civ_border_width="@dimen/px3"
+            android:focusable="false"
+            android:src="@drawable/singer_default" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px66"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:text="@string/main_my_space_user_nickname"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px34" />
+
+        <View
+            android:layout_width="@dimen/px0"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px34" />
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px38"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:text="@string/main_my_space_user_sex_type"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px32" />
+
+        <View
+            android:layout_width="@dimen/px0"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/sex_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px32" />
+    </LinearLayout>
+
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px38"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:text="@string/main_my_space_user_birthday"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px32" />
+
+        <View
+            android:layout_width="@dimen/px0"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px32" />
+    </LinearLayout> -->
+
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px40"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:text="@string/user_info_vip_remain"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px34" />
+
+        <View
+            android:layout_width="@dimen/px0"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/vip_remain_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px34" />
+    </LinearLayout>
+<!--     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px20"
+        android:clipToPadding="false"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:text="@string/main_my_space_user_accout_bind"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px34" />
+
+        <View
+            android:layout_width="@dimen/px0"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/accout_bind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px34" />
+    </LinearLayout> -->
+
+</LinearLayout>

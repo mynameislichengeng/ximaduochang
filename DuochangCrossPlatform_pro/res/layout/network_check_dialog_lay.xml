@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/px1100"
+    android:layout_height="@dimen/px760"
+    android:background="@drawable/toast_bg"
+    android:clipChildren="false"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/setting_net_title"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px60"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px50"
+        android:text="@string/network_check_title"
+        android:textColor="@color/common_confirm_dialog_normal_text_color"
+        android:textSize="@dimen/px40" />
+
+    <com.evideo.kmbox.widget.mainview.about.NetCheckItemWidget
+        android:id="@+id/network_check_dialog_step1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px90"
+        android:layout_marginTop="@dimen/px10" />
+
+    <com.evideo.kmbox.widget.mainview.about.NetCheckItemWidget
+        android:id="@+id/network_check_dialog_step2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px90"
+        android:layout_marginTop="@dimen/px10" />
+
+  <!--   <com.evideo.kmbox.widget.mainview.about.NetCheckItemWidget
+        android:id="@+id/network_check_dialog_step3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px90"
+        android:layout_marginTop="@dimen/px10" /> -->
+
+    <com.evideo.kmbox.widget.mainview.about.NetCheckItemWidget
+        android:id="@+id/network_check_dialog_step4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px90"
+        android:layout_marginTop="@dimen/px10" />
+
+    <com.evideo.kmbox.widget.mainview.about.NetCheckItemWidget
+        android:id="@+id/network_check_dialog_step5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px90"
+        android:layout_marginTop="@dimen/px10" />
+
+    <com.evideo.kmbox.widget.mainview.about.NetCheckItemWidget
+        android:id="@+id/network_check_dialog_step6"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px90"
+        android:layout_marginTop="@dimen/px10" />
+
+    <com.evideo.kmbox.widget.mainview.about.NetCheckItemWidget
+        android:id="@+id/network_check_dialog_step7"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px50"
+        android:layout_marginLeft="@dimen/px120"
+        android:layout_marginRight="@dimen/px90"
+        android:layout_marginTop="@dimen/px10" />
+
+    <ProgressBar
+        android:id="@+id/network_check_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="@dimen/px820"
+        android:layout_height="@dimen/px15"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px20"
+        android:max="100"
+        android:maxHeight="@dimen/px0"
+        android:minHeight="@dimen/px0"
+        android:progressDrawable="@drawable/process_dialog_network_check" />
+
+    <TextView
+        android:id="@+id/network_check_title_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/px20"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px28"
+        android:visibility="visible" />
+
+    <com.evideo.kmbox.widget.common.MaskFocusButton
+        android:id="@+id/network_check_commit"
+        android:layout_width="@dimen/px500"
+        android:layout_height="@dimen/px80"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/px30"
+        MaskFocusView:focusPaddingBottom="@dimen/px18"
+        MaskFocusView:focusPaddingLeft="@dimen/px18"
+        MaskFocusView:focusPaddingRight="@dimen/px18"
+        MaskFocusView:focusPaddingTop="@dimen/px18"
+        android:background="@drawable/search_abc_bg"
+        android:focusable="true"
+        android:paddingLeft="@dimen/px23"
+        android:paddingRight="@dimen/px23"
+        android:text="@string/network_check_start_check"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/px30" />
+
+</LinearLayout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/data_loading_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            style="@android:style/Widget.ProgressBar.Large.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+     <!--    <ImageView 
+            android:id="@+id/loadingIv"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="center"
+        	android:background="@drawable/loading_anim" /> -->
+
+        <TextView
+            android:id="@+id/data_loading_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px30"
+            android:text="@string/data_loading_string"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px40" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/data_retry_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/data_load_error_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_loading_data"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px40" />
+
+        <com.evideo.kmbox.widget.common.MaskFocusButton
+            android:id="@+id/retry_btn"
+            android:layout_width="@dimen/px274"
+            android:layout_height="@dimen/px72"
+            android:layout_marginTop="@dimen/px40"
+            MaskFocusView:focusPaddingBottom="@dimen/px18"
+            MaskFocusView:focusPaddingLeft="@dimen/px18"
+            MaskFocusView:focusPaddingRight="@dimen/px18"
+            MaskFocusView:focusPaddingTop="@dimen/px18"
+            android:background="@drawable/search_abc_bg"
+            android:focusable="true"
+            android:paddingLeft="@dimen/px23"
+            android:paddingRight="@dimen/px23"
+            android:text="@string/retry_get_data"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/px36" />
+    </LinearLayout>
+
+</FrameLayout>

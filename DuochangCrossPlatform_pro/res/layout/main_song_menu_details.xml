@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px750"
+    android:layout_marginTop="@dimen/px160"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/song_menu_details_item_lay"
+        android:layout_width="@dimen/px500"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/px60"
+        android:orientation="vertical" >
+
+        <com.evideo.kmbox.widget.mainview.BreadCrumbsWidget
+            android:id="@+id/song_menu_details_crumb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
+
+        <com.evideo.kmbox.widget.common.RoundRectImageView
+            android:id="@+id/song_menu_details_item_cover"
+            android:layout_width="@dimen/px489"
+            android:layout_height="@dimen/px267"
+            android:layout_marginTop="@dimen/px80"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/song_menu_cover_default_big" />
+
+        <TextView
+            android:id="@+id/song_menu_details_item_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px60"
+            android:ellipsize="marquee"
+            android:gravity="left"
+            android:singleLine="true"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/px39" />
+
+        <TextView
+            android:id="@+id/song_menu_details_item_description_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px10"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:lines="2"
+            android:maxLines="3"
+            android:textColor="@color/text_light_gray"
+            android:textSize="@dimen/px29" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="@dimen/px1300"
+        android:layout_height="match_parent" >
+
+         <com.evideo.kmbox.widget.common.AnimLoadingView
+            android:id="@+id/song_menu_details_loading_widget"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:gravity="center" />
+         
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px40"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/songmenu_total_song_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px50"
+                android:textSize="@dimen/px34" />
+
+            <com.evideo.kmbox.widget.common.SongListView
+                android:id="@+id/song_menu_details_lv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px650"
+                android:drawSelectorOnTop="true"
+                android:nextFocusDown="@id/song_menu_details_lv"
+                android:paddingLeft="@dimen/px20"
+                android:paddingRight="@dimen/px60"
+                android:paddingTop="@dimen/px20"
+                android:scrollbars="@null" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

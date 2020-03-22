@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/px900"
+    android:layout_height="@dimen/px195"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:layout_width="@dimen/px900"
+        android:layout_height="@dimen/px195"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        
+        <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px30"
+            android:text="@string/volumectrl_music"
+            />
+        
+        <SeekBar 
+            android:id="@+id/dialog_volumebar_music_seekbar"
+            android:layout_width="@dimen/px475"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/volume_ctrl_sb_progress_drawable"
+            android:thumb="@drawable/volume_ctrl_sb_thumb"
+            android:minHeight="@dimen/px15"
+            android:maxHeight="@dimen/px15"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px23"
+            />
+        
+        <TextView 
+            android:id="@+id/dialog_volumebar_music_current_value"
+	        android:layout_width="@dimen/px45"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:textColor="@color/text_blue"
+	        android:textSize="@dimen/px40"
+            />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/px1161"
+    android:layout_height="match_parent"
+    android:background="@drawable/mv_selected_list_bg" >
+    
+     <com.evideo.kmbox.widget.common.MaskFocusTextView 
+        android:id="@+id/mv_selected_num_tv"
+        android:layout_width="@dimen/px150"
+        android:layout_height="@dimen/px60"
+        android:textSize="@dimen/px36"
+        android:textColor="@color/white"
+        android:text="@string/playctrl_play_list"
+        android:gravity="center"
+        android:focusable="false"
+        android:layout_marginLeft="@dimen/px555"
+        android:layout_marginTop="@dimen/px75"
+        MaskFocusView:focusPaddingLeft="@dimen/px18"
+		MaskFocusView:focusPaddingRight="@dimen/px18"
+		MaskFocusView:focusPaddingTop="@dimen/px18"
+		MaskFocusView:focusPaddingBottom="@dimen/px18"
+        />
+    
+    <com.evideo.kmbox.widget.mv.selected.MvSelectedListView
+        android:id="@+id/mv_selected_list"
+        android:layout_width="@dimen/px672"
+        android:layout_height="@dimen/px675"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/px143"
+        android:scrollbars="@null"
+        />
+    
+    <ImageView 
+        android:id="@+id/mv_selected_empty_hint_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/px104"
+        android:layout_marginTop="@dimen/px260"
+        android:src="@drawable/mv_selected_empty_hint"
+        />
+    
+    
+</FrameLayout>

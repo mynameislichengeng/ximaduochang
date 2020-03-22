@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/search_key_board_bg"
+    android:orientation="vertical" >
+   
+        <com.evideo.kmbox.widget.mainview.BreadCrumbsWidget
+	        android:id="@+id/main_singer_title_crumb"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="@dimen/px66"
+	        android:gravity="center"
+	        />
+          
+        <TextView
+            android:id="@+id/order_song_search_tv"
+            android:layout_width="@dimen/px590"
+            android:layout_height="@dimen/px90"
+            android:layout_marginLeft="@dimen/px66"
+            android:layout_marginTop="@dimen/px20"
+            android:background="@drawable/search_content_bg"
+            android:gravity="left|center_vertical"
+            android:hint="@string/singer_view_search_by_spell"
+            android:paddingLeft="@dimen/px18"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_alpha_gray"
+            android:maxLength="20"
+            android:textSize="@dimen/px39" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/px15"
+            android:paddingTop="@dimen/px30" >
+
+            <com.evideo.kmbox.widget.common.MaskFocusButton
+                android:id="@+id/order_song_keyboard_switcher_btn"
+                android:layout_width="@dimen/px170"
+                android:layout_height="@dimen/px70"
+                android:layout_marginLeft="@dimen/px66"
+                MaskFocusView:focusPaddingBottom="@dimen/px18"
+                MaskFocusView:focusPaddingLeft="@dimen/px21"
+                MaskFocusView:focusPaddingRight="@dimen/px21"
+                MaskFocusView:focusPaddingTop="@dimen/px21"
+                android:background="@drawable/search_abc_bg"
+                android:gravity="center"
+                android:text="@string/keyboard_in_123"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/px35" />
+
+            <com.evideo.kmbox.widget.common.MaskFocusButton
+                android:id="@+id/order_song_clean_btn"
+                android:layout_width="@dimen/px170"
+                android:layout_height="@dimen/px70"
+                android:layout_marginLeft="@dimen/px30"
+                MaskFocusView:focusPaddingBottom="@dimen/px18"
+                MaskFocusView:focusPaddingLeft="@dimen/px21"
+                MaskFocusView:focusPaddingRight="@dimen/px21"
+                MaskFocusView:focusPaddingTop="@dimen/px21"
+                android:background="@drawable/search_clear_bg"
+                android:gravity="center"
+                android:text="@string/clean"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/px35" />
+
+            <com.evideo.kmbox.widget.common.MaskFocusButton
+                android:id="@+id/order_song_delete_btn"
+                android:layout_width="@dimen/px170"
+                android:layout_height="@dimen/px70"
+                android:layout_marginLeft="@dimen/px30"
+                MaskFocusView:focusPaddingBottom="@dimen/px18"
+                MaskFocusView:focusPaddingLeft="@dimen/px21"
+                MaskFocusView:focusPaddingRight="@dimen/px21"
+                MaskFocusView:focusPaddingTop="@dimen/px21"
+                android:background="@drawable/search_delete_bg"
+                android:gravity="center"
+                android:text="@string/delete"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/px35" />
+        </LinearLayout>
+
+        <com.evideo.kmbox.widget.common.SearchKeyboardView
+            android:id="@+id/order_song_keyboard_gv"
+            android:layout_width="@dimen/px590"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clipChildren="false"
+            android:horizontalSpacing="@dimen/px20" />
+
+</LinearLayout>

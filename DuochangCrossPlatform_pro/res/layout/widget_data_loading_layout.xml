@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:id="@+id/data_loading_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:gravity="center"
+	    android:orientation="vertical" >
+	    <ProgressBar 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        style="@android:style/Widget.ProgressBar.Inverse"
+	        />
+	    
+	    <TextView 
+	        android:id="@+id/data_loading_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="@dimen/main_menu_loading_text_margin_top"
+	        android:textSize="@dimen/main_menu_loading_text_size"
+	        android:textColor="@color/white"
+	        android:text="@string/data_loading_string"
+	        />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/data_load_error_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/error_loading_data"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/px38"
+        android:visibility="gone" />
+    
+</FrameLayout>

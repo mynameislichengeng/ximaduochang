@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="@dimen/px70"
+    android:paddingTop="@dimen/px10"
+    android:clipChildren="false"
+    android:orientation="vertical" >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/px15"
+        android:shrinkColumns="0,1,2,3,4,5,6,7,8"
+        android:stretchColumns="0,1,2,3,4,5,6,7,8"
+        android:orientation="vertical"
+        >
+
+        <TableRow
+            android:id="@+id/search_keyword_row1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:focusable="true"
+            android:nextFocusRight="@id/search_keyword_row1"
+             >
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:layout_marginTop="@dimen/px20"
+        android:layout_gravity="center_horizontal|bottom"
+        android:shrinkColumns="0,1,2,3,4,5,6,7,8"
+        android:stretchColumns="0,1,2,3,4,5,6,7,8"
+        android:orientation="vertical"
+        >
+
+        <TableRow
+            android:id="@+id/search_keyword_row2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:focusable="true"
+            android:nextFocusRight="@id/search_keyword_row2"
+             >
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

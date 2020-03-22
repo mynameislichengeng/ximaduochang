@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/kmosdtvlay"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center" >
+    
+	<ImageView 
+        android:id="@+id/osdimageplayctrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       	android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/px294"/>   
+        
+	<ImageView 
+        android:id="@+id/osdimageplayctrl_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       	android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/px294"/>  
+    
+    <RelativeLayout 
+        android:id="@+id/blesslay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.65"   
+        android:scaleY="0.57"   
+        android:alpha="0.65"  
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/px68">    
+        <ImageView 
+            android:id="@+id/blesserpic"
+			android:layout_width="@dimen/px195"
+			android:layout_height="@dimen/px195"
+			android:scaleType="fitXY"
+		    android:layout_marginLeft="@dimen/px23"
+	        android:layout_marginTop="@dimen/px72"
+            />
+        
+	    <TextView 
+	        android:id="@+id/blessername"
+	        android:layout_width="@dimen/px150"
+	        android:layout_height="@dimen/px48"
+	        android:singleLine="true"
+	        android:textSize="@dimen/px42"
+	        android:ellipsize="marquee"
+	        android:width="@dimen/px147"
+	        android:gravity="center"
+	        android:textColor="@color/white"
+	        android:layout_marginLeft="@dimen/px47"
+	        android:layout_marginTop="@dimen/px270"
+	        />
+	    
+	    <TextView 
+	        android:id="@+id/blesstext"
+	        android:layout_width="@dimen/px1136"
+	        android:layout_height="@dimen/px240"
+       		android:textColor="@color/white"
+       		android:textSize="@dimen/px98"
+	        android:layout_marginLeft="@dimen/px419"
+	        android:gravity="center_vertical"
+	        android:singleLine="true"
+	        android:ellipsize="marquee"
+	        android:layout_marginTop="@dimen/px75"/>
+	    
+    </RelativeLayout>
+    
+	<RelativeLayout 
+        android:id="@+id/cutsong_ordinary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/px68">   
+        <!-- android:background="@drawable/next1" -->
+	    <ImageView 
+	        android:id="@+id/songCover"
+	        android:layout_width="@dimen/px279"
+	        android:layout_height="@dimen/px278"
+	        android:layout_marginLeft="@dimen/px114"
+	        android:layout_marginTop="@dimen/px98"
+	        android:scaleType="centerCrop"
+	        />
+    
+	    <ImageView 
+	        android:id="@+id/scoreicon"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="@dimen/px75"
+	        android:layout_marginTop="@dimen/px86"
+	        />
+	    
+	    <TextView 
+	        android:id="@+id/songtext"
+	        android:layout_width="wrap_content"
+	        android:layout_height="@dimen/px105"
+	        android:width="@dimen/px465"
+	        android:height="@dimen/px105"
+	        android:textColor="@color/white"
+	        android:layout_marginLeft="@dimen/px450"
+	        android:layout_marginTop="@dimen/px135"
+	        android:gravity="center_vertical"
+	        android:ellipsize="marquee"
+	        android:singleLine="true"
+	        />
+	    
+	    <LinearLayout 
+	        android:layout_width="@dimen/px500"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="@dimen/px450"
+	        android:layout_marginTop="@dimen/px270"
+	        android:gravity="center_vertical"
+	        >
+	        <TextView 
+	            android:id="@+id/singertext"
+ 				android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_vertical"
+		        android:singleLine="true"
+		        android:textSize="@dimen/px30"
+		        android:textColor="@color/white"
+		        android:maxWidth="@dimen/px280"
+	            />
+	        
+	        <TextView 
+	            android:id="@+id/loadprocess"
+	            android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_vertical"
+		        android:singleLine="true"
+		        android:textColor="@color/white"
+		        android:textSize="@dimen/px30"
+		        android:layout_marginLeft="@dimen/px30"
+	            />
+	        
+	    </LinearLayout>
+	    
+    </RelativeLayout>
+    
+
+    
+	<RelativeLayout 
+        android:id="@+id/tftplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/px75">    
+          <!-- android:background="@drawable/osd_local_picbg" -->
+        <ImageView 
+            android:id="@+id/tftppic"
+			android:layout_width="@dimen/px480"
+			android:layout_height="@dimen/px480"
+		    android:layout_marginLeft="@dimen/px20"
+	        android:layout_marginTop="@dimen/px18"
+	        android:scaleType="fitXY"
+	        android:adjustViewBounds="true"
+            />
+        
+		<com.evideo.kmbox.widget.common.RoundImageView 
+            android:id="@+id/memberpic"
+			android:layout_width="@dimen/px98"
+			android:layout_height="@dimen/px98"
+			android:scaleType="fitXY"
+		    android:layout_marginLeft="@dimen/px60"
+	        android:layout_marginTop="@dimen/px504"
+            />
+        
+	    <TextView 
+	        android:id="@+id/tftpname"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:singleLine="true"
+	        android:textSize="@dimen/px42"
+	        android:ellipsize="marquee"
+	        android:width="@dimen/px270"
+	        android:gravity="center"
+	        android:textColor="@color/black"
+	        android:layout_marginLeft="@dimen/px188"
+	        android:layout_marginTop="@dimen/px525"
+	        />
+	    	    
+    </RelativeLayout>
+	
+    
+</FrameLayout>

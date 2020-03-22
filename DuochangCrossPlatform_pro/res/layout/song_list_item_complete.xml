@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/song_list_qr_lay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="@dimen/px819"
+        android:layout_height="@dimen/px410"
+        android:layout_marginTop="@dimen/px30"
+        android:background="@drawable/song_list_qr_frame"
+        android:visibility="gone"
+        android:orientation="horizontal" >
+
+        <com.evideo.kmbox.widget.mainmenu.order.BindCodeQrView
+            android:id="@+id/song_list_item_foot_qr"
+            android:layout_width="@dimen/px260"
+            android:layout_height="@dimen/px260"
+            android:layout_marginLeft="@dimen/px77"
+            android:layout_marginTop="@dimen/px79" >
+        </com.evideo.kmbox.widget.mainmenu.order.BindCodeQrView>
+
+        <TextView
+            android:id="@+id/song_list_item_foot_qrhint_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px125"
+            android:layout_marginTop="@dimen/px200"
+            android:lineSpacingExtra="@dimen/px20"
+            android:singleLine="false"
+            android:text="@string/loading_song"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px24" />
+    </LinearLayout>
+
+</LinearLayout>

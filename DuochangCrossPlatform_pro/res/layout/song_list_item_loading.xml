@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/song_list_item_loading_lay_padding_left" >
+
+    <ProgressBar
+        android:id="@+id/song_list_item_foot_pb"
+        style="@android:style/Widget.ProgressBar.Small.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/song_list_item_loading_pb_margin_right" />
+    <TextView
+            android:id="@+id/song_list_item_foot_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/song_list_item_loading_height"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="@string/loading_song"
+            android:textColor="@color/gray_singer"
+            android:textSize="@dimen/song_list_item_loading_text" />
+</LinearLayout>

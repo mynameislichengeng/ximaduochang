@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/px1300"
+    android:layout_height="@dimen/px800"
+    android:id="@+id/activity_dialog_bg"
+    android:orientation="horizontal"
+    >
+
+    <!-- <ImageView
+         android:id="@+id/activity_left_btn"
+         android:layout_width="@dimen/px97"
+         android:layout_height="@dimen/px160"
+         android:layout_gravity="center_vertical"
+         android:focusable="false"
+        /> -->
+    <ImageSwitcher
+        android:id="@+id/activity_dialog_imageswitcher"  
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >  
+    </ImageSwitcher>  
+      
+    <LinearLayout      
+        android:id="@+id/viewGroup"      
+        android:layout_width="fill_parent"      
+        android:layout_height="wrap_content"      
+        android:layout_marginTop="@dimen/px720"      
+        android:gravity="center_horizontal"      
+        android:orientation="horizontal" >      
+    </LinearLayout>      
+    <!-- <ImageView
+         android:layout_marginLeft="@dimen/px53"
+         android:id="@+id/activity_right_btn"
+         android:layout_width="@dimen/px97"
+         android:layout_height="@dimen/px160"
+         android:layout_gravity="center_vertical"
+         android:focusable="false"
+        /> -->
+</FrameLayout>

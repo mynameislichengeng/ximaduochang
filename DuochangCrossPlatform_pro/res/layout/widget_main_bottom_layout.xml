@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+   <!--  android:clipChildren="false"
+	android:clipToPadding="false" -->
+	<!-- <com.evideo.kmbox.widget.common.MaskFocusAnimImageView 
+         android:id="@+id/small_mv_frame"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:src="@drawable/small_mv_bg"
+         android:focusable="true"
+         android:layout_marginTop="@dimen/px15"
+         android:layout_marginLeft="@dimen/px15"
+         MaskFocusView:focusFrame="@drawable/small_mv_bg_focus"
+         MaskFocusView:focusOnTop="false"
+         MaskFocusView:focusPaddingLeft="@dimen/px18"
+   		 MaskFocusView:focusPaddingRight="@dimen/px18"
+		 MaskFocusView:focusPaddingTop="@dimen/px18"
+   		 MaskFocusView:focusPaddingBottom="@dimen/px18"
+        /> -->
+    <ImageView
+         android:id="@+id/small_mv_frame"
+         android:layout_width="@dimen/px354"
+         android:layout_height="@dimen/px214"
+         android:layout_alignParentLeft="true"
+         android:layout_marginTop="@dimen/px8"
+         android:layout_marginLeft="@dimen/px6"
+         android:focusable="true"
+        /> 
+        <!-- android:src="@drawable/small_mv_bg" -->
+    <TextView 
+        android:id="@+id/home_page_current_song_tv"
+        android:layout_width="@dimen/px800"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px90"
+        android:layout_marginLeft="@dimen/px400"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px30"
+        />
+        
+     <com.evideo.kmbox.widget.ButtomMsgView
+         android:id="@+id/home_page_bottom_msg_view"
+         android:layout_width="@dimen/px160"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_marginTop="@dimen/px70"
+         android:layout_marginRight="@dimen/px340"
+         android:gravity="center_vertical"
+         android:visibility="gone"
+         />
+     
+     <!-- android:layout_width="@dimen/px340" -->
+
+     
+     <ImageView
+	    android:id="@+id/home_page_liantong_qr"
+	    android:layout_width="@dimen/px340"
+        android:layout_height="@dimen/px151" 
+        android:layout_marginLeft="@dimen/px1180"
+        android:layout_marginTop="@dimen/px20"
+        android:visibility="gone"
+        />
+     
+     <ImageView 
+        android:id="@+id/home_page_bottom_mv_keycode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/px70"
+        android:layout_marginRight="@dimen/px92"
+         android:visibility="gone"
+        android:src="@drawable/remote_control_switch_mv"
+        />
+    
+</RelativeLayout>

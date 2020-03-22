@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/px160"
+    android:clipChildren="false"
+    android:clipToPadding="true"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="@dimen/px405"
+        android:layout_height="match_parent"
+        android:background="@drawable/my_space_tab_bg"
+        android:clipChildren="false"
+        android:clipToPadding="true"
+        android:orientation="vertical" >
+
+        <!--
+        <com.evideo.kmbox.widget.common.CircleImageView
+            android:id="@+id/memberImage"
+            android:layout_width="@dimen/px130"
+            android:layout_height="@dimen/px130"
+            android:layout_marginTop="@dimen/px5"
+            android:layout_gravity="center_horizontal"
+            CircleImageView:civ_border_color="@color/circle_image_border_gray"
+            CircleImageView:civ_border_width="@dimen/px3"
+            android:focusable="true"
+            android:src="@drawable/singer_default" />
+ 		  <TextView
+            android:id="@+id/memberName"
+            android:text="123456"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/px10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:focusable="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/px38" >
+        </TextView>
+        -->
+
+        <GridView
+            android:id="@+id/main_view_my_space_gv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px100"
+            android:cacheColorHint="@color/transparent"
+            android:clickable="true"
+            android:drawSelectorOnTop="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/px43"
+            android:listSelector="@color/transparent"
+            android:numColumns="1"
+            android:scrollbars="@null"
+            android:verticalSpacing="@dimen/px17"
+            android:visibility="visible" />
+
+        <!--
+             <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/px150"
+            android:src="@drawable/user_center_slogan" />
+        -->
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/login_rect"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/selected_list_rect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px80"
+                android:id="@+id/selected_title"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/px30" />
+
+            <com.evideo.kmbox.widget.mainview.selected.SelectedListView
+                android:id="@+id/my_song_selected_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px600"
+                android:layout_marginLeft="@dimen/px60"
+                android:layout_marginRight="@dimen/px120"
+                android:layout_marginTop="@dimen/px20"
+                android:scrollbars="@null" />
+
+            <!-- <ImageView
+                android:id="@+id/selected_empty_hint_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/px100" /> -->
+             <TextView
+                android:id="@+id/selected_empty_hint_tv"
+                android:layout_width="@dimen/px1400"
+                android:layout_height="@dimen/px600"
+                android:text="@string/user_center_no_select_data"
+                android:textSize="@dimen/px50"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sung_list_rect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px80"
+                android:text="@string/main_my_space_sung_list_header_hint"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/px30" />
+
+            <com.evideo.kmbox.widget.mainview.usercenter.UserCenterSungListView
+                android:id="@+id/my_song_sung_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px600"
+                android:layout_marginLeft="@dimen/px60"
+                android:layout_marginRight="@dimen/px120"
+                android:layout_marginTop="@dimen/px20"
+                android:scrollbars="@null" />
+
+            <TextView
+                android:id="@+id/sung_empty_hint_tv"
+                android:layout_width="@dimen/px1400"
+                android:layout_height="@dimen/px600"
+                android:text="@string/user_center_no_sung_data"
+                android:textSize="@dimen/px50"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/favorite_list_rect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/favorite_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px80"
+                android:text="@string/tip_favorite_num"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/px30" />
+
+            <com.evideo.kmbox.widget.common.FavoriteListView
+                android:id="@+id/favorite_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px600"
+                android:layout_marginLeft="@dimen/px60"
+                android:layout_marginRight="@dimen/px120"
+                android:layout_marginTop="@dimen/px20"
+                android:focusable="true"
+                android:scrollbars="@null" />
+
+            <TextView
+                android:id="@+id/favorite_empty_hint_tv"
+                android:layout_width="@dimen/px1400"
+                android:layout_height="@dimen/px600"
+                android:text="@string/user_center_no_favorite_data"
+                android:textSize="@dimen/px50"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:visibility="gone"
+                />
+            
+            <!-- <ImageView
+                android:id="@+id/favorite_empty_hint_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px200"
+                android:layout_marginTop="@dimen/px100"
+                android:visibility="gone" /> -->
+        </LinearLayout>
+  		<com.evideo.kmbox.widget.common.LoadingAndRetryWidget
+            android:id="@+id/cloud_favorite_loading_widget"
+            android:layout_width="@dimen/px1400"
+            android:layout_height="@dimen/px750"
+            android:visibility="gone"
+            />
+        <!--
+        <LinearLayout
+            android:id="@+id/cloud_records_list_rect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+  			<com.evideo.kmbox.widget.DataLoadingWidget
+	            android:id="@+id/cloud_record_loading_widget"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_marginTop="@dimen/px50"
+	            android:visibility="gone"
+	            android:gravity="center" />
+            <com.evideo.kmbox.widget.mainview.myspace.CloudRecordListView
+                android:id="@+id/cloud_records_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px600"
+                android:layout_marginLeft="@dimen/px60"
+                android:layout_marginRight="@dimen/px120"
+                android:layout_marginTop="@dimen/px20"
+                android:scrollbars="@null" />
+
+            <ImageView
+                android:id="@+id/cloud_records_empty_hint_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cloud" />
+        </LinearLayout>
+        -->
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/px150"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <TextView 
+        android:id="@+id/selected_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px39"
+        android:text="@string/tip_favorite_num"
+        android:layout_marginLeft="@dimen/px80"
+        />
+    
+    <com.evideo.kmbox.widget.mainview.selected.SelectedListView 
+        android:id="@+id/selected_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px600"
+        android:layout_marginTop="@dimen/px70"
+        android:layout_marginLeft="@dimen/px70"
+        android:layout_marginRight="@dimen/px120"
+        android:scrollbars="@null"
+        />
+    
+       <ImageView 
+        android:id="@+id/selected_empty_hint_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px770"
+        android:layout_marginTop="@dimen/px340"
+        />
+
+</FrameLayout>

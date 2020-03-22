@@ -1,0 +1,4 @@
+include ':ChargeProxy'
+include ':DuochangCrossPlatform_pro'
+include ':DuochangBaseLib_pro'
+include ':VLCPlayerLib'
