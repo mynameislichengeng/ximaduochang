@@ -217,9 +217,12 @@ public class SongMenuDetailsView extends AbsBaseView
                 if (itemState == SongListView.ITEM_STATE_NORMAL) {
 //                    orderSongDelayed(song, false);
                     SongOperationManager.getInstance().orderSong(song.getId(), SongMenuDetailsView.this);
-
+                    selectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_TOP) {
                     SongOperationManager.getInstance().topSong(song.getId(), SongMenuDetailsView.this);
+
+                    mListView.restoreUi();
+                    selectItem(parent, view, position, id);
 
                 } else if (itemState == SongListView.ITEM_STATE_FAVORITE) {
 
@@ -227,10 +230,16 @@ public class SongMenuDetailsView extends AbsBaseView
                         if (FavoriteListManager.getInstance().delSong(song.getId())) {
                             onUmengAgentFavoriteSong(false);
                         }
+
+                        mListView.restoreUi();
+                        selectItem(parent, view, position, id);
                         return;
                     } else if (FavoriteListManager.getInstance().addSong(song.getId())) {
 //                        mListView.startFavoriteAnimnation(position);
                         onUmengAgentFavoriteSong(true);
+
+                        mListView.restoreUi();
+                        selectItem(parent, view, position, id);
                         return;
                     }
                 }
@@ -243,26 +252,9 @@ public class SongMenuDetailsView extends AbsBaseView
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
+                Log.d("gsp", TAG + ">>onItemSelected---");
+                selectItem(parent, view, position, id);
 
-                Song item = (Song) parent.getAdapter().getItem(position);
-                if (item == null) {
-                    return;
-                }
-
-                if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
-                    mListView.highlightFavoriteIcon();
-                } else {
-                    mListView.restoreFavoriteIcon();
-                }
-
-//                updateSeekBar(position);
-                if (mDatas.size() >= mTotalNum) {
-                    return;
-                }
-                if (position <= (mAdapter.getCount() - 1)
-                        && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
-                    SongMenuDetailManager.getInstace().loadNextPage();
-                }
             }
 
             @Override
@@ -317,6 +309,35 @@ public class SongMenuDetailsView extends AbsBaseView
 //        mSeekBar.setVisibility(View.GONE); 
 
         mTotalNumTv = (TextView) findViewById(R.id.songmenu_total_song_num);
+    }
+
+
+    private void selectItem(AdapterView<?> parent, View view,
+                            int position, long id) {
+        try {
+            Thread.sleep(5);
+        } catch (Exception e) {
+
+        }
+        Song item = (Song) parent.getAdapter().getItem(position);
+        if (item == null) {
+            return;
+        }
+
+        if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
+            mListView.highlightFavoriteIcon();
+        } else {
+            mListView.restoreFavoriteIcon();
+        }
+
+//                updateSeekBar(position);
+        if (mDatas.size() >= mTotalNum) {
+            return;
+        }
+        if (position <= (mAdapter.getCount() - 1)
+                && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
+            SongMenuDetailManager.getInstace().loadNextPage();
+        }
     }
 
 

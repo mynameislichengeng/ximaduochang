@@ -20,6 +20,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.evideo.kmbox.R;
+import com.evideo.kmbox.data.TouchEventManager;
+import com.evideo.kmbox.model.touch.TouchPostionParam;
 import com.evideo.kmbox.util.EvLog;
 import com.evideo.kmbox.widget.mainmenu.order.BindCodeQrView;
 
@@ -75,6 +77,10 @@ public class SongListView extends ListView implements android.widget.AdapterView
     private int mTvLayoutPaddingBottom;
 
     private int mClickItemPos = -1;
+
+    private TouchPostionParam topTouchPostionParam;//置顶按钮的位置
+    private TouchPostionParam favoriteTouchPostionParam;//搜查按钮位置
+
 
     public void resetState() {
         mItemState = ITEM_STATE_NORMAL;
@@ -222,33 +228,44 @@ public class SongListView extends ListView implements android.widget.AdapterView
     }
 
     private void drawNormalSelector(Canvas canvas) {
-        if (mItemState == ITEM_STATE_NORMAL) {
+//        if (mItemState == ITEM_STATE_NORMAL) {
             final Drawable selector = mFocusFrame;
             selector.setBounds(mListSelectorRect.left - mTvLayoutPaddingLeft,
                     mListSelectorRect.top - mTvLayoutPaddingTop,
                     mListSelectorRect.right - mIconSideLen * 2 - mTvLayoutPaddingRight,
                     mListSelectorRect.bottom + mTvLayoutPaddingBottom);
             selector.draw(canvas);
-        }
+//        }
     }
 
     private void drawFavoriteIcon(Canvas canvas) {
         if (!isFocused()) {
             return;
         }
+        int moveLeft = mIconSideLen + mIconIntrSideLen + mIconSideLen;
         int left = mListSelectorRect.right - (mIconSideLen + mIconIntrSideLen) / 2;
+        left = left - moveLeft;
         int right = mListSelectorRect.right - (mIconSideLen - mIconIntrSideLen) / 2;
+        right = right - moveLeft;
         int top = (mListSelectorRect.top + mListSelectorRect.bottom - mIconIntrSideLen) / 2;
         int bottom = (mListSelectorRect.top + mListSelectorRect.bottom + mIconIntrSideLen) / 2;
         // 自己注释掉
-//        favoriteLeft = left;
+
         final Drawable favoriteIcon = mFavoriteIcon;
         favoriteIcon.setBounds(left, top, right, bottom);
         favoriteIcon.draw(canvas);
 
+        favoriteTouchPostionParam = new TouchPostionParam();
+        favoriteTouchPostionParam.setLeft(left);
+        favoriteTouchPostionParam.setRight(right);
+        favoriteTouchPostionParam.setUp(top);
+        favoriteTouchPostionParam.setDown(bottom);
+
         if (mItemState == ITEM_STATE_FAVORITE) {
             left = mListSelectorRect.right - mIconSideLen - mIconFocusPadding;
+            left = left - moveLeft;
             right = mListSelectorRect.right + mIconFocusPadding;
+            right = right - moveLeft;
             top = (mListSelectorRect.top + mListSelectorRect.bottom - mIconSideLen) / 2 - mIconFocusPadding;
             bottom = (mListSelectorRect.top + mListSelectorRect.bottom + mIconSideLen) / 2 + mIconFocusPadding;
             final Drawable facoriteIconFocusFrame = mFocusFrame;
@@ -257,8 +274,6 @@ public class SongListView extends ListView implements android.widget.AdapterView
         }
     }
 
-
-    private int selectorLeft;
 
     /**
      * [描绘顶歌图标]
@@ -269,19 +284,30 @@ public class SongListView extends ListView implements android.widget.AdapterView
         if (!isFocused()) {
             return;
         }
-
+        int moveLeft = (mIconSideLen + mIconIntrSideLen) + mIconSideLen;
         int left = mListSelectorRect.right - (mIconSideLen + mIconIntrSideLen) / 2 - mIconSideLen;
+        left = left - moveLeft;
         int right = mListSelectorRect.right - (mIconSideLen - mIconIntrSideLen) / 2 - mIconSideLen;
+        right = right - moveLeft;
         int top = (mListSelectorRect.top + mListSelectorRect.bottom - mIconIntrSideLen) / 2;
         int bottom = (mListSelectorRect.top + mListSelectorRect.bottom + mIconIntrSideLen) / 2;
         final Drawable topIcon = mTopIcon;
         topIcon.setBounds(left, top, right, bottom);
         topIcon.draw(canvas);
-        // 自己写的注释掉
-//        selectorLeft = left;
+
+        topTouchPostionParam = new TouchPostionParam();
+        topTouchPostionParam.setLeft(left);
+        topTouchPostionParam.setRight(right);
+        topTouchPostionParam.setUp(top);
+        topTouchPostionParam.setDown(bottom);
+
+//        log("top-position置顶按钮位置: left: " + left + ", top: " + top + ", right: " + right + ", bottom: " + bottom);
+
         if (mItemState == ITEM_STATE_TOP) {
             left = mListSelectorRect.right - mIconSideLen * 2 - mIconFocusPadding;
+            left = left - moveLeft;
             right = mListSelectorRect.right - mIconSideLen + mIconFocusPadding;
+            right = right - moveLeft;
             top = (mListSelectorRect.top + mListSelectorRect.bottom - mIconSideLen) / 2 - mIconFocusPadding;
             bottom = (mListSelectorRect.top + mListSelectorRect.bottom + mIconSideLen) / 2 + mIconFocusPadding;
             final Drawable topIconFocusFrame = mFocusFrame;
@@ -289,6 +315,45 @@ public class SongListView extends ListView implements android.widget.AdapterView
             topIconFocusFrame.draw(canvas);
         }
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+
+        switch (ev.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+//                log("onTouchEvent(MotionEvent ev)---MotionEvent.ACTION_DOWN");
+                float x = ev.getX();
+                float y = ev.getY();
+//                log("onTouchEvent(MotionEvent ev)---position-down位置--x: " + x + ", y:" + y);
+                if (TouchEventManager.isTouchCommon(topTouchPostionParam, ev)) {
+                    log("\n----选择了----topButton置顶按钮--\n");
+                    if (mItemState != ITEM_STATE_TOP) {
+                        mItemState = ITEM_STATE_TOP;
+                        invalidate();
+                        return true;
+                    }
+                } else if (TouchEventManager.isTouchCommon(favoriteTouchPostionParam, ev)) {
+                    log("\n----选择了----favoriteButton按钮\n");
+                    if (mItemState != ITEM_STATE_FAVORITE) {
+                        mItemState = ITEM_STATE_FAVORITE;
+                        invalidate();
+                        return true;
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+//                log("onTouchEvent(MotionEvent ev)---MotionEvent.ACTION_MOVE");
+                break;
+            case MotionEvent.ACTION_UP:
+//                log("onTouchEvent(MotionEvent ev)---MotionEvent.ACTION_UP");
+                break;
+            default:
+                break;
+        }
+        return super.onTouchEvent(ev);
+    }
+
     //  自己写的  先注释掉
 
 //    @Override
@@ -313,7 +378,7 @@ public class SongListView extends ListView implements android.widget.AdapterView
      */
     public void highlightFavoriteIcon() {
         mFavoriteIcon = getResources().getDrawable(R.drawable.ic_favorite_hl);
-        Log.i("gsp", "highlightFavoriteIcon: 显示收藏坐标    ");
+        Log.i("gsp", TAG + ">>highlightFavoriteIcon()");
         invalidate();
     }
 
@@ -322,21 +387,27 @@ public class SongListView extends ListView implements android.widget.AdapterView
      */
     public void restoreFavoriteIcon() {
         mFavoriteIcon = getResources().getDrawable(R.drawable.ic_favorite);
-        Log.i("gsp", "highlightFavoriteIcon: 显示收藏坐标    ");
+        Log.i("gsp", TAG + ">>restoreFavoriteIcon()");
+        invalidate();
+    }
+
+    public void restoreUi() {
+        mItemState = ITEM_STATE_NORMAL;
+//        mFavoriteIcon = getResources().getDrawable(R.drawable.ic_favorite);
         invalidate();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        EvLog.d("SongListView onKeyDown keyCode: " + keyCode);
-        Log.i("gsp", TAG + ">>onKeyDown():"+keyCode);
+        Log.i("gsp", TAG + ">>onKeyDown():" + keyCode);
         if (getAdapter().getCount() <= 0) {
             return super.onKeyDown(keyCode, event);
         }
 
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_RIGHT:
-                Log.i("gsp", TAG+">>KEYCODE_DPAD_RIGHT");
+                Log.i("gsp", TAG + ">>KEYCODE_DPAD_RIGHT");
                 Log.i("gsp", "onKeyDown: 显示最后边右边的坐标");
                 if (mItemState == ITEM_STATE_NORMAL) {
                     mItemState = ITEM_STATE_TOP;
@@ -355,7 +426,7 @@ public class SongListView extends ListView implements android.widget.AdapterView
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_LEFT:
-                Log.i("gsp", TAG+">>KEYCODE_DPAD_LEFT");
+                Log.i("gsp", TAG + ">>KEYCODE_DPAD_LEFT");
                 if (mItemState == ITEM_STATE_TOP) {
                     mItemState = ITEM_STATE_NORMAL;
                     invalidate();
@@ -372,7 +443,7 @@ public class SongListView extends ListView implements android.widget.AdapterView
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
-                Log.i("gsp", TAG+">>KEYCODE_DPAD_UP");
+                Log.i("gsp", TAG + ">>KEYCODE_DPAD_UP");
                 if (event.getRepeatCount() > MAX_REPEAT_EVENT_COUNT) {
                     // EvLog.i("reject getRepeatCount " + MAX_REPEAT_EVENT_COUNT);
                     return true;
@@ -388,7 +459,7 @@ public class SongListView extends ListView implements android.widget.AdapterView
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                Log.i("gsp", TAG+">>KEYCODE_DPAD_DOWN");
+                Log.i("gsp", TAG + ">>KEYCODE_DPAD_DOWN");
                 if (event.getRepeatCount() > MAX_REPEAT_EVENT_COUNT) {
                     // EvLog.i("reject getRepeatCount " + MAX_REPEAT_EVENT_COUNT);
                     return true;
@@ -410,6 +481,7 @@ public class SongListView extends ListView implements android.widget.AdapterView
 
         return super.onKeyDown(keyCode, event);
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -456,5 +528,9 @@ public class SongListView extends ListView implements android.widget.AdapterView
         if (gainFocus && lastSelectedItemPosition == 0) {
             setSelection(lastSelectedItemPosition);
         }
+    }
+
+    private void log(String tag) {
+        Log.d("gsp", TAG + " >>" + tag);
     }
 }
