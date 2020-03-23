@@ -113,7 +113,7 @@ public class FreeSongView extends AbsBaseView implements IGetFreeSongEventListen
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id, int itemState) {
-                log("---onItemClick()----itemState:"+itemState);
+                log("---onItemClick()----itemState:" + itemState);
                 Song song = (Song) parent.getAdapter().getItem(position);
                 if (song == null) {
                     mListView.resetUi();
@@ -235,14 +235,15 @@ public class FreeSongView extends AbsBaseView implements IGetFreeSongEventListen
             mListView.restoreFavoriteIcon();
         }
 
-//                updateSeekBar(position);
-               /* if (mDatas.size() >= mTotalNum) {
-                    return;
-                }*/
-                /*if (position <= (mAdapter.getCount() - 1)
-                        && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
-                    SongMenuDetailManager.getInstace().loadNextPage();
-                } */
+//        updateSeekBar(position);
+
+//        if (mDatas.size() >= mTotalNum) {
+//            return;
+//        }
+//        if (position <= (mAdapter.getCount() - 1)
+//                && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
+//            SongMenuDetailManager.getInstace().loadNextPage();
+//        }
     }
 
 
@@ -298,6 +299,7 @@ public class FreeSongView extends AbsBaseView implements IGetFreeSongEventListen
         FreeSongListManager.getInstance().removeGetFreeSongEventListener(this);
         PlayListManager.getInstance().unregisterListener(this);
         FavoriteListManager.getInstance().unregisterListener(this);
+        DeviceConfigManager.getInstance().setFree(false);
     }
 
     private void updateData() {

@@ -241,11 +241,11 @@ public class SongMenuDetailsView extends AbsBaseView
                         mListView.resetUi();
                         operateSelectItem(parent, view, position, id);
                         return;
-                    }else {
+                    } else {
                         mListView.resetUi();
                         operateSelectItem(parent, view, position, id);
                     }
-                }else {
+                } else {
                     mListView.resetUi();
                     operateSelectItem(parent, view, position, id);
                 }
@@ -320,6 +320,7 @@ public class SongMenuDetailsView extends AbsBaseView
 
     private void operateSelectItem(AdapterView<?> parent, View view,
                                    int position, long id) {
+        Log.d("gsp", TAG + "---operateSelectItem()---");
         try {
             Thread.sleep(5);
         } catch (Exception e) {
@@ -338,10 +339,12 @@ public class SongMenuDetailsView extends AbsBaseView
 
 //                updateSeekBar(position);
         if (mDatas.size() >= mTotalNum) {
+            Log.d("gsp", TAG + "mDatas.size() >= mTotalNum");
             return;
         }
         if (position <= (mAdapter.getCount() - 1)
                 && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
+            Log.d("gsp", TAG + "更新");
             SongMenuDetailManager.getInstace().loadNextPage();
         }
     }
