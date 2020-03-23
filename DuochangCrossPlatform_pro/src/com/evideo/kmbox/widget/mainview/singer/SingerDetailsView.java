@@ -198,6 +198,7 @@ public class SingerDetailsView extends AbsBaseView implements
                                     int position, long id, int itemState) {
                 Song song = (Song) parent.getAdapter().getItem(position);
                 if (song == null) {
+//                    mListView.resetUi();
                     return;
                 }
 
@@ -216,10 +217,11 @@ public class SingerDetailsView extends AbsBaseView implements
                             song.getId())) {
                         if (FavoriteListManager.getInstance().delSong(
                                 song.getId())) {
-                            mListView.resetUi();
-                            operateSelectItem(parent, view, position, id);
+
                             onUmengAgentFavoriteSong(false);
                         }
+                        mListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                         return;
                     } else if (FavoriteListManager.getInstance().addSong(
                             song.getId())) {
@@ -229,6 +231,11 @@ public class SingerDetailsView extends AbsBaseView implements
                         onUmengAgentFavoriteSong(true);
                         return;
                     }
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
+                }else {
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 }
             }
 

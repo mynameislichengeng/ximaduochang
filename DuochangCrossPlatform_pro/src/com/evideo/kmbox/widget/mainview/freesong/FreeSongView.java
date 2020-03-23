@@ -51,8 +51,10 @@ import com.evideo.kmbox.widget.mainview.MainViewManager;
 /**
  * [功能说明]
  */
-public class FreeSongView extends AbsBaseView implements IGetFreeSongEventListener,IOrderSongResultListener,ITopSongResultListener,
-IPlayListListener, IFavoriteListListener{
+public class FreeSongView extends AbsBaseView implements IGetFreeSongEventListener, IOrderSongResultListener, ITopSongResultListener,
+        IPlayListListener, IFavoriteListListener {
+
+    private final String TAG = FreeSongView.class.getSimpleName();
 
     private SongListView mListView;
     private OrderSongListAdapter mAdapter;
@@ -60,7 +62,7 @@ IPlayListListener, IFavoriteListListener{
     private ImageView mTvShowRectTv = null;
     private TextView mPlayingSongInfoTv = null;
     private AnimLoadingView mLoadingView = null;
-    
+
     public FreeSongView(Activity activity, int backViewId) {
         super(activity, backViewId);
 //        initPayBtn();
@@ -73,11 +75,11 @@ IPlayListListener, IFavoriteListListener{
             mPlayingSongInfoTv.setText(info);
         }
     }
-    
+
     private void initView() {
-        mTvShowRectTv = (ImageView)findViewById(R.id.mv_show_rect);
+        mTvShowRectTv = (ImageView) findViewById(R.id.mv_show_rect);
         mTvShowRectTv.setOnFocusChangeListener(new OnFocusChangeListener() {
-            
+
             @Override
             public void onFocusChange(View arg0, boolean arg1) {
                 if (arg1) {
@@ -95,13 +97,13 @@ IPlayListListener, IFavoriteListListener{
                 MainViewManager.getInstance().switchMainView();
             }
         });
-        
-        mPlayingSongInfoTv = (TextView)findViewById(R.id.freesong_page_songname_tv);
-        
-        mLoadingView = (AnimLoadingView)findViewById(R.id.free_song_loading_widget);
-        
+
+        mPlayingSongInfoTv = (TextView) findViewById(R.id.freesong_page_songname_tv);
+
+        mLoadingView = (AnimLoadingView) findViewById(R.id.free_song_loading_widget);
+
         mListView = (SongListView) findViewById(R.id.free_song_lv);
-        
+
         mAdapter = new OrderSongListAdapter(mActivity, mListView, mDatas);
         mAdapter.setSongNameSpecWidth(BaseApplication.getInstance().getBaseContext().getResources().getDimensionPixelSize(R.dimen.px650));
         mListView.setAdapter(mAdapter);
@@ -110,98 +112,93 @@ IPlayListListener, IFavoriteListListener{
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id, int itemState) {
+                                    int position, long id, int itemState) {
+                log("---onItemClick()----itemState:"+itemState);
                 Song song = (Song) parent.getAdapter().getItem(position);
                 if (song == null) {
+                    mListView.resetUi();
                     return;
                 }
-                
+
                 if (itemState == SongListView.ITEM_STATE_NORMAL) {
                     DeviceConfigManager.getInstance().setFree(true);
                     SongOperationManager.getInstance().orderSong(song.getId(), FreeSongView.this);
+                    operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_TOP) {
                     SongOperationManager.getInstance().topSong(song.getId(), FreeSongView.this);
-                    
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_FAVORITE) {
                     if (FavoriteListManager.getInstance().isAlreadyExists(song.getId())) {
                         Log.i("gsp", "onItemClick:如果收藏成功的话删除这个歌单ID ");
                         if (FavoriteListManager.getInstance().delSong(song.getId())) {
 //                            onUmengAgentFavoriteSong(false);
                             Log.i("gsp", "onItemClick:成功删除这个歌单ID ");
+                            mListView.resetUi();
+                            operateSelectItem(parent, view, position, id);
                         }
                         return;
                     } else if (FavoriteListManager.getInstance().addSong(song.getId())) {
                         Log.i("gsp", "onItemClick:成功添加到收藏的这个歌单ID ");
+                        mListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
 //                        mListView.startFavoriteAnimnation(position);
 //                        onUmengAgentFavoriteSong(true);
                         return;
                     }
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 } else {
 //                    mListView.highlightFavoriteIcon();
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 }
             }
-            
+
         });
 
         mListView.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
-                    int position, long id) {
-                EvLog.i("mListView onItemSelected:" + position);
-                Song item = (Song) parent.getAdapter().getItem(position);
-                if (item == null) {
-                    return;
-                }
-                Log.i("gsp", "onItemSelected: 什么时候调用他来进行收藏");
-                if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
-                    mListView.highlightFavoriteIcon();
-                } else {
-                    mListView.restoreFavoriteIcon();
-                }
-                
-//                updateSeekBar(position);
-               /* if (mDatas.size() >= mTotalNum) {
-                    return;
-                }*/
-                /*if (position <= (mAdapter.getCount() - 1) 
-                        && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
-                    SongMenuDetailManager.getInstace().loadNextPage();
-                } */
+                                       int position, long id) {
+
+                operateSelectItem(parent, view, position, id);
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
 
-        }); 
+        });
         mListView.setOnFocusChangeListener(new OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-               int selectPos = mListView.getSelectedItemPosition();
-              
-               
-               EvLog.i(hasFocus + ",getSelectedItemPosition:" + selectPos );
-               if (mAdapter != null) {
-                   mAdapter.refreshSelectedState(hasFocus, selectPos);
-               }
-               if (hasFocus) {
+                int selectPos = mListView.getSelectedItemPosition();
+
+
+                EvLog.i(hasFocus + ",getSelectedItemPosition:" + selectPos);
+                if (mAdapter != null) {
+                    mAdapter.refreshSelectedState(hasFocus, selectPos);
+                }
+                if (hasFocus) {
 //                 onPageStart();
 //                   mListView.setSelection(selectPos);
-               }
+                }
             }
         });
-        
+
         mListView.setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
-            
+
             @Override
             public void onRightEdgeKeyDown() {
                 if (MainViewManager.getInstance().getStatusBar() != null) {
                     MainViewManager.getInstance().getStatusBar().setSelectedNumFocus();
                 }
             }
-            
+
             @Override
             public void onLeftEdgeKeyDown() {
 //                MainViewManager.getInstance().setSmallMvFocus();
@@ -210,7 +207,7 @@ IPlayListListener, IFavoriteListListener{
 
             @Override
             public void onDownEdgeKeyDown() {
-                
+
             }
 
             @Override
@@ -220,11 +217,35 @@ IPlayListListener, IFavoriteListListener{
                 }
             }
         });
-       
+
         mListView.setVisibility(View.GONE);
     }
-   
-    
+
+    private void operateSelectItem(AdapterView<?> parent, View view,
+                                   int position, long id) {
+        EvLog.i("mListView onItemSelected:" + position);
+        Song item = (Song) parent.getAdapter().getItem(position);
+        if (item == null) {
+            return;
+        }
+        Log.i("gsp", "onItemSelected: 什么时候调用他来进行收藏");
+        if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
+            mListView.highlightFavoriteIcon();
+        } else {
+            mListView.restoreFavoriteIcon();
+        }
+
+//                updateSeekBar(position);
+               /* if (mDatas.size() >= mTotalNum) {
+                    return;
+                }*/
+                /*if (position <= (mAdapter.getCount() - 1)
+                        && position > (mAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
+                    SongMenuDetailManager.getInstace().loadNextPage();
+                } */
+    }
+
+
     @Override
     protected int getLayResId() {
         return R.layout.main_freesong_view;
@@ -238,20 +259,21 @@ IPlayListListener, IFavoriteListListener{
     @Override
     protected void resetFocus() {
     }
-    
+
 
     private void showMV() {
         int width = getResources().getDimensionPixelSize(R.dimen.px680);
-        int height =  getResources().getDimensionPixelSize(R.dimen.px510);
+        int height = getResources().getDimensionPixelSize(R.dimen.px510);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(width, height);
-        lp.topMargin =  getResources().getDimensionPixelSize(R.dimen.px251);//+11
+        lp.topMargin = getResources().getDimensionPixelSize(R.dimen.px251);//+11
         lp.leftMargin = getResources().getDimensionPixelSize(R.dimen.px80);
         MainViewManager.getInstance().showMvAtAssignRect(lp);
     }
-    
+
     public void focusBackFromMV() {
         showMV();
     }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -259,7 +281,7 @@ IPlayListListener, IFavoriteListListener{
         FavoriteListManager.getInstance().registerListener(this);
         showMV();
         mPlayingSongInfoTv.setText(MainViewManager.getInstance().getPlayingSongInfo());
-       
+
         FreeSongListManager.getInstance().addGetFreeSongEventListener(this);
         if (FreeSongListManager.getInstance().getListCount() == 0) {
             showLoadingView();
@@ -268,7 +290,7 @@ IPlayListListener, IFavoriteListListener{
             updateData();
         }
     }
-    
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -277,7 +299,7 @@ IPlayListListener, IFavoriteListListener{
         PlayListManager.getInstance().unregisterListener(this);
         FavoriteListManager.getInstance().unregisterListener(this);
     }
-    
+
     private void updateData() {
         EvLog.e("updateData------------");
         mDatas.clear();
@@ -286,25 +308,25 @@ IPlayListListener, IFavoriteListListener{
         showListView();
         mListView.requestFocus();
     }
-    
+
     private void showListView() {
-        
+
         if (mLoadingView != null && mLoadingView.getVisibility() != View.GONE) {
             mLoadingView.stopAnim();
             mLoadingView.setVisibility(View.GONE);
         }
-        
-        if (mListView == null ) {
+
+        if (mListView == null) {
             return;
         }
         if (mListView.getVisibility() != View.VISIBLE) {
             mListView.setVisibility(View.VISIBLE);
         }
-        mListView.showFootView(R.string.loading_song_no_more);        
+        mListView.showFootView(R.string.loading_song_no_more);
     }
-    
+
     private void showLoadingView() {
-    
+
         if (mListView != null && mListView.getVisibility() != View.GONE) {
             mListView.setVisibility(View.GONE);
         }
@@ -313,18 +335,18 @@ IPlayListListener, IFavoriteListListener{
             mLoadingView.startAnim();
         }
     }
-    
+
     private void showLoadFail() {
         if (mLoadingView != null && mLoadingView.getVisibility() != View.VISIBLE) {
             mLoadingView.setVisibility(View.VISIBLE);
         }
         mLoadingView.showLoadFail(R.string.error_loading_data);
-        
+
         if (mListView != null && mListView.getVisibility() != View.GONE) {
             mListView.setVisibility(View.GONE);
         }
     }
-    
+
     @Override
     public void onStartGetFreeSong() {
         mDatas.clear();
@@ -361,7 +383,7 @@ IPlayListListener, IFavoriteListListener{
 
     @Override
     public void onOrderSongFailed(int songId) {
-        
+
     }
 
     @Override
@@ -376,7 +398,7 @@ IPlayListListener, IFavoriteListListener{
 
     @Override
     public void onTopSongFailed(int songId) {
-        
+
     }
 
     @Override
@@ -385,10 +407,10 @@ IPlayListListener, IFavoriteListListener{
             @Override
             public void run() {
                 if (mListView == null || mAdapter == null) {
-                    Log.i("gsp", "run: mListView+"+mListView+mAdapter);
+                    Log.i("gsp", "run: mListView+" + mListView + mAdapter);
                     return;
                 }
-                Log.i("gsp", "run: mListView11111+"+mListView.getSelectedItemPosition() +mAdapter);
+                Log.i("gsp", "run: mListView11111+" + mListView.getSelectedItemPosition() + mAdapter);
                 Song song = (Song) mAdapter.getItem(mListView.getSelectedItemPosition());
                 if (song == null) {
 
@@ -402,7 +424,7 @@ IPlayListListener, IFavoriteListListener{
                     mListView.restoreFavoriteIcon();
                 }
             }
-        }); 
+        });
     }
 
     @Override
@@ -442,5 +464,9 @@ IPlayListListener, IFavoriteListListener{
             return true;
         }
         return false;
+    }
+
+    private void log(String tag) {
+        Log.d("gsp", TAG + ">>>" + tag);
     }
 }

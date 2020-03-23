@@ -294,30 +294,6 @@ public class SingerView extends AbsBaseView implements
             }
         };
 
-//        OnTouchListener onTouchListener = new OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                log("--onTouch()---");
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//
-//                        log("--onTouch()---MotionEvent.ACTION_DOWN----tag:" + v.getTag());
-//
-//                        v.requestFocus();
-//                        return true;
-//                    case MotionEvent.ACTION_MOVE:
-//                        log("--onTouch()---MotionEvent.ACTION_MOVE----");
-//
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        log("--onTouch()---MotionEvent.ACTION_UP----");
-//
-//                        break;
-//
-//                }
-//                return false;
-//            }
-//        };
 
         OnClickListener onClickListener = new OnClickListener() {
             @Override
@@ -330,16 +306,12 @@ public class SingerView extends AbsBaseView implements
 
                 int index = (Integer) arg0.getTag();
 
-//                if (!arg1) {
-//                    mPreTabIndex = index;
-//                    return;
-//                }
                 mCurTabIndex = index;
                 setTabChecked(index);
-//                if (mCurTabIndex != mPreTabIndex) {
+
                 onTabSelected(index);
                 LogAnalyzeManager.onEvent(mActivity, EventConst.ID_CLICK_ALL_SINGER_TYPE_LIST);
-//                }
+
             }
         };
 

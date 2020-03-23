@@ -211,6 +211,8 @@ public class SongMenuDetailsView extends AbsBaseView
                 Log.d("gsp", TAG + ">>onItemClick事件---当前的状态:" + itemState);
                 Song song = (Song) parent.getAdapter().getItem(position);
                 if (song == null) {
+                    Log.d("gsp", TAG + ">>onItemClick事件---song=null");
+                    mListView.resetUi();
                     return;
                 }
 
@@ -239,7 +241,13 @@ public class SongMenuDetailsView extends AbsBaseView
                         mListView.resetUi();
                         operateSelectItem(parent, view, position, id);
                         return;
+                    }else {
+                        mListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                     }
+                }else {
+                    mListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 }
             }
 
