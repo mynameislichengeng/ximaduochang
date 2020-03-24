@@ -13,6 +13,7 @@ package com.evideo.kmbox.widget.mainview.songtop;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.text.TextPaint;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,12 @@ public class SongTopDetailAdapter extends BaseSongListAdapter<SongTopDetail> {
     private int mOffset;
 
     private int mSongNameHighlightColor;
+
+    private int selectPostion = -1;
+
+    public void setSelectPostion(int selectPostion) {
+        this.selectPostion = selectPostion;
+    }
 
     public SongTopDetailAdapter(Context context, ViewGroup parentView, ArrayList<SongTopDetail> datas) {
         super(context, parentView, datas);
@@ -148,6 +155,12 @@ public class SongTopDetailAdapter extends BaseSongListAdapter<SongTopDetail> {
         viewHolder.mScoreFlag.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
         setSongOrderedState(viewHolder, item);
+
+        if (selectPostion == position) {
+            setSingerNameBelow(convertView,View.VISIBLE);
+        }else {
+            setSingerNameBelow(convertView,View.GONE);
+        }
     }
 
     public void setSongNameSpecWidth(int specWidth) {
@@ -220,6 +233,14 @@ public class SongTopDetailAdapter extends BaseSongListAdapter<SongTopDetail> {
         viewHolder.mSongName.setTextColor(mOrderedSongColor);
         viewHolder.mSingerName.setTextColor(mOrderedSingerColor);
         viewHolder.mSingerNameBelow.setTextColor(mOrderedSingerColor);
+    }
+
+    public void setSingerNameBelow(View convertView, int visibility) {
+        if (convertView == null) {
+            return;
+        }
+        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+        viewHolder.mSingerNameBelow.setVisibility(visibility);
     }
 
     /**

@@ -326,10 +326,14 @@ public class SongMenuDetailsView extends AbsBaseView
         } catch (Exception e) {
 
         }
+
+
         Song item = (Song) parent.getAdapter().getItem(position);
         if (item == null) {
             return;
         }
+        mAdapter.setSelectPostion(position);
+        mAdapter.notifyDataSetChanged();
 
         if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
             mListView.highlightFavoriteIcon();

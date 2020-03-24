@@ -321,6 +321,9 @@ public class SongNameView extends AbsBaseView implements IPageLoadCallback<Song>
             return;
         }
 
+        mAdapter.setSelectPostion(position);
+        mAdapter.notifyDataSetChanged();
+
         if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
             mListView.highlightFavoriteIcon();
         } else {

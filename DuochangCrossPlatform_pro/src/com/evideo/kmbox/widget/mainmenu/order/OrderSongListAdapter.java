@@ -25,6 +25,7 @@ import com.evideo.kmbox.widget.common.AutoHideTextView;
 import com.evideo.kmbox.widget.common.AutoShowTextView;
 import com.evideo.kmbox.widget.common.BaseSongListAdapter;
 import com.evideo.kmbox.widget.common.ListMarqueeTextView;
+import com.evideo.kmbox.widget.mainview.songtop.SongTopDetailAdapter;
 
 /**
  * [点歌列表]
@@ -52,6 +53,12 @@ public class OrderSongListAdapter extends BaseSongListAdapter<Song> {
 //    private int mOffset;
 
     private int mSongNameHighlightColor;
+
+    private int selectPostion = -1;
+
+    public void setSelectPostion(int selectPostion) {
+        this.selectPostion = selectPostion;
+    }
 
     public OrderSongListAdapter(Context context, ViewGroup parentView, ArrayList<Song> datas) {
         super(context, parentView, datas);
@@ -140,6 +147,12 @@ public class OrderSongListAdapter extends BaseSongListAdapter<Song> {
         viewHolder.mLocalExistFlag.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
         setSongOrderedState(viewHolder, item);
+
+        if(selectPostion==position){
+            setSingerNameBelow(convertView,View.VISIBLE);
+        }else {
+            setSingerNameBelow(convertView,View.GONE);
+        }
     }
 
     public void setSongNameSpecWidth(int specWidth) {
@@ -213,6 +226,14 @@ public class OrderSongListAdapter extends BaseSongListAdapter<Song> {
         viewHolder.mSongName.setTextColor(mOrderedSongColor);
         viewHolder.mSingerName.setTextColor(mOrderedSingerColor);
         viewHolder.mSingerNameBelow.setTextColor(mOrderedSingerColor);
+    }
+
+    public void setSingerNameBelow(View convertView, int visibility) {
+        if (convertView == null) {
+            return;
+        }
+        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+        viewHolder.mSingerNameBelow.setVisibility(visibility);
     }
 
     /**

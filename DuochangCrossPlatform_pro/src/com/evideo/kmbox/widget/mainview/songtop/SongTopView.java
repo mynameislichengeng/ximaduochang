@@ -19,6 +19,7 @@ import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -63,19 +64,21 @@ import com.evideo.kmbox.widget.mainview.MainViewManager;
 /**
  * [排行界面]
  */
-public class SongTopView extends AbsBaseView 
-    implements IPageLoadCallback<SongTopDetail>, ILoadCacheDataCallback<SongTopDetail>,
-    ISongTopListListener, IPlayListListener, IFavoriteListListener,IOrderSongResultListener,ITopSongResultListener {
+public class SongTopView extends AbsBaseView
+        implements IPageLoadCallback<SongTopDetail>, ILoadCacheDataCallback<SongTopDetail>,
+        ISongTopListListener, IPlayListListener, IFavoriteListListener, IOrderSongResultListener, ITopSongResultListener {
+
+    private final String TAG = SongTopView.class.getSimpleName();
 
     private static final int PAGE_LOAD_EDGE_COUNT = 8;
     private Activity mActivity;
-  
+
     private int mCurrentSongTopId = -1;
     private int mTotalNum;
 
     private AnimLoadingView mGvLoading = null;
     private GridView mGridView;
-    
+
     private AnimLoadingView mListLoading = null;
     private SongTopAdapter mSongTopAdapter;
     private SongListView mSongListView;
@@ -88,7 +91,7 @@ public class SongTopView extends AbsBaseView
     private int mDefaultFocusId = 0;
     private boolean mNeedResetListViewWhenFocus = true;
 //    private ImageView mTopSloganIv = null;
-            
+
     /**
      * @param activity
      * @param songMenu
@@ -101,30 +104,32 @@ public class SongTopView extends AbsBaseView
         mDatas = new ArrayList<SongTopDetail>();
         initViewSongTop();
         initViewSongTopDetail();
+//        mGridView.performClick();
+//        mSongListView.requestFocus();
     }
-    
+
     private int mDefaultFocusSongTopId = 0;
-    
+
     public void setDefaultFocusSongTopId(int focusRankId) {
         mDefaultFocusSongTopId = focusRankId;
     }
-    
-    public SongTopView(Activity activity, int defaultFocusId,int backViewId) {
+
+    public SongTopView(Activity activity, int defaultFocusId, int backViewId) {
         super(activity, backViewId);
         mActivity = activity;
         mDefaultFocusId = defaultFocusId;
         initViewSongTop();
         initViewSongTopDetail();
     }
-    
+
     private void initViewSongTop() {
         FrameLayout rect = (FrameLayout) findViewById(R.id.song_top_details_item_lay);
         Bitmap bmp = BitmapUtil.getBitmapByResId(BaseApplication.getInstance(), R.drawable.main_view_top_song_left_lay_bg);
         rect.setBackgroundDrawable(new BitmapDrawable(bmp));
-        
+
         mTitle = (BreadCrumbsWidget) findViewById(R.id.main_songname_title_crumb);
         mTitle.setFirstTitle(getString(R.string.main_top_song_title));
-        
+
         mGvLoading = (AnimLoadingView) findViewById(R.id.song_top_gv_loading_widget);
         mFadingEdgeLength = getResources().getDimensionPixelSize(R.dimen.px98);
         mGridView = (GridView) findViewById(R.id.main_view_song_top_gv);
@@ -136,7 +141,7 @@ public class SongTopView extends AbsBaseView
         mGridView.setAdapter(mSongTopAdapter);
         mSongTopAdapter.notifyDataSetChanged();
         mGridView.setOnKeyListener(new View.OnKeyListener() {
-            
+
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -147,18 +152,34 @@ public class SongTopView extends AbsBaseView
                 return false;
             }
         });
- 
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                log("---mGridView---setOnItemClickListener()---");
+                SongTop songTop = (SongTop) parent.getAdapter().getItem(position);
+
+                if (songTop == null) {
+                    return;
+                }
+                mSongTopAdapter.setCheckedView(view);
+                //zxs
+                EvLog.d("zxs", "setOnItemClickListener songMenuID===>" + songTop.songTopId);
+                SongTopManager.getInstance().notifySongTopClicked(songTop);
+
+            }
+        });
         mGridView.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
-                    int position, long id) {
+                                       int position, long id) {
+                log("---mGridView---onItemSelected()---");
                 if (!mGridView.isFocused()) {
                     return;
                 }
 //                EvLog.d("zxs", "mGridView.setOnItemClickListener Top run 1");
                 SongTop songTop = (SongTop) parent.getAdapter().getItem(position);
-                
+
                 if (songTop == null) {
                     return;
                 }
@@ -172,92 +193,96 @@ public class SongTopView extends AbsBaseView
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        
+
         mGridView.setOnFocusChangeListener(new OnFocusChangeListener() {
-            
+
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    View view = mGridView.getSelectedView();
-                    if (view != null) {
-                        mSongTopAdapter.setCheckedView(view);
-                    }
-                } else {
-                    View view = mSongTopAdapter.getView(mGridView.getSelectedItemPosition(), null, mGridView);
-                    EvLog.i("SongTopList", "Focus Lose");
-                    if (view != null) {
-                        mSongTopAdapter.setViewSelectedButNotFocus();
-                    }
-                }
+                log("---mGridView---onFocusChange()---hasFocus：" + hasFocus);
+//                if (hasFocus) {
+//                    View view = mGridView.getSelectedView();
+//                    if (view != null) {
+//                        mSongTopAdapter.setCheckedView(view);
+//                    }
+//                } else {
+//                    View view = mSongTopAdapter.getView(mGridView.getSelectedItemPosition(), null, mGridView);
+//                    EvLog.i("SongTopList", "Focus Lose");
+//                    if (view != null) {
+//                        mSongTopAdapter.setViewSelectedButNotFocus();
+//                    }
+//                }
             }
         });
         mGridView.requestFocus();
-        mGridView.setSelection(mDefaultFocusId);
+//        mGridView.setSelection(mDefaultFocusId);
         SongTopManager.getInstance().startGetSongTopListTask();
+        mGridView.setSelection(mDefaultFocusId);
     }
-    
+
     private void initViewSongTopDetail() {
 //        ImageView topSloganIv = (ImageView) findViewById(R.id.top_slogan);
 //        Bitmap bmp = BitmapUtil.getBitmapByResId(BaseApplication.getInstance(), R.drawable.top_slogan);
 //        topSloganIv.setImageBitmap(bmp);
 //        mDetailsLoadingView = findViewById(R.id.loading_lay);
 //        mLoadingErrorTv = (TextView) findViewById(R.id.loading_error_tv);
-        
-        mListLoading = (AnimLoadingView)findViewById(R.id.song_top_list_loading_widget);
+
+        mListLoading = (AnimLoadingView) findViewById(R.id.song_top_list_loading_widget);
         mSongListView = (SongListView) findViewById(R.id.main_view_song_top_details_lv);
 
         mSongListView.setOnItemClickCallback(new OnItemClickCallback() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id, int itemState) {
+                                    int position, long id, int itemState) {
+                log("----mSongListView---onItemClick()----");
                 SongTopDetail item = (SongTopDetail) parent.getAdapter().getItem(position);
                 if (item == null) {
                     return;
                 }
-              
+
                 if (itemState == SongListView.ITEM_STATE_NORMAL) {
+                    mSongListView.requestFocus();
                     SongOperationManager.getInstance().orderSong(item.songId, SongTopView.this);
-                   
+                    operateSelectItem(parent, view, position, id);
+
                 } else if (itemState == SongListView.ITEM_STATE_TOP) {
                     SongOperationManager.getInstance().topSong(item.songId, SongTopView.this);
+                    mSongListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_FAVORITE) {
                     if (FavoriteListManager.getInstance().isAlreadyExists(item.songId)) {
                         if (FavoriteListManager.getInstance().delSong(item.songId)) {
                             onUmengAgentFavoriteSong(false);
-                        }                      
+                        }
+                        mSongListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                         return;
                     } else if (FavoriteListManager.getInstance().addSong(item.songId)) {
 //                      mListView.startFavoriteAnimnation(position);
+                        mSongListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                         onUmengAgentFavoriteSong(true);
                         return;
+                    } else {
+                        mSongListView.resetUi();
+                        operateSelectItem(parent, view, position, id);
                     }
+                } else {
+                    mSongListView.resetUi();
+                    operateSelectItem(parent, view, position, id);
                 }
+
             }
         });
-        
+
         mSongListView.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
-                    int position, long id) {
-                
-                SongTopDetail item = (SongTopDetail) parent.getAdapter().getItem(position);
-                if (item == null) {
-                    return;
-                }
+                                       int position, long id) {
+                log("----mSongListView---onItemSelected()----");
+                operateSelectItem(parent, view, position, id);
 
-                if (FavoriteListManager.getInstance().isAlreadyExists(item.songId/*getId()*/)) {
-                    mSongListView.highlightFavoriteIcon();
-                } else {
-                    mSongListView.restoreFavoriteIcon();
-                }
-                
-                if (position <= (mSongTopDetailAdapter.getCount() - 1)
-                        && position > (mSongTopDetailAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
-                    SongTopDetailManager.getInstace().loadNextPage();
-                    EvLog.i("wrq", "start loading next page");
-                } 
             }
 
             @Override
@@ -272,33 +297,34 @@ public class SongTopView extends AbsBaseView
              */
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    if (mNeedResetListViewWhenFocus) {
-                        mSongListView.setAdapter(mSongTopDetailAdapter);
-                        mSongListView.setSelection(0);
-                        mNeedResetListViewWhenFocus = false;
-                    } else {
-                        EvLog.e("not need reset listview");
-                    }
-                } else {
-                    mSongListView.resetState();
-                }
-                if (mSongTopDetailAdapter != null) {
-                    mSongTopDetailAdapter.refreshSelectedState(hasFocus, mSongListView.getSelectedItemPosition());
-                }
+                log("--mSongListView----onFocusChange()-----hasFocus：" + hasFocus);
+//                if (hasFocus) {
+//                    if (mNeedResetListViewWhenFocus) {
+//                        mSongListView.setAdapter(mSongTopDetailAdapter);
+//                        mSongListView.setSelection(0);
+//                        mNeedResetListViewWhenFocus = false;
+//                    } else {
+//                        EvLog.e("not need reset listview");
+//                    }
+//                } else {
+//                    mSongListView.resetState();
+//                }
+//                if (mSongTopDetailAdapter != null) {
+//                    mSongTopDetailAdapter.refreshSelectedState(hasFocus, mSongListView.getSelectedItemPosition());
+//                }
             }
-            
+
         });
-        
+
         mSongListView.setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
-            
+
             @Override
             public void onRightEdgeKeyDown() {
                 if (MainViewManager.getInstance().getStatusBar() != null) {
                     MainViewManager.getInstance().getStatusBar().setSelectedNumFocus();
                 }
             }
-            
+
             @Override
             public void onLeftEdgeKeyDown() {
                 if (mGridView != null) {
@@ -306,9 +332,10 @@ public class SongTopView extends AbsBaseView
                     mSongListView.setSelection(0);
                 }
             }
+
             @Override
             public void onDownEdgeKeyDown() {
-                
+
             }
 
             @Override
@@ -323,19 +350,42 @@ public class SongTopView extends AbsBaseView
         mSongTopDetailAdapter = new SongTopDetailAdapter(mActivity, mSongListView, mDatas);
         mSongTopDetailAdapter.setSongNameSpecWidth(DimensionsUtil.getDimensionPixelSize(mActivity, R.dimen.px698));
         mSongListView.setAdapter(mSongTopDetailAdapter);
-    }    
- 
+    }
+
+    private void operateSelectItem(AdapterView<?> parent, View view,
+                                   int position, long id) {
+        log("----mSongListView---operateSelectItem()----");
+        SongTopDetail item = (SongTopDetail) parent.getAdapter().getItem(position);
+        if (item == null) {
+            return;
+        }
+        mSongTopDetailAdapter.setSelectPostion(position);
+        mSongTopDetailAdapter.notifyDataSetChanged();
+        if (FavoriteListManager.getInstance().isAlreadyExists(item.songId/*getId()*/)) {
+            mSongListView.highlightFavoriteIcon();
+        } else {
+            mSongListView.restoreFavoriteIcon();
+        }
+
+        if (position <= (mSongTopDetailAdapter.getCount() - 1)
+                && position > (mSongTopDetailAdapter.getCount() - PAGE_LOAD_EDGE_COUNT)) {
+            SongTopDetailManager.getInstace().loadNextPage();
+            EvLog.i("wrq", "start loading next page");
+        }
+    }
+
     private class SloganInfo {
         public String sloganPath;
         public Bitmap sloganBmp;
+
         public SloganInfo() {
             this.sloganBmp = null;
             this.sloganPath = "";
         }
     }
-    
+
     private SloganInfo mShowSloganInfo = null;
-    
+
     private void updateTopSlogan() {
         /*if (mTopSloganIv != null) {
             String localVersion =  KmSharedPreferences.getInstance().getString(KeyName.KEY_TOP_SLOGAN_VERSION, "1.0");
@@ -361,7 +411,7 @@ public class SongTopView extends AbsBaseView
             }
         }*/
     }
-    
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -382,7 +432,7 @@ public class SongTopView extends AbsBaseView
             mDatas.clear();
         }*/
     }
-    
+
     private String getSongTopName() {
         SongTop songTop = SongTopManager.getInstance().getSongTopById(mCurrentSongTopId);
         if (songTop != null) {
@@ -390,7 +440,7 @@ public class SongTopView extends AbsBaseView
         }
         return null;
     }
-    
+
     private void onUmengAgentOrderSong() {
         String name = getSongTopName();
         if (name == null) {
@@ -400,7 +450,7 @@ public class SongTopView extends AbsBaseView
         m.put(EventConst.K_SONG_MENU_NAME, name);
         UmengAgent.onEvent(mActivity, EventConst.ID_CLICK_SONG_MENU_DETAILS_ORDER_SONG, m);
     }
-    
+
     private void onUmengAgentTopSong() {
         String name = getSongTopName();
         if (name == null) {
@@ -410,7 +460,7 @@ public class SongTopView extends AbsBaseView
         m.put(EventConst.K_SONG_MENU_NAME, name);
         UmengAgent.onEvent(mActivity, EventConst.ID_CLICK_SONG_MENU_DETAILS_TOP_SONG, m);
     }
-    
+
     private void onUmengAgentFavoriteSong(boolean favorite) {
         String name = getSongTopName();
         if (name == null) {
@@ -445,10 +495,8 @@ public class SongTopView extends AbsBaseView
         }
         return false;
     }
-    
-   
-   
-    
+
+
     /**
      * {@inheritDoc}
      */
@@ -472,7 +520,7 @@ public class SongTopView extends AbsBaseView
             mSongListView.requestFocus();
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -484,23 +532,23 @@ public class SongTopView extends AbsBaseView
             mSongListView.showFootLoadingView();
         }
     }
-    
+
     private void showSongTopLoadingView() {
         mGridView.setVisibility(View.GONE);
     }
-    
+
     private void hideSongTopLoadingView() {
         mGvLoading.setVisibility(View.GONE);
         mGridView.setVisibility(View.VISIBLE);
     }
-    
+
     private void showSongTopLoadErrorView() {
         mGridView.setVisibility(View.GONE);
        /* if (!NetUtils.isNetworkConnected(mContext)) {
             mTopLoadingErrorTv.setText(getString(R.string.error_network));
         }*/
     }
-    
+
     private void showTopDetailsLoadingView() {
 //        mDetailsLoadingView.setVisibility(View.VISIBLE);
 //        mLoadingErrorTv.setVisibility(View.GONE);
@@ -508,7 +556,7 @@ public class SongTopView extends AbsBaseView
         mListLoading.startAnim();
         mSongListView.setVisibility(View.GONE);
     }
-    
+
     private void updateCheckedState() {
         if (mGridView != null && mSongTopAdapter != null && mSongTopAdapter.getCount() > 0) {
             View view = mGridView.getSelectedView();
@@ -524,7 +572,8 @@ public class SongTopView extends AbsBaseView
      */
     @Override
     public void onPostLoadData(Exception e, boolean isReset, boolean isNext,
-            List<SongTopDetail> datas) {
+                               List<SongTopDetail> datas) {
+        log("----onPostLoadData()----");
         if (e != null) {
             handleException(e, isReset);
         }
@@ -540,9 +589,9 @@ public class SongTopView extends AbsBaseView
             if (isReset) {
                 mSongListView.setSelection(0);
             }
-        }        
+        }
     }
-    
+
     private void handleException(Exception e, boolean isReset) {
         EvLog.e(e.getMessage());
         if (e instanceof NetworkErrorException) {
@@ -628,7 +677,7 @@ public class SongTopView extends AbsBaseView
         mSongTopAdapter.notifyDataSetChanged();
 
         mGridView.requestFocus();
-        
+
         int position = 0;
         EvLog.i("mDefaultFocusSongTopId:" + mDefaultFocusSongTopId);
         if (mDefaultFocusSongTopId == 0) {
@@ -646,20 +695,28 @@ public class SongTopView extends AbsBaseView
         }
         updateCheckedState();
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void onSongTopClicked(SongTop songTop) {
+        log("----onSongTopClicked()----");
+        if (mFirstSongTop != null) {
+            if (mFirstSongTop.songTopId == songTop.songTopId) {
+                return;
+            }
+        }
+
         mFirstSongTop = songTop;
         mCurrentSongTopId = mFirstSongTop.songTopId;
         EvLog.d("top click " + mFirstSongTop.name + ",songTopId===>>" + mCurrentSongTopId);
         SongTopDetailManager.getInstace().startGetSongTopDetailsTask(mCurrentSongTopId, this, this);
-  
+
         if (mSongTopDetailAdapter == null || mSongListView == null) {
             return;
         }
-  
+
         if (mSongListView.getCount() <= 0) {
             return;
         }
@@ -672,15 +729,18 @@ public class SongTopView extends AbsBaseView
         } else {
             mSongListView.restoreFavoriteIcon();
         }
+
         mSongTopDetailAdapter.refreshOrderedState();
+        mSongListView.setSelection(0);
+
     }
-    
+
     @Override
     public void onSongTopLoading() {
         EvLog.i("SONG TOP LIST LOADING");
         showSongTopLoadingView();
     }
-    
+
     @Override
     public void onSongTopLoadFail() {
         showSongTopLoadErrorView();
@@ -698,9 +758,9 @@ public class SongTopView extends AbsBaseView
                     mSongTopDetailAdapter.notifyDataSetChanged();
                 }
             }
-        }); 
+        });
     }
- 
+
     /**
      * {@inheritDoc}
      */
@@ -722,7 +782,7 @@ public class SongTopView extends AbsBaseView
                     mSongListView.restoreFavoriteIcon();
                 }
             }
-        }); 
+        });
     }
 
     @Override
@@ -742,7 +802,7 @@ public class SongTopView extends AbsBaseView
     @Override
     public void onTopSongSuccess(int songId) {
         EvLog.d(" recv onTopSongSuccess");
-        
+
         if (DeviceConfigManager.getInstance().isOrderNeedAnimation()) {
             if (mSongListView != null) {
                 mSongListView.startOrderSongAnimDelayed();
@@ -757,7 +817,7 @@ public class SongTopView extends AbsBaseView
     @Override
     public void onTopSongFailed(int songId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -766,7 +826,7 @@ public class SongTopView extends AbsBaseView
     @Override
     public void onOrderSongFailed(int songId) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -780,7 +840,7 @@ public class SongTopView extends AbsBaseView
         }
     }
 
-    
+
     @Override
     public boolean onSmallMVUpKey() {
         if (mGridView != null) {
@@ -790,7 +850,7 @@ public class SongTopView extends AbsBaseView
         return false;
     }
 
-    
+
     @Override
     public boolean onSmallMVRightKey() {
         mNeedResetListViewWhenFocus = false;
@@ -801,7 +861,7 @@ public class SongTopView extends AbsBaseView
         return false;
     }
 
-   
+
     @Override
     public boolean onStatusBarDownKey() {
         if (mSongListView != null && mSongListView.getVisibility() == View.VISIBLE) {
@@ -814,5 +874,9 @@ public class SongTopView extends AbsBaseView
             }
         }
         return false;
+    }
+
+    private void log(String tag) {
+        Log.d("gsp", TAG + ">>>" + tag);
     }
 }

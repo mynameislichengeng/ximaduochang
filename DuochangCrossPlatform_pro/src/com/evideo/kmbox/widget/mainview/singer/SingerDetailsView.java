@@ -233,7 +233,7 @@ public class SingerDetailsView extends AbsBaseView implements
                     }
                     mListView.resetUi();
                     operateSelectItem(parent, view, position, id);
-                }else {
+                } else {
                     mListView.resetUi();
                     operateSelectItem(parent, view, position, id);
                 }
@@ -314,6 +314,8 @@ public class SingerDetailsView extends AbsBaseView implements
         if (item == null) {
             return;
         }
+        mAdapter.setSelectPostion(position);
+        mAdapter.notifyDataSetChanged();
 
         if (FavoriteListManager.getInstance().isAlreadyExists(
                 item.getId())) {

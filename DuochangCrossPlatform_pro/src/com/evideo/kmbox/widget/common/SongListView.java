@@ -233,14 +233,18 @@ public class SongListView extends ListView implements android.widget.AdapterView
         }
     }
 
+
     private void drawNormalSelector(Canvas canvas) {
 //        if (mItemState == ITEM_STATE_NORMAL) {
+
         final Drawable selector = mFocusFrame;
         selector.setBounds(mListSelectorRect.left - mTvLayoutPaddingLeft,
                 mListSelectorRect.top - mTvLayoutPaddingTop,
                 mListSelectorRect.right - mIconSideLen * 2 - mTvLayoutPaddingRight,
                 mListSelectorRect.bottom + mTvLayoutPaddingBottom);
         selector.draw(canvas);
+
+
 //        }
     }
 
@@ -534,6 +538,7 @@ public class SongListView extends ListView implements android.widget.AdapterView
             setSelection(lastSelectedItemPosition);
         }
     }
+
 
     private void log(String tag) {
         Log.d("gsp", TAG + " >>" + tag);

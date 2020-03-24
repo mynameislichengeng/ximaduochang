@@ -228,6 +228,8 @@ public class FreeSongView extends AbsBaseView implements IGetFreeSongEventListen
         if (item == null) {
             return;
         }
+        mAdapter.setSelectPostion(position);
+        mAdapter.notifyDataSetChanged();
         Log.i("gsp", "onItemSelected: 什么时候调用他来进行收藏");
         if (FavoriteListManager.getInstance().isAlreadyExists(item.getId())) {
             mListView.highlightFavoriteIcon();
