@@ -14,6 +14,7 @@ package com.evideo.kmbox.widget.mainview.usercenter;
 import android.app.Activity;
 import android.os.Message;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -71,8 +72,12 @@ import java.util.List;
 public class UserCenterSimpleView extends AbsBaseView implements
         IPlayListListener, IFavoriteListListener, IPlayHistoryListener,
         View.OnFocusChangeListener, AdapterView.OnItemSelectedListener,
-        IOrderSongResultListener, ITopSongResultListener,IChargeFinishListener,
-        ISyncFavoriteCloudListListener,IClickRetryBtnListener,IMVSwitchListener{
+        IOrderSongResultListener, ITopSongResultListener, IChargeFinishListener,
+        ISyncFavoriteCloudListListener, IClickRetryBtnListener, IMVSwitchListener {
+
+
+    private final String TAG = UserCenterSimpleView.class.getSimpleName();
+
 
     private static final int TAB_ID_USER = 1;
     private static final int TAB_ID_SELECTED = 2;
@@ -105,7 +110,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
     private TextView mSelectedEmptyHint;
     private ArrayList<KmPlayListItem> mSelectedDatas;
     private TextView mSelectedTitle;
-    
+
     private GridView mGridView = null;
 
     private LinearLayout mSungRect = null;
@@ -156,29 +161,46 @@ public class UserCenterSimpleView extends AbsBaseView implements
         mGridView.setAdapter(mTabAdapter);
         mGridView.setOnFocusChangeListener(this);
         mGridView.setOnItemSelectedListener(this);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                log("--mGridView----onItemClick()---position:" + position);
+                operateLeftTabItemSelect(parent, view, position, id);
+                if (position == 1) {
+                    mSelectedListView.requestFocus();
+
+                } else if (position == 2) {
+                    mSungListView.requestFocus();
+                } else if (position == 3) {
+                    mFavoriteListView.requestFocus();
+                }
+
+            }
+        });
         mGridView.setOnKeyListener(new View.OnKeyListener() {
-            
+
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT ) {
+                    if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
                         if (mLoginRect.getVisibility() == View.VISIBLE) {
                             if (mUserInfoView != null && mUserInfoView.getVisibility() == View.VISIBLE) {
 //                                mUserInfoView.setLogOutButtonFocus();
                             }
                             return true;
                         } else if (mSelectedRect.getVisibility() == View.VISIBLE) {
-                            if (mSelectedDatas.size() > 0){
+                            if (mSelectedDatas.size() > 0) {
                                 mSelectedListView.requestFocus();
                             }
                             return true;
                         } else if (mSungRect.getVisibility() == View.VISIBLE) {
-                            if (mSungDatas.size() > 0){
+                            if (mSungDatas.size() > 0) {
                                 mSungListView.requestFocus();
                             }
                             return true;
                         } else if (mFavoriteRect.getVisibility() == View.VISIBLE) {
-                            if (mFavoriteDatas.size() > 0){
+                            if (mFavoriteDatas.size() > 0) {
                                 mFavoriteListView.requestFocus();
                             }
                             return true;
@@ -209,28 +231,44 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id, int itemState) {
+                                    int position, long id, int itemState) {
+
+                log("--mSelectedListView--onItemClick()----position：" + position + "，itemState：" + itemState);
                 KmPlayListItem item = PlayListManager.getInstance()
                         .getItemByPos(position);
+                mSelectedListView.setSelectPositon(position);
+
                 if (itemState == SelectedListView.ITEM_STATE_DELETE) {
                     PlayListManager.getInstance().delSong(item.getSerialNum());
                     LogAnalyzeManager.onEvent(getContext(),
                             EventConst.ID_CLICK_SELECTED_LIST_VIEW_DELETE_SONG);
+                    mSelectedListView.resetState();
+                    mSelectedListView.invalidate();
                 } else if (itemState == SelectedListView.ITEM_STATE_TOP) {
                     PlayListManager.getInstance().addSong(item.getCustomerid(),
                             item.getSongId(), true);
                     LogAnalyzeManager.onEvent(getContext(),
                             EventConst.ID_CLICK_SELECTED_LIST_VIEW_TOP_SONG);
+                    mSelectedListView.resetState();
+                    mSelectedListView.invalidate();
+                    operateAlreadyOrderSelectItem(parent, view, position, id);
                 } else if (itemState == SelectedListView.ITEM_STATE_CUT_SONG) {
                     MainViewManager.getInstance().cutSong();
                     LogAnalyzeManager.onEvent(getContext(),
                             EventConst.ID_CLICK_SELECTED_LIST_VIEW_CUT_SONG);
+                    mSelectedListView.resetState();
+                    mSelectedListView.invalidate();
+                    operateAlreadyOrderSelectItem(parent, view, position, id);
+
                 } else if (itemState == SelectedListView.ITEM_STATE_FAVORITE) {
 
                     if (FavoriteListManager.getInstance().isAlreadyExists(
                             item.getSongId())) {
                         if (FavoriteListManager.getInstance().delSong(
                                 item.getSongId())) {
+                            mSelectedListView.resetState();
+                            mSelectedListView.invalidate();
+                            operateAlreadyOrderSelectItem(parent, view, position, id);
                             UmengAgentUtil
                                     .onEventFavoriteAction(
                                             BaseApplication.getInstance().getBaseContext(),
@@ -240,12 +278,23 @@ public class UserCenterSimpleView extends AbsBaseView implements
                         return;
                     } else if (FavoriteListManager.getInstance().addSong(
                             item.getSongId())) {
+                        mSelectedListView.resetState();
+                        mSelectedListView.invalidate();
+                        operateAlreadyOrderSelectItem(parent, view, position, id);
                         UmengAgentUtil
                                 .onEventFavoriteAction(
                                         BaseApplication.getInstance().getBaseContext(),
                                         EventConst.ID_CLICK_SELECTED_LIST_VIEW_FAVORITE,
                                         true);
+                    } else {
+                        mSelectedListView.resetState();
+                        mSelectedListView.invalidate();
+                        operateAlreadyOrderSelectItem(parent, view, position, id);
                     }
+                } else if (itemState == SelectedListView.ITEM_STATE_NORMAL) {
+                    mSelectedListView.resetState();
+                    mSelectedListView.invalidate();
+                    operateAlreadyOrderSelectItem(parent, view, position, id);
                 }
             }
         });
@@ -254,6 +303,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                log("---mSelectedListView---onFocusChange()---hasFocus:" + hasFocus);
                 /*
                  * if (hasFocus) {
                  * LogAnalyzeManager.getInstance().onPageStart(PageName
@@ -285,20 +335,8 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
                     @Override
                     public void onItemSelected(AdapterView<?> parent,
-                            View view, int position, long id) {
-                        mSelectedListView.restoreFavoriteIcon();
-
-                        KmPlayListItem item = (KmPlayListItem) parent
-                                .getAdapter().getItem(position);
-
-                        if (item == null) {
-                            return;
-                        }
-
-                        if (FavoriteListManager.getInstance().isAlreadyExists(
-                                item.getSongId())) {
-                            mSelectedListView.highlightFavoriteIcon();
-                        }
+                                               View view, int position, long id) {
+                        operateAlreadyOrderSelectItem(parent, view, position, id);
                     }
 
                     @Override
@@ -326,10 +364,30 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
                     @Override
                     public void onUpEdgeKeyDown() {
-                        
+
                     }
                 });
     }
+
+    private void operateAlreadyOrderSelectItem(AdapterView<?> parent,
+                                               View view, int position, long id) {
+
+        log("--mSelectedListView--operateSelectItem()----");
+        mSelectedListView.restoreFavoriteIcon();
+
+        KmPlayListItem item = (KmPlayListItem) parent
+                .getAdapter().getItem(position);
+
+        if (item == null) {
+            return;
+        }
+
+        if (FavoriteListManager.getInstance().isAlreadyExists(
+                item.getSongId())) {
+            mSelectedListView.highlightFavoriteIcon();
+        }
+    }
+
 
     private void initSungView() {
         mSungEmptyTv = (TextView) findViewById(R.id.sung_empty_hint_tv);
@@ -339,7 +397,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         if (mSungDatas == null) {
             mSungDatas = new ArrayList<SungListItem>();
         }
-       
+
 
         mSungAdapter = new SungListAdapter(mActivity, mSungListView, mSungDatas);
         mSungListView.setAdapter(mSungAdapter);
@@ -360,14 +418,14 @@ public class UserCenterSimpleView extends AbsBaseView implements
         mSungListView.setOnItemClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id, int itemState) {
+                                    int position, long id, int itemState) {
                 SungListItem item = (SungListItem) parent.getAdapter().getItem(
                         position);
 
                 if (item == null) {
                     return;
                 }
-
+                mSungListView.setmClickItemPos(position);
                 if (itemState == UserCenterSungListView.ITEM_STATE_DELETE) {
                     EvLog.d("del sung item:" + item.getSongName() + ","
                             + item.getShareCode());
@@ -377,6 +435,10 @@ public class UserCenterSimpleView extends AbsBaseView implements
                     msg.obj = item.getShareCode();
                     PlayListDAOManager.getInstance().getHandler()
                             .sendMessage(msg);
+
+                    mSungListView.resetState();
+                    mSungListView.invalidate();
+//                    mSungListView.setSelection(position - 1);
                     LogAnalyzeManager.onEvent(BaseApplication.getInstance().getBaseContext(),
                             EventConst.ID_CLICK_SUNG_LIST_VIEW_DEL_SONG);
                 } else if (itemState == UserCenterSungListView.ITEM_STATE_NORMAL) {
@@ -384,11 +446,17 @@ public class UserCenterSimpleView extends AbsBaseView implements
                             item.getSongId(), UserCenterSimpleView.this);
                     LogAnalyzeManager.onEvent(BaseApplication.getInstance().getBaseContext(),
                             EventConst.ID_CLICK_SUNG_LIST_VIEW_ADD_SONG);
+
                 } else if (itemState == UserCenterSungListView.ITEM_STATE_TOP) {
                     SongOperationManager.getInstance().topSong(
                             item.getSongId(), UserCenterSimpleView.this);
+                    mSungListView.resetState();
+                    mSungListView.invalidate();
                     LogAnalyzeManager.onEvent(BaseApplication.getInstance().getBaseContext(),
                             EventConst.ID_CLICK_SUNG_LIST_VIEW_TOP_SONG);
+                } else {
+                    mSungListView.resetState();
+                    mSungListView.invalidate();
                 }
             }
         });
@@ -414,19 +482,19 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
                     @Override
                     public void onUpEdgeKeyDown() {
-                        
+
                     }
                 });
     }
 
-    private void delSungListItem(final int sungItemId, final String auidoPath,
-            final String shareCode) {
-        Message msg = new Message();
-        msg.what = ListHandler.SUNGLIST_DEL_ITEM;
-        msg.obj = shareCode;
-        PlayListDAOManager.getInstance().getHandler()
-                .sendMessage(Message.obtain(msg));
-    }
+//    private void delSungListItem(final int sungItemId, final String auidoPath,
+//                                 final String shareCode) {
+//        Message msg = new Message();
+//        msg.what = ListHandler.SUNGLIST_DEL_ITEM;
+//        msg.obj = shareCode;
+//        PlayListDAOManager.getInstance().getHandler()
+//                .sendMessage(Message.obtain(msg));
+//    }
 
     private void initFavoriteView() {
         mFavoriteEmptyIv = (TextView) findViewById(R.id.favorite_empty_hint_tv);
@@ -479,20 +547,22 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
                     @Override
                     public void onUpEdgeKeyDown() {
-                        
+
                     }
                 });
         mFavoriteListView.setOnItemClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id, int itemState) {
+                                    int position, long id, int itemState) {
                 Integer item = (Integer) parent.getAdapter().getItem(position);
                 if (item == null) {
                     return;
                 }
-
+                mFavoriteListView.setmClickItemPos(position);
                 if (itemState == FavoriteListView.ITEM_STATE_DELETE) {
                     if (FavoriteListManager.getInstance().delSong(item)) {
+                        mFavoriteListView.resetState();
+                        mFavoriteListView.invalidate();
                         LogAnalyzeManager
                                 .onEvent(
                                         BaseApplication.getInstance().getBaseContext(),
@@ -501,6 +571,8 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 } else if (itemState == FavoriteListView.ITEM_STATE_TOP) {
                     SongOperationManager.getInstance().topSong(item,
                             UserCenterSimpleView.this);
+                    mFavoriteListView.resetState();
+                    mFavoriteListView.invalidate();
                     LogAnalyzeManager.onEvent(BaseApplication.getInstance().getBaseContext(),
                             EventConst.ID_CLICK_FAVORITE_LIST_VIEW_TOP_SONG);
                 } else if (itemState == FavoriteListView.ITEM_STATE_NORMAL) {
@@ -511,14 +583,14 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 }
             }
         });
-        
-        mLoadingFavorite = (LoadingAndRetryWidget)findViewById(R.id.cloud_favorite_loading_widget);
+
+        mLoadingFavorite = (LoadingAndRetryWidget) findViewById(R.id.cloud_favorite_loading_widget);
     }
 
     /*
      * private void orderSongDelayed(final Song song, final boolean top) {
      * postDelayed(new Runnable() {
-     * 
+     *
      * @Override public void run() { PlayListManager.getInstance().addSong(null,
      * song.getId(), top); } }, KmConfig.ORDER_SONG_DELAY_DURATION); }
      */
@@ -528,7 +600,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 R.string.selected_list_title, count);
         mSelectedTitle.setText(Html.fromHtml(mSelectedTitleFormat));
     }
-    
+
     private void updateTitle(int count) {
         String mFavoriteTitleFormat = getResources().getString(
                 R.string.favorite_list_title, count);
@@ -584,7 +656,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         } else {
             mGridView.setNextFocusRightId(-1);
         }*/
-        
+
     }
 
     private void initSungData() {
@@ -595,16 +667,16 @@ public class UserCenterSimpleView extends AbsBaseView implements
             mSungDatas.addAll(tempData);
             Collections.reverse(mSungDatas);
         }
-        
+
         if (mSungDatas.size() > 0) {
             mSungListView.setVisibility(View.VISIBLE);
             mSungEmptyTv.setVisibility(View.GONE);
             mSungAdapter.refreshOrderedState();
             mSungAdapter.notifyDataSetChanged();
         } else {
-           mSungListView.setVisibility(View.GONE);
-           mSungEmptyTv.setVisibility(View.VISIBLE);
-           mGridView.requestFocus();
+            mSungListView.setVisibility(View.GONE);
+            mSungEmptyTv.setVisibility(View.VISIBLE);
+            mGridView.requestFocus();
         }
     }
 
@@ -627,7 +699,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
             mGridView.requestFocus();
         }
     }
-    
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -638,9 +710,9 @@ public class UserCenterSimpleView extends AbsBaseView implements
         SungListManager.getInstance().registerListener(this);
         FavoriteListManager.getInstance().registerListener(this);
         FavoriteListManager.getInstance().setSyncFavoriteCloudListListener(this);
-        
+
         ChargeViewManager.getInstance().addListener(this);
-        
+
         if (DeviceConfigManager.getInstance().isSupportUserLogin()) {
         } else {
             mSelectedRect.setVisibility(View.VISIBLE);
@@ -661,7 +733,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
                         mSelectedListView.highlightFavoriteIcon();
                     } else {
                         mSelectedListView.restoreFavoriteIcon();
-                    } 
+                    }
                 } else {
                     updateLoginRect();
                 }
@@ -669,13 +741,13 @@ public class UserCenterSimpleView extends AbsBaseView implements
         }, 10);
     }
 
-   
+
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         MainViewManager.getInstance().removeMVSwitchListener(this);
         MainViewManager.getInstance().getStatusBar().showAll();
-        
+
         mTabAdapter.emptyCheckedView();
         mGridView.setSelection(-1);
         PlayListManager.getInstance().unregisterListener(this);
@@ -683,7 +755,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         FavoriteListManager.getInstance().unregisterListener(this);
         FavoriteListManager.getInstance().setSyncFavoriteCloudListListener(null);
         ChargeViewManager.getInstance().removeListener(this);
-        
+
         if (DeviceConfigManager.getInstance().isSupportUserLogin()) {
             if (mSelectedRect.getVisibility() != View.GONE) {
                 mSelectedRect.setVisibility(View.GONE);
@@ -699,7 +771,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 mSelectedRect.setVisibility(View.VISIBLE);
             }
         }
-        
+
         mSelectedListView.resetState();
         mSungListView.resetState();
         mFavoriteListView.resetState();
@@ -709,8 +781,8 @@ public class UserCenterSimpleView extends AbsBaseView implements
         if (mSelectedRect.getVisibility() != View.GONE) {
             mSelectedRect.setVisibility(View.GONE);
         }
-        
-       
+
+
     }
 
     @Override
@@ -804,6 +876,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
     }
 
     private int mTabId = 0;
+
     private void showSubViewByTabId(int tabId) {
 //        EvLog.e("showSubViewByTabId :" + tabId);
         if (tabId == TAB_ID_USER) {
@@ -819,11 +892,11 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 mSungRect.setVisibility(View.GONE);
             }
 
-            if (mFavoriteRect.getVisibility()  == View.VISIBLE) {
+            if (mFavoriteRect.getVisibility() == View.VISIBLE) {
                 mFavoriteRect.setVisibility(View.GONE);
             }
 
-            if (mSelectedRect.getVisibility()  == View.VISIBLE) {
+            if (mSelectedRect.getVisibility() == View.VISIBLE) {
                 mSelectedRect.setVisibility(View.GONE);
             }
         }
@@ -832,15 +905,15 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 mLoadingFavorite.setVisibility(View.GONE);
             }
             initSungData();
-            
-            
-            if (mLoginRect.getVisibility()  == View.VISIBLE) {
+
+
+            if (mLoginRect.getVisibility() == View.VISIBLE) {
                 mLoginRect.setVisibility(View.GONE);
             }
-            if (mSelectedRect.getVisibility()  == View.VISIBLE) {
+            if (mSelectedRect.getVisibility() == View.VISIBLE) {
                 mSelectedRect.setVisibility(View.GONE);
             }
-            if (mFavoriteRect.getVisibility()  == View.VISIBLE) {
+            if (mFavoriteRect.getVisibility() == View.VISIBLE) {
                 mFavoriteRect.setVisibility(View.GONE);
             }
             if (mSungRect.getVisibility() != View.VISIBLE) {
@@ -851,19 +924,19 @@ public class UserCenterSimpleView extends AbsBaseView implements
             if (mFavoriteDatas == null || mFavoriteAdapter == null) {
                 return;
             }
-            
+
             // mFavoriteListView.setVisibility(View.GONE);
-            if (mSungRect.getVisibility()  == View.VISIBLE) {
+            if (mSungRect.getVisibility() == View.VISIBLE) {
                 mSungRect.setVisibility(View.GONE);
             }
-            if (mSelectedRect.getVisibility()  == View.VISIBLE) {
+            if (mSelectedRect.getVisibility() == View.VISIBLE) {
                 mSelectedRect.setVisibility(View.GONE);
             }
-          
-            if (mLoginRect.getVisibility()  == View.VISIBLE) {
+
+            if (mLoginRect.getVisibility() == View.VISIBLE) {
                 mLoginRect.setVisibility(View.GONE);
             }
-            
+
             int state = FavoriteListManager.getInstance().getSyncCloudFavoriteState();
             if (state != FavoriteListManager.SYNC_STATE_SUCCESS) {
                 if (mLoadingFavorite.getVisibility() != View.VISIBLE) {
@@ -885,15 +958,15 @@ public class UserCenterSimpleView extends AbsBaseView implements
             if (mLoadingFavorite.getVisibility() != View.GONE) {
                 mLoadingFavorite.setVisibility(View.GONE);
             }
-            
+
             initSelectedData();
-            if (mSungRect.getVisibility()  == View.VISIBLE) {
+            if (mSungRect.getVisibility() == View.VISIBLE) {
                 mSungRect.setVisibility(View.GONE);
             }
-            if (mLoginRect.getVisibility()  == View.VISIBLE) {
+            if (mLoginRect.getVisibility() == View.VISIBLE) {
                 mLoginRect.setVisibility(View.GONE);
             }
-            if (mFavoriteRect.getVisibility()  == View.VISIBLE) {
+            if (mFavoriteRect.getVisibility() == View.VISIBLE) {
                 mFavoriteRect.setVisibility(View.GONE);
             }
 
@@ -911,13 +984,13 @@ public class UserCenterSimpleView extends AbsBaseView implements
         mGridView.setNextFocusRightId(mLoadingFavorite.getRetryBtnId());
         mLoadingFavorite.setRetryCallback(this);
     }
-    
+
     private void showFavoriteDatas() {
         mFavoriteDatas.clear();
         mFavoriteDatas.addAll(FavoriteListManager.getInstance().getList());
         updateTitle(mFavoriteDatas.size());
-        EvLog.i("showFavoriteDatas " +mFavoriteDatas.size());
-        
+        EvLog.i("showFavoriteDatas " + mFavoriteDatas.size());
+
         if (mFavoriteDatas.size() == 0) {
             mFavoriteListView.setVisibility(View.GONE);
             mFavoriteEmptyIv.setVisibility(View.VISIBLE);
@@ -931,14 +1004,20 @@ public class UserCenterSimpleView extends AbsBaseView implements
         mFavoriteListView.setFocusable(true);
         return;
     }
-    
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position,
-            long id) {
+                               long id) {
 //        EvLog.d("onItemselected " + position);
         if (!mGridView.isFocused()) {
             return;
         }
+        operateLeftTabItemSelect(parent, view, position, id);
+    }
+
+    private void operateLeftTabItemSelect(AdapterView<?> parent, View view, int position,
+                                          long id) {
+
         UserCenterTabItem tab = (UserCenterTabItem) parent.getAdapter()
                 .getItem(position);
 
@@ -948,6 +1027,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         mTabAdapter.setCheckedView(view);
         mTabId = tab.tabId;
         showSubViewByTabId(tab.tabId);
+
     }
 
     @Override
@@ -1029,12 +1109,12 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
     @Override
     public void onChargeFailed() {
-        
+
     }
 
     @Override
     public void onChargeCancel() {
-        
+
     }
 
     @Override
@@ -1072,7 +1152,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         if (mFavoriteRect.getVisibility() != View.VISIBLE) {
             return;
         }
-        
+
         if (mFavoriteRect.getVisibility() != View.GONE) {
             mFavoriteRect.setVisibility(View.GONE);
         }
@@ -1099,7 +1179,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
             mFavoriteDatas.clear();
         }
     }
-   
+
     @Override
     public boolean onSmallMVUpKey() {
         mGridView.requestFocus();
@@ -1128,7 +1208,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
     @Override
     public void onSwitchToMV() {
-        
+
     }
 
     @Override
@@ -1139,5 +1219,9 @@ public class UserCenterSimpleView extends AbsBaseView implements
     @Override
     public boolean onStatusBarDownKey() {
         return false;
+    }
+
+    private void log(String tag) {
+        Log.d("gsp", TAG + ">>>" + tag);
     }
 }

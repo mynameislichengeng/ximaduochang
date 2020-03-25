@@ -1,35 +1,35 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
-INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
-INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
-INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
-INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
-INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
-INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
+ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
+INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
+INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
+INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
+INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
+INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
+INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:1-15:12
 	package
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:2:5-37
-		INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml
-		INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:2:5-37
+		INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml
+		INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml
 	android:versionName
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:4:5-30
-		INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml
-		INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:4:5-30
+		INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml
+		INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:1:11-69
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:1:11-69
 	android:versionCode
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:3:5-28
-		INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml
-		INJECTED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:3:5-28
+		INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml
+		INJECTED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml
 uses-sdk
-ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:6:5-8:41
+ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:6:5-8:41
 	android:targetSdkVersion
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:8:9-38
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:8:9-38
 	android:minSdkVersion
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:7:9-34
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:7:9-34
 application
-ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:10:5-13:19
+ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:10:5-13:19
 	android:label
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:12:9-41
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:12:9-41
 	android:allowBackup
-		ADDED from /Users/geshuaipeng/AndroidStudioProjects/duochang/ximaduochang/ChargeProxy/AndroidManifest.xml:11:9-35
+		ADDED from /Users/licheng/ws/as/private/music/ximaduochang/ChargeProxy/AndroidManifest.xml:11:9-35

@@ -156,11 +156,11 @@ public class SongTopDetailAdapter extends BaseSongListAdapter<SongTopDetail> {
 
         setSongOrderedState(viewHolder, item);
 
-        if (selectPostion == position) {
-            setSingerNameBelow(convertView,View.VISIBLE);
-        }else {
-            setSingerNameBelow(convertView,View.GONE);
-        }
+//        if (selectPostion == position) {
+//            setSingerNameBelow(convertView,View.VISIBLE);
+//        }else {
+//            setSingerNameBelow(convertView,View.GONE);
+//        }
     }
 
     public void setSongNameSpecWidth(int specWidth) {

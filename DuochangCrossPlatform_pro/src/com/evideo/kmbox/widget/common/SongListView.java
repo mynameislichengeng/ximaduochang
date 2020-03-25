@@ -326,6 +326,12 @@ public class SongListView extends ListView implements android.widget.AdapterView
         }
     }
 
+    float down_x = 0;
+    float down_y = 0;
+
+    float up_x = 0;
+    float up_y = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
 
@@ -336,6 +342,8 @@ public class SongListView extends ListView implements android.widget.AdapterView
 //                float x = ev.getX();
 //                float y = ev.getY();
 //                log("onTouchEvent(MotionEvent ev)---position-down位置--x: " + x + ", y:" + y);
+                down_x = ev.getX();
+                down_y = ev.getY();
                 if (isFocused()) {
                     if (TouchEventManager.isTouchCommon(topTouchPostionParam, ev)) {
                         log("\n----选择了----topButton置顶按钮--\n");
@@ -361,6 +369,16 @@ public class SongListView extends ListView implements android.widget.AdapterView
                 break;
             case MotionEvent.ACTION_UP:
 //                log("onTouchEvent(MotionEvent ev)---MotionEvent.ACTION_UP");
+                up_x = ev.getX();
+                up_y = ev.getY();
+                float temp_x = up_x - down_x;
+                float temp_y = up_y - down_y;
+                log("位置移动距离temp_x:" + temp_x + ", temp_y:" + temp_y);
+                if (Math.abs(temp_x) > 10 || Math.abs(temp_y) > 10) {
+                    mItemState = ITEM_STATE_NORMAL;
+                    invalidate();
+                    return true;
+                }
                 break;
             default:
                 break;

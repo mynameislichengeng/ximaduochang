@@ -103,6 +103,7 @@
                 android:layout_marginLeft="@dimen/px60"
                 android:layout_marginRight="@dimen/px120"
                 android:layout_marginTop="@dimen/px20"
+
                 android:scrollbars="@null" />
 
             <!-- <ImageView
