@@ -102,7 +102,7 @@ public class SongMenuView extends AbsBaseView implements ISongMenuListListener {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        SongMenuManager.getInstance().getSongMenuList();
+
         if (SongMenuManager.getInstance().getSongMenuList().size() == 0) {
             if (mLoadingView.getVisibility() != View.VISIBLE) {
                 mLoadingView.setVisibility(View.VISIBLE);

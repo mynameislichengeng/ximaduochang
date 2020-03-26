@@ -1,344 +1,346 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+    xmlns:MaskFocusView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/px40"
+    android:layout_height="match_parent">
 
-	<com.evideo.kmbox.widget.common.SmoothHorizontalScrollView
-		android:id="@+id/home_scrollview"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/px120"
-		android:clipChildren="false"
-		android:clipToPadding="false"
-		android:scrollbars="none">
+    <com.evideo.kmbox.widget.common.SmoothHorizontalScrollView
+        android:id="@+id/home_scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px120"
+        android:clipChildren="false"
+        android:clipToPadding="false"
 
-		<FrameLayout
-			android:id="@+id/home_page_container"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:clipChildren="false"
-			android:clipToPadding="false"
-			android:paddingRight="@dimen/px81">
+        android:scrollbars="none">
 
-			<!-- android:src="@drawable/home_page_huodong" -->
+        <FrameLayout
+            android:id="@+id/home_page_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingRight="@dimen/px81">
 
-			<com.evideo.kmbox.widget.common.MaskFocusAnimLinearLayout
-				android:id="@+id/song_huodong_container"
-				android:layout_width="@dimen/px541"
-				android:layout_height="@dimen/px434"
-				android:layout_marginLeft="@dimen/px81"
-				android:focusable="true"
-				android:nextFocusLeft="@id/song_huodong_container"
-				android:nextFocusRight="@+id/song_name"
-				android:nextFocusDown="@+id/freesong"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
+            <!-- android:src="@drawable/home_page_huodong" -->
+
+            <com.evideo.kmbox.widget.common.MaskFocusAnimLinearLayout
+                android:id="@+id/song_huodong_container"
+                android:layout_width="@dimen/px541"
+                android:layout_height="@dimen/px434"
+                android:layout_marginLeft="@dimen/px41"
                 android:layout_marginTop="@dimen/px64"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27">
+                android:focusable="true"
+                android:nextFocusLeft="@id/song_huodong_container"
+                android:nextFocusRight="@+id/song_name"
+                android:nextFocusDown="@+id/freesong"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27">
 
-				<ImageView
-					android:id="@+id/song_huodong"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:clipChildren="true"
-					android:clipToPadding="true"
-					android:focusable="false"
-					android:src="@drawable/ic_song_menu_child" />
-			</com.evideo.kmbox.widget.common.MaskFocusAnimLinearLayout>
+                <ImageView
+                    android:id="@+id/song_huodong"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="true"
+                    android:clipToPadding="true"
+                    android:focusable="false"
+                    android:src="@drawable/ic_song_menu_child" />
+            </com.evideo.kmbox.widget.common.MaskFocusAnimLinearLayout>
 
-			<!-- 歌单 -->
-			<!--     <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-	            android:id="@+id/song_huodong_bak"
-	            android:layout_width="@dimen/px541"
-	            android:layout_height="@dimen/px434"
-	            android:focusable="true"
-	            android:layout_marginTop="@dimen/px167"
-	            android:layout_marginLeft="@dimen/px81"
-	            android:visibility="invisible"
-	            android:src="@drawable/home_page_huodong"
-	            MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-	            MaskFocusView:focusOnTop="false"
-	            MaskFocusView:focusPaddingLeft="@dimen/px27"
-        		MaskFocusView:focusPaddingRight="@dimen/px27"
-       			MaskFocusView:focusPaddingTop="@dimen/px27"
-        		MaskFocusView:focusPaddingBottom="@dimen/px27"
-        		android:nextFocusRight="@+id/song_name"
-        		android:nextFocusLeft="@id/song_huodong"
-        		android:nextFocusDown="@+id/favorite"
-	            /> -->
+            <!-- 歌单 -->
+            <!--     <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/song_huodong_bak"
+                android:layout_width="@dimen/px541"
+                android:layout_height="@dimen/px434"
+                android:focusable="true"
+                android:layout_marginTop="@dimen/px167"
+                android:layout_marginLeft="@dimen/px81"
+                android:visibility="invisible"
+                android:src="@drawable/home_page_huodong"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                   MaskFocusView:focusPaddingTop="@dimen/px27"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                android:nextFocusRight="@+id/song_name"
+                android:nextFocusLeft="@id/song_huodong"
+                android:nextFocusDown="@+id/favorite"
+                /> -->
 
-			<!-- 歌名 -->
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/song_name"
-				android:layout_width="@dimen/px329"
-				android:layout_height="@dimen/px212"
-				android:layout_marginLeft="@dimen/px632"
-				android:focusable="true"
-				android:nextFocusLeft="@id/song_huodong_container"
-				android:src="@drawable/home_page_song_name"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				android:layout_marginTop="@dimen/px64"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-
-			<!-- 歌星 -->
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/singer"
-				android:layout_width="@dimen/px328"
-				android:layout_height="@dimen/px212"
-				android:layout_marginLeft="@dimen/px632"
-				android:layout_marginTop="@dimen/px278"
-				android:focusable="true"
-				android:nextFocusLeft="@id/song_huodong_container"
-				android:src="@drawable/home_page_singer"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<!--免费试唱 -->
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/freesong"
-				android:layout_width="@dimen/px212"
-				android:layout_height="@dimen/px212"
-				android:layout_marginLeft="@dimen/px81"
-				android:layout_marginTop="@dimen/px499"
-				android:focusable="true"
-				android:nextFocusLeft="@id/freesong"
-				android:nextFocusUp="@id/song_huodong_container"
-				android:src="@drawable/home_page_free_song"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<!--  <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-	            android:id="@+id/redsong"
-	            android:layout_width="@dimen/px213"
-	            android:layout_height="@dimen/px212"
-	            android:src="@drawable/home_page_red_song"
-	            android:focusable="true"
-	            android:layout_marginTop="@dimen/px611"
-	            android:layout_marginLeft="@dimen/px303"
-	            MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-	            MaskFocusView:focusOnTop="false"
-	            MaskFocusView:focusPaddingLeft="@dimen/px27"
-        		MaskFocusView:focusPaddingRight="@dimen/px27"
-       			MaskFocusView:focusPaddingTop="@dimen/px27"
-        		MaskFocusView:focusPaddingBottom="@dimen/px27"
-        		android:nextFocusUp="@id/song_huodong_container"
-	            /> -->
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/newestSong"
-				android:layout_width="@dimen/px213"
-				android:layout_height="@dimen/px212"
-				android:layout_marginLeft="@dimen/px303"
-				android:layout_marginTop="@dimen/px499"
-				android:focusable="true"
-				android:nextFocusUp="@id/song_huodong_container"
-				android:src="@drawable/home_page_newestsong"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/child"
-				android:layout_width="@dimen/px213"
-				android:layout_height="@dimen/px212"
-				android:layout_marginLeft="@dimen/px525"
-				android:layout_marginTop="@dimen/px499"
-				android:focusable="true"
-				android:nextFocusUp="@id/song_huodong_container"
-				android:src="@drawable/home_page_children"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/drama"
-				android:layout_width="@dimen/px211"
-				android:layout_height="@dimen/px210"
-				android:layout_marginLeft="@dimen/px747"
-				android:layout_marginTop="@dimen/px499"
-				android:focusable="true"
-				android:nextFocusUp="@id/singer"
-				android:src="@drawable/home_page_opera"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<!-- 歌单 -->
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/song_menu"
-				android:layout_width="@dimen/px439"
-				android:layout_height="@dimen/px323"
-				android:layout_marginLeft="@dimen/px970"
-				android:focusable="true"
-				android:layout_marginTop="@dimen/px64"
-				android:src="@drawable/home_page_menu"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-			<!-- 排行 -->
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/top"
-				android:layout_width="@dimen/px439"
-				android:layout_height="@dimen/px323"
-				android:layout_marginLeft="@dimen/px970"
-				android:layout_marginTop="@dimen/px396"
-				android:focusable="true"
-				android:src="@drawable/home_page_top"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/order_by_phone"
-				android:layout_width="@dimen/px415"
-				android:layout_height="@dimen/px211"
-				android:layout_marginLeft="@dimen/px1419"
-				android:focusable="true"
-				android:nextFocusUp="@id/status_bar_search"
-				android:src="@drawable/home_page_order_by_phone_third_platform"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				android:layout_marginTop="@dimen/px64"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<com.evideo.kmbox.widget.mainview.homepage.HomePageMySpaceLayout
-				android:id="@+id/user_center"
-				android:layout_width="@dimen/px415"
-				android:layout_height="@dimen/px211"
-				android:layout_marginLeft="@dimen/px1419"
-				android:layout_marginTop="@dimen/px284"
-				android:background="@drawable/home_page_user_center"
-				android:focusable="true"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-			<!--   <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-	            android:id="@+id/user_center"
-	            android:layout_width="@dimen/px415"
-	            android:layout_height="@dimen/px211"
-	            android:src="@drawable/home_page_user_center"
-	            android:focusable="true"
-	            android:layout_marginTop="@dimen/px388"
-	            android:layout_marginLeft="@dimen/px1419"
-	            MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-	            MaskFocusView:focusOnTop="false"
-	            MaskFocusView:focusPaddingLeft="@dimen/px27"
-        		MaskFocusView:focusPaddingRight="@dimen/px27"
-       			MaskFocusView:focusPaddingTop="@dimen/px27"
-        		MaskFocusView:focusPaddingBottom="@dimen/px27"
-	            /> -->
-			<com.evideo.kmbox.widget.common.MaskFocusAnimImageView
-				android:id="@+id/about"
-				android:layout_width="@dimen/px415"
-				android:layout_height="@dimen/px211"
-				android:layout_marginLeft="@dimen/px1419"
-				android:layout_marginTop="@dimen/px506"
-				android:focusable="true"
-				android:src="@drawable/home_page_about"
-				MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
-				MaskFocusView:focusOnTop="false"
-				MaskFocusView:focusPaddingBottom="@dimen/px27"
-				MaskFocusView:focusPaddingLeft="@dimen/px27"
-				MaskFocusView:focusPaddingRight="@dimen/px27"
-				MaskFocusView:focusPaddingTop="@dimen/px27" />
-
-			<!-- 倒影 -->
-			<!--  <com.evideo.kmbox.widget.common.ReflectImageView
-	            android:id="@+id/reflect_iv_newest_song"
-	            android:layout_width="@dimen/px212"
-	            android:layout_height="@dimen/px80"
-	            android:src="@drawable/home_page_newestsong"
-	            android:layout_marginLeft="@dimen/px81"
-	            android:layout_marginTop="@dimen/px833"
-	            />
-
-	        <com.evideo.kmbox.widget.common.ReflectImageView
-	            android:id="@+id/reflect_iv_red"
-	            android:layout_width="@dimen/px213"
-	            android:layout_height="@dimen/px80"
-	            android:src="@drawable/home_page_red_song"
-	            android:layout_marginLeft="@dimen/px303"
-	            android:layout_marginTop="@dimen/px833"
-	            />
-
-	        <com.evideo.kmbox.widget.common.ReflectImageView
-	            android:id="@+id/reflect_iv_child"
-	            android:layout_width="@dimen/px213"
-	            android:layout_height="@dimen/px80"
-	            android:src="@drawable/home_page_children"
-	            android:layout_marginLeft="@dimen/px525"
-	            android:layout_marginTop="@dimen/px833"
-	            />
-
-	        <com.evideo.kmbox.widget.common.ReflectImageView
-	            android:id="@+id/reflect_iv_drama"
-	            android:layout_width="@dimen/px211"
-	            android:layout_height="@dimen/px80"
-	            android:src="@drawable/home_page_opera"
-	            android:layout_marginLeft="@dimen/px746"
-	            android:layout_marginTop="@dimen/px833"
-	            />
-
-	        <com.evideo.kmbox.widget.common.ReflectImageView
-	            android:id="@+id/reflect_iv_top"
-	            android:layout_width="@dimen/px439"
-	            android:layout_height="@dimen/px80"
-	            android:src="@drawable/home_page_top"
-	            android:layout_marginLeft="@dimen/px970"
-	            android:layout_marginTop="@dimen/px833"
-	            />
+            <!-- 歌名 -->
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/song_name"
+                android:layout_width="@dimen/px329"
+                android:layout_height="@dimen/px212"
+                android:layout_marginLeft="@dimen/px591"
+                android:layout_marginTop="@dimen/px64"
+                android:focusable="true"
+                android:nextFocusLeft="@id/song_huodong_container"
+                android:src="@drawable/home_page_song_name"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
 
 
-	        <com.evideo.kmbox.widget.common.ReflectImageView
-	            android:id="@+id/reflect_iv_about"
-	            android:layout_width="@dimen/px439"
-	            android:layout_height="@dimen/px80"
-	            android:src="@drawable/home_page_about_liantong"
-	            android:layout_marginLeft="@dimen/px1419"
-	            android:layout_marginTop="@dimen/px833"
-	            /> -->
+            <!-- 歌星 -->
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/singer"
+                android:layout_width="@dimen/px328"
+                android:layout_height="@dimen/px212"
+                android:layout_marginLeft="@dimen/px591"
+                android:layout_marginTop="@dimen/px278"
+                android:focusable="true"
+                android:nextFocusLeft="@id/song_huodong_container"
+                android:src="@drawable/home_page_singer"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
 
-		</FrameLayout>
+            <!--免费试唱 -->
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/freesong"
+                android:layout_width="@dimen/px212"
+                android:layout_height="@dimen/px212"
+                android:layout_marginLeft="@dimen/px41"
+                android:layout_marginTop="@dimen/px499"
+                android:focusable="true"
+                android:nextFocusLeft="@id/freesong"
+                android:nextFocusUp="@id/song_huodong_container"
+                android:src="@drawable/home_page_free_song"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
 
-	</com.evideo.kmbox.widget.common.SmoothHorizontalScrollView>
-	<!--   <com.evideo.kmbox.widget.common.CircleImageView
+            <!--  <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/redsong"
+                android:layout_width="@dimen/px213"
+                android:layout_height="@dimen/px212"
+                android:src="@drawable/home_page_red_song"
+                android:focusable="true"
+                android:layout_marginTop="@dimen/px611"
+                android:layout_marginLeft="@dimen/px303"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                   MaskFocusView:focusPaddingTop="@dimen/px27"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                android:nextFocusUp="@id/song_huodong_container"
+                /> -->
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/newestSong"
+                android:layout_width="@dimen/px213"
+                android:layout_height="@dimen/px212"
+                android:layout_marginLeft="@dimen/px262"
+                android:layout_marginTop="@dimen/px499"
+                android:focusable="true"
+                android:nextFocusUp="@id/song_huodong_container"
+                android:src="@drawable/home_page_newestsong"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/child"
+                android:layout_width="@dimen/px213"
+                android:layout_height="@dimen/px212"
+                android:layout_marginLeft="@dimen/px485"
+                android:layout_marginTop="@dimen/px499"
+                android:focusable="true"
+                android:nextFocusUp="@id/song_huodong_container"
+                android:src="@drawable/home_page_children"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/drama"
+                android:layout_width="@dimen/px211"
+                android:layout_height="@dimen/px210"
+                android:layout_marginLeft="@dimen/px707"
+                android:layout_marginTop="@dimen/px499"
+                android:focusable="true"
+                android:nextFocusUp="@id/singer"
+                android:src="@drawable/home_page_opera"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+
+            <!-- 歌单 -->
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/song_menu"
+                android:layout_width="@dimen/px439"
+                android:layout_height="@dimen/px323"
+                android:layout_marginLeft="@dimen/px930"
+                android:layout_marginTop="@dimen/px64"
+                android:focusable="true"
+                android:src="@drawable/home_page_menu"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+            <!-- 排行 -->
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/top"
+                android:layout_width="@dimen/px439"
+                android:layout_height="@dimen/px323"
+                android:layout_marginLeft="@dimen/px930"
+                android:layout_marginTop="@dimen/px396"
+                android:focusable="true"
+                android:src="@drawable/home_page_top"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/order_by_phone"
+                android:layout_width="@dimen/px415"
+                android:layout_height="@dimen/px211"
+                android:layout_marginLeft="@dimen/px1379"
+                android:layout_marginTop="@dimen/px64"
+                android:focusable="true"
+                android:nextFocusUp="@id/status_bar_search"
+                android:src="@drawable/home_page_order_by_phone_third_platform"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+
+            <com.evideo.kmbox.widget.mainview.homepage.HomePageMySpaceLayout
+                android:id="@+id/user_center"
+                android:layout_width="@dimen/px415"
+                android:layout_height="@dimen/px211"
+                android:layout_marginLeft="@dimen/px1379"
+                android:layout_marginTop="@dimen/px284"
+                android:background="@drawable/home_page_user_center"
+                android:focusable="true"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+            <!--   <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/user_center"
+                android:layout_width="@dimen/px415"
+                android:layout_height="@dimen/px211"
+                android:src="@drawable/home_page_user_center"
+                android:focusable="true"
+                android:layout_marginTop="@dimen/px388"
+                android:layout_marginLeft="@dimen/px1419"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                   MaskFocusView:focusPaddingTop="@dimen/px27"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                /> -->
+            <com.evideo.kmbox.widget.common.MaskFocusAnimImageView
+                android:id="@+id/about"
+                android:layout_width="@dimen/px415"
+                android:layout_height="@dimen/px211"
+                android:layout_marginLeft="@dimen/px1379"
+                android:layout_marginTop="@dimen/px506"
+                android:focusable="true"
+                android:src="@drawable/home_page_about"
+                MaskFocusView:focusFrame="@drawable/home_page_focus_frame"
+                MaskFocusView:focusOnTop="false"
+                MaskFocusView:focusPaddingBottom="@dimen/px27"
+                MaskFocusView:focusPaddingLeft="@dimen/px27"
+                MaskFocusView:focusPaddingRight="@dimen/px27"
+                MaskFocusView:focusPaddingTop="@dimen/px27" />
+
+            <!-- 倒影 -->
+            <!--  <com.evideo.kmbox.widget.common.ReflectImageView
+                android:id="@+id/reflect_iv_newest_song"
+                android:layout_width="@dimen/px212"
+                android:layout_height="@dimen/px80"
+                android:src="@drawable/home_page_newestsong"
+                android:layout_marginLeft="@dimen/px81"
+                android:layout_marginTop="@dimen/px833"
+                />
+
+            <com.evideo.kmbox.widget.common.ReflectImageView
+                android:id="@+id/reflect_iv_red"
+                android:layout_width="@dimen/px213"
+                android:layout_height="@dimen/px80"
+                android:src="@drawable/home_page_red_song"
+                android:layout_marginLeft="@dimen/px303"
+                android:layout_marginTop="@dimen/px833"
+                />
+
+            <com.evideo.kmbox.widget.common.ReflectImageView
+                android:id="@+id/reflect_iv_child"
+                android:layout_width="@dimen/px213"
+                android:layout_height="@dimen/px80"
+                android:src="@drawable/home_page_children"
+                android:layout_marginLeft="@dimen/px525"
+                android:layout_marginTop="@dimen/px833"
+                />
+
+            <com.evideo.kmbox.widget.common.ReflectImageView
+                android:id="@+id/reflect_iv_drama"
+                android:layout_width="@dimen/px211"
+                android:layout_height="@dimen/px80"
+                android:src="@drawable/home_page_opera"
+                android:layout_marginLeft="@dimen/px746"
+                android:layout_marginTop="@dimen/px833"
+                />
+
+            <com.evideo.kmbox.widget.common.ReflectImageView
+                android:id="@+id/reflect_iv_top"
+                android:layout_width="@dimen/px439"
+                android:layout_height="@dimen/px80"
+                android:src="@drawable/home_page_top"
+                android:layout_marginLeft="@dimen/px970"
+                android:layout_marginTop="@dimen/px833"
+                />
+
+
+            <com.evideo.kmbox.widget.common.ReflectImageView
+                android:id="@+id/reflect_iv_about"
+                android:layout_width="@dimen/px439"
+                android:layout_height="@dimen/px80"
+                android:src="@drawable/home_page_about_liantong"
+                android:layout_marginLeft="@dimen/px1419"
+                android:layout_marginTop="@dimen/px833"
+                /> -->
+
+        </FrameLayout>
+
+    </com.evideo.kmbox.widget.common.SmoothHorizontalScrollView>
+    <!--   <com.evideo.kmbox.widget.common.CircleImageView
             android:id="@+id/home_page_memberImage"
             android:layout_width="@dimen/px130"
             android:layout_height="@dimen/px130"

@@ -174,8 +174,9 @@ public class UserCenterSimpleView extends AbsBaseView implements
                     mSungListView.requestFocus();
                 } else if (position == 3) {
                     mFavoriteListView.requestFocus();
+                } else if (position == 0) {
+                    mUserInfoView.requestFocus();
                 }
-
             }
         });
         mGridView.setOnKeyListener(new View.OnKeyListener() {

@@ -38,15 +38,19 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
 
     private TextView mLastCheckedView = null;
 
+
+
     /**
      * @param context
      * @param parentView
      * @param datas
      */
     public UserCenterTabAdapter(Context context, ViewGroup parentView,
-            ArrayList<UserCenterTabItem> datas) {
+                                ArrayList<UserCenterTabItem> datas) {
         super(context, parentView, datas);
     }
+
+
 
     /**
      * {@inheritDoc}
@@ -58,10 +62,10 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
                 R.dimen.px39);
         mEnlargeSize = mContext.getResources().getDimensionPixelSize(
                 R.dimen.px49);
-        
+
         mEnlargeColor = mContext.getResources().getColor(
                 R.color.text_white);
-        mNormalColor =  mContext.getResources().getColor(
+        mNormalColor = mContext.getResources().getColor(
                 R.color.myspace_tab_item_normal_color);
     }
 
@@ -76,6 +80,12 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
         viewHolder.mNameTv = (TextView) view
                 .findViewById(R.id.main_view_song_top_item_name_tv);
         view.setTag(viewHolder);
+//        if (selectPosition == position) {
+////            setSelectI(viewHolder.mNameTv, true);
+//            setViewSelectedButNotFocus();
+//        } else {
+//            setSelectI(viewHolder.mNameTv, false);
+//        }
         return view;
     }
 
@@ -106,9 +116,8 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
 
     /**
      * [功能说明] 设置view选中状态
-     * 
-     * @param checkedView
-     *            选中view
+     *
+     * @param checkedView 选中view
      */
     public void setCheckedView(View checkedView) {
         if (checkedView == null) {
@@ -116,12 +125,12 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
         }
         if (mLastCheckedView != null) {
             setViewSelected(mLastCheckedView, false);
-        } 
+        }
         ViewHolder holder = (ViewHolder) checkedView.getTag();
         TextView textView = holder.mNameTv;
         setViewSelected(textView, true);
     }
-    
+
     /**
      * [功能说明]焦点离开但选中状态
      */
@@ -146,7 +155,7 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mNormalSize);
         }
     }
-    
+
     public int getCurrentViewTabId() {
         String text = (String) mLastCheckedView.getText();
         if (TextUtils.isEmpty(text)) {
@@ -160,11 +169,14 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
         }
         return -1;
     }
-    
+
     public void emptyCheckedView() {
         mLastCheckedView = null;
     }
-    private void setViewSelected(TextView view, boolean selected) {
+
+
+
+    private void setViewSelected(TextView view, boolean selected){
         if (view != null) {
             if (selected) {
 //                EvLog.d("setViewSelected ----");
@@ -179,6 +191,8 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
                 view.setTextColor(mNormalColor);
 //                view.setTextSize(mNormalSize);
                 view.setTextSize(TypedValue.COMPLEX_UNIT_PX, mNormalSize);
+
+
             }
         }
     }

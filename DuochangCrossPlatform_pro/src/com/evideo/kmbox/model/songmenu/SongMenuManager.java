@@ -136,7 +136,7 @@ public final class SongMenuManager {
     public List<SongMenu> getSongMenuList() {
         /*mDatas.clear();*/
         /*addPreData();*/
-        Log.i("gsp", "getSongMenuList: 歌单列表是"+mDatas.size());
+//        Log.i("gsp", "getSongMenuList: 歌单列表是"+mDatas.size());
         return mDatas;
     }
     

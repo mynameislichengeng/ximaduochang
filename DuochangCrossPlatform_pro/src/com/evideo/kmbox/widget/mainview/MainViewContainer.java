@@ -107,7 +107,7 @@ public class MainViewContainer extends FrameLayout implements IActivityObserver,
     }
 
     /**
-     * @param context
+     * @param
      */
     public MainViewContainer(Activity activity) {
         super(activity);
@@ -144,12 +144,11 @@ public class MainViewContainer extends FrameLayout implements IActivityObserver,
         mHomePageView.huodongReady();
     }
 
-    public void huodongPause() {
-        mHomePageView.pauseHuodongViewPager();
+    public void huodongPause(){
+        mHomePageView.removeHandlerHuadong();
     }
-
-    public void huodongResume() {
-        mHomePageView.resumeHuodongViewPager();
+    public void huodongResume(){
+        mHomePageView.sendHandlerHuadong();
     }
 
     public void updateHomeView() {

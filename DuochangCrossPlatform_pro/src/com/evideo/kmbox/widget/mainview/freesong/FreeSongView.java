@@ -121,7 +121,7 @@ public class FreeSongView extends AbsBaseView implements IGetFreeSongEventListen
                 }
 
                 if (itemState == SongListView.ITEM_STATE_NORMAL) {
-                    DeviceConfigManager.getInstance().setFree(true);
+//                    DeviceConfigManager.getInstance().setFree(true);
                     SongOperationManager.getInstance().orderSong(song.getId(), FreeSongView.this);
                     operateSelectItem(parent, view, position, id);
                 } else if (itemState == SongListView.ITEM_STATE_TOP) {
