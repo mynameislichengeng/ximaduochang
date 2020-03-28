@@ -1067,17 +1067,8 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
                                     EvLog.e("isMainViewVisible notifyBackPressed");
                                     ActivitySubject.getInstance().notifyBackPressed();
                                 } else {
-                   /* if (mMainView.isRemoteControlShow()) {
-                        mMainView.hideRemoteControlGuide();
-                        KmSharedPreferences.getInstance().putBoolean(KeyName.KEY_SHOW_REMOTE_CONTROL_GUIDE, false);
-                        return true;
-                    }*/
-                                    if (mMvSelectedView != null && mMvSelectedView.getVisibility() == View.VISIBLE/*MvSelectedManager.getInstance().isVisible()*/) {
-                                        /*MvSelectedManager.getInstance().hideMvSelectedView();*/
-                                        mMvSelectedView.hide();
-                                    } else {
-                                        MainViewManager.getInstance().switchMainView();
-                                    }
+                                    //mv中的退出操作
+                                    operateExitFromMv();
                                 }
                             }
                         } else {
@@ -1542,8 +1533,12 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
     }
 
     public void showPlayCtrlView() {
+
         if (mMVCtrlWidget.isPlayCtrlWidgetShowing()) {
+            log("showPlayCtrlView()---false");
             return;
+        } else {
+            log("showPlayCtrlView()---true");
         }
 
         boolean gradeOpen = false;
@@ -1559,6 +1554,18 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
             mMVCtrlWidget.showPlayWidgetWithGradeBtn(gradeOpen);
         } else {
             mMVCtrlWidget.showPlayWidgetWithoutGradeBtn();
+        }
+    }
+
+    /**
+     * 在mv中退出操作
+     */
+    public void operateExitFromMv() {
+        if (mMvSelectedView != null && mMvSelectedView.getVisibility() == View.VISIBLE/*MvSelectedManager.getInstance().isVisible()*/) {
+            /*MvSelectedManager.getInstance().hideMvSelectedView();*/
+            mMvSelectedView.hide();
+        } else {
+            MainViewManager.getInstance().switchMainView();
         }
     }
 
@@ -2984,6 +2991,10 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
     @Override
     public void exitActivity() {
         release();
+    }
+
+    private void log(String msg) {
+        Log.d("gsp", TAG + ">>>" + msg);
     }
 
 }

@@ -15,6 +15,7 @@ import android.media.MediaPlayer.TrackInfo;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -28,38 +29,38 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
         OnCompletionListener {
 
     public static final String TAG = "mediaplayer";
-    
+
     private String mUrl = null;
     private MediaPlayer mPlayer = null;
     private IKmPlayerEvent mListener = null;
     int mState = KmPlayerState.PlayerState_eIdle;
     private int mSingMode = KmAudioTrackMode.MODE_ORI;
-    
+
     private int mAudioOrgTrackIndex = -1;
     private int mAudioAccTrackIndex = -1;
     // add by qiangv
     private int mAudioTrackCount = 0;
     private int mOriginalInfo = 0;
     private int mAccompanyInfo = 0;
-    
+
     private DefaultVideoRenderView mRenderView;
     private boolean mUnsafeMode;//使用用户创建的SurfaceView来使用该类,如果多个player共用该SurfaceView可能出现卡顿或不能播放视频的bug
     private SurfaceView mSurfaceView;
     private Handler mMainHandler = new Handler(Looper.getMainLooper());
     private final Object mReadyLock = new Object();
-    private boolean mIsPrepared=false;
-    private boolean mIsSurfaceCreated=false;
+    private boolean mIsPrepared = false;
+    private boolean mIsSurfaceCreated = false;
     public static boolean gOpenSoftDecode = false;
 
-    
+
     public KmVideoPlayer(Object renderView) {
         initPlayer();
         mState = KmPlayerState.PlayerState_eIdle;
-        
-        mRenderView=(DefaultVideoRenderView)renderView;
-        mUnsafeMode=false;
+
+        mRenderView = (DefaultVideoRenderView) renderView;
+        mUnsafeMode = false;
         EvLog.i(TAG + "use safe mode");
-        if (mRenderView==null){
+        if (mRenderView == null) {
             EvLog.w(TAG + " render view is null, no video output");
         }
     }
@@ -79,18 +80,17 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
         }*/
     }
 
-    
-    static void runOnHandlerSync(final Runnable task, Handler handler){
+
+    static void runOnHandlerSync(final Runnable task, Handler handler) {
         final Object lock = new Object();
-        if (Looper.myLooper() == handler.getLooper()){
+        if (Looper.myLooper() == handler.getLooper()) {
             task.run();
-        }
-        else{
+        } else {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     task.run();
-                    synchronized (lock){
+                    synchronized (lock) {
                         lock.notify();
                     }
                 }
@@ -109,8 +109,8 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
 
     @Override
     public int destroy() {
-        
-        synchronized (mReadyLock){
+
+        synchronized (mReadyLock) {
            /* mEvPlayer.stop();
             mEvPlayer.setSurface(null);
             mStarted =false;
@@ -129,11 +129,11 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
                 mPlayer.release();
                 mPlayer = null;
             }
-            mIsPrepared=false;
-            mIsSurfaceCreated=false;
+            mIsPrepared = false;
+            mIsSurfaceCreated = false;
         }
-        
-        if (!mUnsafeMode && mRenderView!=null && mSurfaceView!=null) {
+
+        if (!mUnsafeMode && mRenderView != null && mSurfaceView != null) {
             runOnHandlerSync(new Runnable() {
                 @Override
                 public void run() {
@@ -149,7 +149,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
         mAudioTrackCount = 0;
         mOriginalInfo = 0;
         mAccompanyInfo = 0;
-        
+
         return 0;
     }
 
@@ -244,7 +244,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
         return true;
     }
 
-   
+
     @Override
     public int getAudioSingMode() {
         return mSingMode;
@@ -262,14 +262,14 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
     }
 
     private FrameLayout.LayoutParams mSurfaceViewParam = null;
+
     private void initDisplay() {
-        if (mUnsafeMode){
-            if (mSurfaceView!=null) {
+        if (mUnsafeMode) {
+            if (mSurfaceView != null) {
                 mPlayer.setSurface(mSurfaceView.getHolder().getSurface());
             }
-        }
-        else {
-            if (mRenderView!=null) {
+        } else {
+            if (mRenderView != null) {
                 runOnHandlerSync(new Runnable() {
                     @Override
                     public void run() {
@@ -278,19 +278,19 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
                         if (mSurfaceViewParam == null) {
                             mSurfaceViewParam = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
                         }
-                        mSurfaceView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.i("gsp", "onClick:我被点击了 哈哈哈哈哈哈哈哈哈哈 ");
-                            }
-                        });
+//                        mSurfaceView.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Log.i("gsp", "onClick:我被点击了 哈哈哈哈哈哈哈哈哈哈 ");
+//                            }
+//                        });
                         mRenderView.addView(mSurfaceView, 0, mSurfaceViewParam);
 //                        mRenderView.addView(mSurfaceView);
                         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
                             @Override
                             public void surfaceCreated(SurfaceHolder holder) {
-                                EvLog.d(TAG,"surfaceCreated Width="+ mSurfaceView.getWidth()+"|Height="+mSurfaceView.getHeight());
-                                
+                                EvLog.d(TAG, "surfaceCreated Width=" + mSurfaceView.getWidth() + "|Height=" + mSurfaceView.getHeight());
+
                                 boolean hasStart = false;
                                 synchronized (mReadyLock) {
                                     if (mPlayer != null)
@@ -323,7 +323,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             }
         }
     }
-    
+
 
     @Override
     public int play() {
@@ -331,7 +331,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             EvLog.e(TAG + " mPlayer is null");
             return -1;
         }
-        
+
         EvLog.e(TAG + " player play:" + mState);
         if (mState == KmPlayerState.PlayerState_eInit) {
             try {
@@ -359,7 +359,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             EvLog.e(TAG + " mPlayer is null");
             return -1;
         }
-        
+
         if (mState == KmPlayerState.PlayerState_ePlay) {
             EvLog.d("KmVideoPlayer pause");
             mPlayer.pause();
@@ -376,7 +376,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             EvLog.e(TAG + " mPlayer is null");
             return -1;
         }
-        
+
         destroy();
         mState = KmPlayerState.PlayerState_eInit;
         return 0;
@@ -388,7 +388,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             EvLog.e(TAG + " mPlayer is null");
             return -1;
         }
-        
+
         return (int) mPlayer.getCurrentPosition();
     }
 
@@ -403,7 +403,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             EvLog.e(TAG + " mPlayer is null");
             return -1;
         }
-        
+
         return (int) mPlayer.getDuration();
     }
 
@@ -423,7 +423,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             EvLog.e(TAG + " mPlayer is null");
             return -1;
         }
-        
+
         mPlayer.setVolume(vol, vol);
         return 0;
     }
@@ -451,9 +451,9 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
         return false;
     }
 
-    private boolean startEvPlayer(){
-        synchronized (mReadyLock){
-            if (mUnsafeMode || (mIsSurfaceCreated && mIsPrepared)){
+    private boolean startEvPlayer() {
+        synchronized (mReadyLock) {
+            if (mUnsafeMode || (mIsSurfaceCreated && mIsPrepared)) {
                 EvLog.i("startEvPlayer------------------");
                 mPlayer.start();
                 mState = KmPlayerState.PlayerState_ePlay;
@@ -462,28 +462,28 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
         }
         return false;
     }
-    
+
     @Override
     public void onPrepared(MediaPlayer var1) {
         EvLog.d(TAG + " onprepared");
-        
+
         boolean hasStart = false;
-        synchronized (mReadyLock){
-            mIsPrepared=true;
+        synchronized (mReadyLock) {
+            mIsPrepared = true;
             hasStart = startEvPlayer();
         }
-        
+
         if (hasStart) {
             if (mListener != null) {
                 mListener.onPrepared();
 //                mListener.onPlay();
             }
         }
-        
-        if ( mState == KmPlayerState.PlayerState_ePreparing ) {
+
+        if (mState == KmPlayerState.PlayerState_ePreparing) {
             mState = KmPlayerState.PlayerState_ePrepared;
         } else {
-            EvLog.d( "onPrepared not start at " + mState );
+            EvLog.d("onPrepared not start at " + mState);
         }
     }
 
@@ -503,19 +503,18 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
                     EvLog.i("recv MEDIA_INFO_VIDEO_RENDERING_START ,mSurfaceView is gone");
                     mSurfaceView.setVisibility(View.GONE);
                     mSurfaceView.setVisibility(View.VISIBLE);
-                } else*/ 
+                } else*/
 //                mSurfaceView.setVisibility(View.VISIBLE);
                 {
                     EvLog.i("recv MEDIA_INFO_VIDEO_RENDERING_START ,mSurfaceView is visible");
                 }
-                
-                if ( mState == KmPlayerState.PlayerState_ePlay ) {
-                    if ( mListener != null ) {
+
+                if (mState == KmPlayerState.PlayerState_ePlay) {
+                    if (mListener != null) {
                         mListener.onPlay();
                     }
-                }
-                else {
-                    EvLog.e( "onInfo state " +mState  );
+                } else {
+                    EvLog.e("onInfo state " + mState);
                 }
                 break;
             }
@@ -523,12 +522,12 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
                 EvLog.d("video recv MEDIA_INFO_BUFFERING_START ");
 //                mStateBeforeBuffering = mState;
 //                mState = PlayerState.PlayerState_eBuffering;
-                if ( mListener != null )
+                if (mListener != null)
                     mListener.onBufferingStart();
                 break;
             case MediaPlayer.MEDIA_INFO_BUFFERING_END:
                 EvLog.d("video recv MEDIA_INFO_BUFFERING_END ");
-                if ( mListener != null )
+                if (mListener != null)
                     mListener.onBufferingEnd();
 //                mState = mStateBeforeBuffering;
                 break;
@@ -561,7 +560,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
             mPlayer.setSoftDecodeMode(0);
         }*/
     }
-    
+
     private void switchTrack(int mode) {
         if (mState == KmPlayerState.PlayerState_eInit
                 || mState == KmPlayerState.PlayerState_eErrors
@@ -640,7 +639,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
 
         mAudioTrackCount = 0;
         TrackInfo[] trackInfoArray = null;
-        
+
         try {
             trackInfoArray = mPlayer.getTrackInfo();
         } catch (Exception e) {
@@ -649,7 +648,7 @@ public class KmVideoPlayer implements IKmPlayer, OnInfoListener,
                 mListener.onError(KmPlayerError.ERR_INIT_TRACK_INFO, 0);
             }
         }
-        
+
         if (trackInfoArray == null) {
             return;
         }

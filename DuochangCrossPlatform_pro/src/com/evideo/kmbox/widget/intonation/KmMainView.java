@@ -2,6 +2,7 @@ package com.evideo.kmbox.widget.intonation;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -14,17 +15,16 @@ import com.evideo.kmbox.activity.MainActivity;
 import com.evideo.kmbox.model.player.DefaultVideoRenderView;
 import com.evideo.kmbox.model.playerctrl.KmPlayerCtrl;
 import com.evideo.kmbox.model.songinfo.KmPlayListItem;
-import com.evideo.kmbox.util.EvLog;
 import com.evideo.kmbox.widget.LoadingView;
 import com.evideo.kmbox.widget.MainBottomWidget;
 import com.evideo.kmbox.widget.StatusBarWidget;
 import com.evideo.kmbox.widget.StatusBarWidget.IStatusBarKeyListener;
-import com.evideo.kmbox.widget.common.ToastUtil;
 import com.evideo.kmbox.widget.playctrl.MVCtrlWidgetManager;
 import com.evideo.kmbox.widget.playctrl.PlayCtrlWidget;
 
 public class KmMainView {
 
+    private final String TAG = KmMainView.class.getSimpleName();
     private KmPlayListItem currentSong;
     private PlayCtrlWidget playCtrlWidget;
 
@@ -72,7 +72,9 @@ public class KmMainView {
 
     private LinearLayout mAudioDisplayRect = null;
     private MainBottomWidget mBottomWidget = null;
-   private MVCtrlWidgetManager mMVCtrlWidget = null;
+    private MVCtrlWidgetManager mMVCtrlWidget = null;
+
+    private int EXIT_X_MAX;//从左向右滑动退出,然后限定一个区域
 
     public LinearLayout getAudioDisplayRect() {
         return mAudioDisplayRect;
@@ -135,16 +137,16 @@ public class KmMainView {
         initLoadView();
 
         mOsdContainer = (LinearLayout) mRootView.findViewById(R.id.linearlayout_osdview_container);
-        mMVCtrlWidget= new MVCtrlWidgetManager();
+        mMVCtrlWidget = new MVCtrlWidgetManager();
         currentSong = KmPlayerCtrl.getInstance().getPlayingSong();
         playCtrlWidget = new PlayCtrlWidget(mContext);
-        mVideoView.setOnClickListener(new View.OnClickListener() {
+        EXIT_X_MAX = mContext.getResources().getDimensionPixelOffset(R.dimen.px100);
+        mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Log.i("gsp", "onClick:MV点击事   显示播放暂停");
-                MainActivity.mainActivity.showPlayCtrlView();
-//                playCtrlWidget.show();
-
+            public boolean onTouch(View v, MotionEvent event) {
+                log("---mVideoView--OnTouchListener--onTouch--");
+                operateTouchEvent(v, event);
+                return false;
             }
         });
     }
@@ -251,7 +253,6 @@ public class KmMainView {
     }
 
 
-
     /**
      * [功能说明]放大mv界面
      */
@@ -282,7 +283,6 @@ public class KmMainView {
 
         boolean gradeOpen = false;
         boolean showGradeBtn = false;
-
 
 
         if (showGradeBtn) {
@@ -407,5 +407,45 @@ public class KmMainView {
         if (mStatusBar != null) {
             mStatusBar.hideSearchBar();
         }
+    }
+
+    private float x_start = 0;
+
+    private boolean operateTouchEvent(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x_start = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                float move_x = event.getX() - x_start;
+                if (x_start < EXIT_X_MAX) {
+                    if (move_x > 6) {
+                        //退出
+                        operateExit();
+                        return true;
+                    }
+                }
+                operateShowControllerDialog();
+                return true;
+        }
+        return false;
+
+    }
+
+    /*
+    弹窗，弹出控制按钮
+     */
+    private void operateShowControllerDialog() {
+        MainActivity.mainActivity.showPlayCtrlView();
+    }
+
+    private void operateExit() {
+        MainActivity.mainActivity.operateExitFromMv();
+    }
+
+    private void log(String tag) {
+        Log.d("gsp", TAG + ">>" + tag);
     }
 }

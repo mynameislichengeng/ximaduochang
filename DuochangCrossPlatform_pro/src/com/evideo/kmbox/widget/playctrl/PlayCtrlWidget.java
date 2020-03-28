@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -32,6 +33,8 @@ import com.evideo.kmbox.widget.playctrl.TimeOutHandler.TimeOutListener;
  * [播控按钮弹框界面]
  */
 public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
+
+    private final String TAG = PlayCtrlWidget.class.getSimpleName();
 
     private static final int PLAYCTRL_HIDE_MESSAGE = 20;
     private static final int PLAYCTRL_SHOW_TIMEOUT = 5000;
@@ -81,11 +84,11 @@ public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
         mPauseStateTxt = res.getString(R.string.playctrl_state_pause);
         initListener();
         initHandler();
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.dimAmount = 0.0f;
-        lp.y = lp.y - DIALOG_VERTICAL_OFFSET;
-        lp.width = LayoutParams.MATCH_PARENT;
-        getWindow().setAttributes(lp);
+//        WindowManager.LayoutParams lp = getWindow().getAttributes();
+//        lp.dimAmount = 0.0f;
+//        lp.y = lp.y - DIALOG_VERTICAL_OFFSET;
+//        lp.width = LayoutParams.MATCH_PARENT;
+//        getWindow().setAttributes(lp);
     }
 
     private void initHandler() {
@@ -102,9 +105,9 @@ public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
 
     /**
      * [显示弹框]
-     *
      */
     public void show() {
+        log("---show()---");
         if (KmPlayerCtrl.getInstance().getPlayingSong() == null) {
             mBtnPlayPause.setFocusable(false);
             mBtnPlayPause.setVisibility(View.GONE);
@@ -130,6 +133,7 @@ public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
 
     @Override
     public void dismiss() {
+        log("-- dismiss()---");
         super.dismiss();
         mHandler.clear();
         LogAnalyzeManager.getInstance().onPageStart(PageName.MAIN_ACTIVITY);
@@ -280,5 +284,9 @@ public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    private void log(String msg) {
+        Log.d("gsp", TAG + ">>>" + msg);
     }
 }

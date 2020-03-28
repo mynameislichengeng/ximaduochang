@@ -9,9 +9,12 @@ import android.widget.FrameLayout;
  * 该类的目的是修改RenderView的实现而不影响应用层,只需应用层重新编译即可
  */
 public class DefaultVideoRenderView extends FrameLayout {
-    private void config(){
+
+
+    private void config() {
         setBackgroundColor(0xFF000000);
     }
+
     public DefaultVideoRenderView(Context context) {
         super(context);
         config();
@@ -27,7 +30,8 @@ public class DefaultVideoRenderView extends FrameLayout {
         config();
     }
 
-   /* public DefaultVideoRenderView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+
+    /* public DefaultVideoRenderView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         config();
     }*/
