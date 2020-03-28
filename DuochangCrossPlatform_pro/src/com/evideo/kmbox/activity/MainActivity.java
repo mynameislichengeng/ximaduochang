@@ -1064,8 +1064,7 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
                                 Log.i("gsp", "onTouch:888888888888888 已开始右滑动了   ");
 
                                 if (MainViewManager.getInstance().isMainViewVisible()) {
-                                    EvLog.e("isMainViewVisible notifyBackPressed");
-                                    ActivitySubject.getInstance().notifyBackPressed();
+                                    operateExitView();
                                 } else {
                                     //mv中的退出操作
                                     operateExitFromMv();
@@ -1550,6 +1549,14 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
         } else {
             MainViewManager.getInstance().switchMainView();
         }
+    }
+
+    /*
+    正常的退出view
+     */
+    public void operateExitView() {
+        EvLog.e("isMainViewVisible notifyBackPressed");
+        ActivitySubject.getInstance().notifyBackPressed();
     }
 
 

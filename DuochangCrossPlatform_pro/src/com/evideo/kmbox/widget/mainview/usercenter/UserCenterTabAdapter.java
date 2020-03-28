@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import com.evideo.kmbox.widget.mainview.usercenter.UserCenterSimpleView.UserCent
  */
 public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem> {
 
+    private final String TAG = UserCenterTabAdapter.class.getSimpleName();
+
     private int mNormalSize;
     private int mEnlargeSize;
     private int mNormalColor;
@@ -38,7 +41,11 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
 
     private TextView mLastCheckedView = null;
 
+    private OnUserAdaperClickListener onUserAdaperClickListener;
 
+    public void setOnUserAdaperClickListener(OnUserAdaperClickListener onUserAdaperClickListener) {
+        this.onUserAdaperClickListener = onUserAdaperClickListener;
+    }
 
     /**
      * @param context
@@ -49,7 +56,6 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
                                 ArrayList<UserCenterTabItem> datas) {
         super(context, parentView, datas);
     }
-
 
 
     /**
@@ -93,11 +99,14 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
      * {@inheritDoc}
      */
     @Override
-    protected void fillViewData(int position, View convertView) {
+    protected void fillViewData(final int position, final View convertView) {
+        final UserCenterTabItem item = getItem(position);
+
+        log("fillViewData()----position:" + position + ",item: " + item.tabName);
         if (convertView == null) {
             return;
         }
-        final UserCenterTabItem item = getItem(position);
+
         if (item == null) {
             return;
         }
@@ -105,6 +114,20 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
         viewHolder.mNameTv.setText(item.tabName);
         viewHolder.mNameTv.setTextColor(mNormalColor);
+        viewHolder.mNameTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                log("--onClick--position:" + position + ",UserCenterTabItem:" + item.tabName);
+                setCheckedView(convertView);
+                if (onUserAdaperClickListener != null) {
+                    onUserAdaperClickListener.onItemClick(position, item);
+                }
+            }
+        });
+
+//        if (position == 0) {
+//            setCheckedView(convertView);
+//        }
     }
 
     /**
@@ -145,38 +168,14 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
         }
     }
 
-    public void setViewLostFocus() {
-        TextView textView = mLastCheckedView;
-        if (textView != null) {
-            ((LinearLayout) textView.getParent()).setBackground(
-                    mContext.getResources().getDrawable(R.color.transparent));
-            textView.setTextColor(mNormalColor);
-//            textView.setTextSize(mNormalSize);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mNormalSize);
-        }
-    }
-
-    public int getCurrentViewTabId() {
-        String text = (String) mLastCheckedView.getText();
-        if (TextUtils.isEmpty(text)) {
-            EvLog.d("getCurrentViewTabId text");
-            return -1;
-        }
-        for (UserCenterTabItem data : super.mDatas) {
-            if (data.tabName.equals(text)) {
-                return data.tabId;
-            }
-        }
-        return -1;
-    }
 
     public void emptyCheckedView() {
         mLastCheckedView = null;
     }
 
 
+    private void setViewSelected(TextView view, boolean selected) {
 
-    private void setViewSelected(TextView view, boolean selected){
         if (view != null) {
             if (selected) {
 //                EvLog.d("setViewSelected ----");
@@ -195,5 +194,13 @@ public class UserCenterTabAdapter extends BaseSongListAdapter<UserCenterTabItem>
 
             }
         }
+    }
+
+    private void log(String msg) {
+        Log.d("gsp", TAG + ">>" + msg);
+    }
+
+    public interface OnUserAdaperClickListener {
+        void onItemClick(int positon, UserCenterTabItem item);
     }
 }

@@ -17,6 +17,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 
 import com.evideo.kmbox.BaseApplication;
 import com.evideo.kmbox.R;
+import com.evideo.kmbox.activity.MainActivity;
 import com.evideo.kmbox.model.device.DeviceConfigManager;
 import com.evideo.kmbox.model.loganalyze.LogAnalyzeManager;
 import com.evideo.kmbox.model.playerctrl.PlayListDAOManager;
@@ -139,6 +141,8 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
     private UserCenterTabAdapter mTabAdapter = null;
 
+    float x_start = 0;
+
     private void initLeftTab() {
         mGridView = (GridView) findViewById(R.id.main_view_my_space_gv);
 
@@ -159,17 +163,14 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
         mTabAdapter = new UserCenterTabAdapter(mActivity, mGridView, mTabs);
         mGridView.setAdapter(mTabAdapter);
-        mGridView.setOnFocusChangeListener(this);
-        mGridView.setOnItemSelectedListener(this);
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mTabAdapter.setOnUserAdaperClickListener(new UserCenterTabAdapter.OnUserAdaperClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(int position, UserCenterTabItem item) {
 
-                log("--mGridView----onItemClick()---position:" + position);
-                operateLeftTabItemSelect(parent, view, position, id);
+                mTabId = item.tabId;
+                showSubViewByTabId(item.tabId);
                 if (position == 1) {
                     mSelectedListView.requestFocus();
-
                 } else if (position == 2) {
                     mSungListView.requestFocus();
                 } else if (position == 3) {
@@ -179,38 +180,101 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 }
             }
         });
-        mGridView.setOnKeyListener(new View.OnKeyListener() {
-
+        mGridView.setOnTouchListener(new OnTouchListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-                        if (mLoginRect.getVisibility() == View.VISIBLE) {
-                            if (mUserInfoView != null && mUserInfoView.getVisibility() == View.VISIBLE) {
-//                                mUserInfoView.setLogOutButtonFocus();
-                            }
-                            return true;
-                        } else if (mSelectedRect.getVisibility() == View.VISIBLE) {
-                            if (mSelectedDatas.size() > 0) {
-                                mSelectedListView.requestFocus();
-                            }
-                            return true;
-                        } else if (mSungRect.getVisibility() == View.VISIBLE) {
-                            if (mSungDatas.size() > 0) {
-                                mSungListView.requestFocus();
-                            }
-                            return true;
-                        } else if (mFavoriteRect.getVisibility() == View.VISIBLE) {
-                            if (mFavoriteDatas.size() > 0) {
-                                mFavoriteListView.requestFocus();
-                            }
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        log("--setOnTouchListener--onTouch()--MotionEvent.ACTION_DOWN--");
+                        x_start = event.getX();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        log("--setOnTouchListener--onTouch()--MotionEvent.ACTION_UP--");
+                        float move_x = event.getX() - x_start;
+                        if (move_x > 10) {
+                            log("--退出移动距离:" + move_x);
+                            MainActivity.mainActivity.operateExitView();
                             return true;
                         }
-                    }
+                        break;
                 }
                 return false;
             }
         });
+
+//        mGridView.setOnFocusChangeListener(this);
+//        mGridView.setOnItemSelectedListener(this);
+//        mGridView.setOnItemSelectedListener(new OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                log("---onItemSelected()---position:" + position);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+
+//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                log("--mGridView----onItemClick()---position:" + position);
+//                operateLeftTabItemSelect(parent, view, position, id);
+//                if (position == 1) {
+//                    mSelectedListView.requestFocus();
+//                } else if (position == 2) {
+//                    mSungListView.requestFocus();
+//                } else if (position == 3) {
+//                    mFavoriteListView.requestFocus();
+//                } else if (position == 0) {
+//                    mUserInfoView.requestFocus();
+//                }
+//            }
+//        });
+//        mGridView.setSelection(0);
+//        mGridView.performClick();
+//        mGridView.invalidate();
+
+
+//        mGridView.setOnKeyListener(new View.OnKeyListener() {
+//
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                log("--mGridView---onKey()---");
+//                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//                    if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+//                        if (mLoginRect.getVisibility() == View.VISIBLE) {
+//                            if (mUserInfoView != null && mUserInfoView.getVisibility() == View.VISIBLE) {
+////                                mUserInfoView.setLogOutButtonFocus();
+//                            }
+//                            return true;
+//                        } else if (mSelectedRect.getVisibility() == View.VISIBLE) {
+//                            if (mSelectedDatas.size() > 0) {
+//                                mSelectedListView.requestFocus();
+//                            }
+//                            return true;
+//                        } else if (mSungRect.getVisibility() == View.VISIBLE) {
+//                            if (mSungDatas.size() > 0) {
+//                                mSungListView.requestFocus();
+//                            }
+//                            return true;
+//                        } else if (mFavoriteRect.getVisibility() == View.VISIBLE) {
+//                            if (mFavoriteDatas.size() > 0) {
+//                                mFavoriteListView.requestFocus();
+//                            }
+//                            return true;
+//                        }
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
 
     private void initSelectedView() {
@@ -344,30 +408,30 @@ public class UserCenterSimpleView extends AbsBaseView implements
                     public void onNothingSelected(AdapterView<?> parent) {
                     }
                 });
-        mSelectedListView
-                .setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
-
-                    @Override
-                    public void onRightEdgeKeyDown() {
-                    }
-
-                    @Override
-                    public void onLeftEdgeKeyDown() {
-                        if (mGridView != null) {
-                            mGridView.requestFocus();
-                        }
-                    }
-
-                    @Override
-                    public void onDownEdgeKeyDown() {
-                        MainViewManager.getInstance().setSmallMvFocus();
-                    }
-
-                    @Override
-                    public void onUpEdgeKeyDown() {
-
-                    }
-                });
+//        mSelectedListView
+//                .setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
+//
+//                    @Override
+//                    public void onRightEdgeKeyDown() {
+//                    }
+//
+//                    @Override
+//                    public void onLeftEdgeKeyDown() {
+//                        if (mGridView != null) {
+//                            mGridView.requestFocus();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onDownEdgeKeyDown() {
+//                        MainViewManager.getInstance().setSmallMvFocus();
+//                    }
+//
+//                    @Override
+//                    public void onUpEdgeKeyDown() {
+//
+//                    }
+//                });
     }
 
     private void operateAlreadyOrderSelectItem(AdapterView<?> parent,
@@ -462,30 +526,30 @@ public class UserCenterSimpleView extends AbsBaseView implements
             }
         });
 
-        mSungListView
-                .setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
-
-                    @Override
-                    public void onRightEdgeKeyDown() {
-                    }
-
-                    @Override
-                    public void onLeftEdgeKeyDown() {
-                        if (mGridView != null) {
-                            mGridView.requestFocus();
-                        }
-                    }
-
-                    @Override
-                    public void onDownEdgeKeyDown() {
-                        MainViewManager.getInstance().setSmallMvFocus();
-                    }
-
-                    @Override
-                    public void onUpEdgeKeyDown() {
-
-                    }
-                });
+//        mSungListView
+//                .setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
+//
+//                    @Override
+//                    public void onRightEdgeKeyDown() {
+//                    }
+//
+//                    @Override
+//                    public void onLeftEdgeKeyDown() {
+//                        if (mGridView != null) {
+//                            mGridView.requestFocus();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onDownEdgeKeyDown() {
+//                        MainViewManager.getInstance().setSmallMvFocus();
+//                    }
+//
+//                    @Override
+//                    public void onUpEdgeKeyDown() {
+//
+//                    }
+//                });
     }
 
 //    private void delSungListItem(final int sungItemId, final String auidoPath,
@@ -527,30 +591,30 @@ public class UserCenterSimpleView extends AbsBaseView implements
                 }
             }
         });
-        mFavoriteListView
-                .setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
-                    @Override
-                    public void onRightEdgeKeyDown() {
-                    }
-
-                    @Override
-                    public void onLeftEdgeKeyDown() {
-                        if (mGridView != null) {
-                            mGridView.requestFocus();
-                        }
-                    }
-
-                    @Override
-                    public void onDownEdgeKeyDown() {
-                        EvLog.i("mFavoriteListView onDownEdgeKeyDown");
-                        MainViewManager.getInstance().setSmallMvFocus();
-                    }
-
-                    @Override
-                    public void onUpEdgeKeyDown() {
-
-                    }
-                });
+//        mFavoriteListView
+//                .setOnSongListKeyDownEventListener(new OnSongListKeyDownEventListener() {
+//                    @Override
+//                    public void onRightEdgeKeyDown() {
+//                    }
+//
+//                    @Override
+//                    public void onLeftEdgeKeyDown() {
+//                        if (mGridView != null) {
+//                            mGridView.requestFocus();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onDownEdgeKeyDown() {
+//                        EvLog.i("mFavoriteListView onDownEdgeKeyDown");
+//                        MainViewManager.getInstance().setSmallMvFocus();
+//                    }
+//
+//                    @Override
+//                    public void onUpEdgeKeyDown() {
+//
+//                    }
+//                });
         mFavoriteListView.setOnItemClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -623,13 +687,6 @@ public class UserCenterSimpleView extends AbsBaseView implements
     protected void resetFocus() {
     }
 
-    public boolean resumeFocus() {
-        if (mGridView != null) {
-            mGridView.requestFocus();
-            return true;
-        }
-        return false;
-    }
 
     private void initSelectedData() {
         if (mSelectedDatas == null) {
@@ -650,7 +707,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         } else {
             mSelectedEmptyHint.setVisibility(View.VISIBLE);
             mSelectedListView.setVisibility(View.GONE);
-            mGridView.requestFocus();
+//            mGridView.requestFocus();
         }
        /* if (mSelectedDatas.size() > 0) {
             mGridView.setNextFocusRightId(mSelectedListView.getId());
@@ -677,7 +734,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         } else {
             mSungListView.setVisibility(View.GONE);
             mSungEmptyTv.setVisibility(View.VISIBLE);
-            mGridView.requestFocus();
+//            mGridView.requestFocus();
         }
     }
 
@@ -697,7 +754,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         mLoginRect.addView(mUserInfoView, params);
         mUserInfoView.updateUserInfo();
         if (!mGridView.isFocused()) {
-            mGridView.requestFocus();
+//            mGridView.requestFocus();
         }
     }
 
@@ -797,7 +854,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
                     updateSelectedTitle(mSelectedDatas.size());
                     mSelectedAdapter.notifyDataSetChanged();
                     if (mSelectedDatas.size() == 0) {
-                        mGridView.requestFocus();
+//                        mGridView.requestFocus();
                     }
                 }
                 if (mSungAdapter != null
@@ -859,6 +916,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
     public void onFocusChange(View v, boolean hasFocus) {
         if (v.getId() == R.id.main_view_my_space_gv) {
             // EvLog.d("mGridView onFocusChange hasFocus=" + hasFocus);
+            log("--onFocusChange()---");
             if (hasFocus) {
                 View view = mGridView.getSelectedView();
                 if (view != null) {
@@ -867,8 +925,6 @@ public class UserCenterSimpleView extends AbsBaseView implements
             } else {
                 View view = mTabAdapter.getView(
                         mGridView.getSelectedItemPosition(), null, mGridView);
-                EvLog.i("mGridView", "Focus Lose,getSelectedItemPosition= "
-                        + mGridView.getSelectedItemPosition() + ",view=" + view);
                 if (view != null) {
                     mTabAdapter.setViewSelectedButNotFocus();
                 }
@@ -920,7 +976,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
             if (mSungRect.getVisibility() != View.VISIBLE) {
                 mSungRect.setVisibility(View.VISIBLE);
             }
-            mGridView.setNextFocusRightId(mSungListView.getId());
+//            mGridView.setNextFocusRightId(mSungListView.getId());
         } else if (tabId == TAB_ID_MY_FAVORITE) {
             if (mFavoriteDatas == null || mFavoriteAdapter == null) {
                 return;
@@ -982,7 +1038,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
             mLoadingFavorite.setVisibility(View.VISIBLE);
         }
         mLoadingFavorite.showRetry();
-        mGridView.setNextFocusRightId(mLoadingFavorite.getRetryBtnId());
+//        mGridView.setNextFocusRightId(mLoadingFavorite.getRetryBtnId());
         mLoadingFavorite.setRetryCallback(this);
     }
 
@@ -995,7 +1051,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
         if (mFavoriteDatas.size() == 0) {
             mFavoriteListView.setVisibility(View.GONE);
             mFavoriteEmptyIv.setVisibility(View.VISIBLE);
-            mGridView.requestFocus();
+//            mGridView.requestFocus();
             return;
         }
         mFavoriteEmptyIv.setVisibility(View.GONE);
@@ -1010,6 +1066,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
     public void onItemSelected(AdapterView<?> parent, View view, int position,
                                long id) {
 //        EvLog.d("onItemselected " + position);
+        log("---void onItemSelected()---");
         if (!mGridView.isFocused()) {
             return;
         }
@@ -1019,13 +1076,14 @@ public class UserCenterSimpleView extends AbsBaseView implements
     private void operateLeftTabItemSelect(AdapterView<?> parent, View view, int position,
                                           long id) {
 
+
         UserCenterTabItem tab = (UserCenterTabItem) parent.getAdapter()
                 .getItem(position);
-
+        log("--operateLeftTabItemSelect()--tab:" + tab.tabName);
         if (tab == null) {
             return;
         }
-        mTabAdapter.setCheckedView(view);
+//        mTabAdapter.setCheckedView(view);
         mTabId = tab.tabId;
         showSubViewByTabId(tab.tabId);
 
@@ -1183,7 +1241,7 @@ public class UserCenterSimpleView extends AbsBaseView implements
 
     @Override
     public boolean onSmallMVUpKey() {
-        mGridView.requestFocus();
+//        mGridView.requestFocus();
         return true;
     }
 
