@@ -1085,23 +1085,6 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
                         int x = (int) event.getRawX();
                         int y = (int) event.getRawY();
                         Log.e("gsp", "移动" + x);
-//                        if (MainViewManager.getInstance().isMainViewVisible()) {
-//                            EvLog.e("isMainViewVisible notifyBackPressed");
-//                            ActivitySubject.getInstance().notifyBackPressed();
-//                        } else {
-//                   /* if (mMainView.isRemoteControlShow()) {
-//                        mMainView.hideRemoteControlGuide();
-//                        KmSharedPreferences.getInstance().putBoolean(KeyName.KEY_SHOW_REMOTE_CONTROL_GUIDE, false);
-//                        return true;
-//                    }*/
-//
-//                            if (mMvSelectedView != null && mMvSelectedView.getVisibility() == View.VISIBLE/*MvSelectedManager.getInstance().isVisible()*/) {
-//                                /*MvSelectedManager.getInstance().hideMvSelectedView();*/
-//                                mMvSelectedView.hide();
-//                            } else {
-//                                MainViewManager.getInstance().switchMainView();
-//                            }
-//                        }
                         break;
                 }
                 return true;
@@ -2895,10 +2878,14 @@ public class MainActivity extends BaseActivity implements INetworkInfoObserver, 
             msg.arg1 = PlayCtrlWidget.PLAYCTRL_INDEX_REPLAY;
             PlayCtrlHandler.getInstance().sendMessage(msg);
         } else if (index == PlayCtrlWidget.PLAYCTRL_INDEX_PLAY_LIST) {
-            if (/*!MvSelectedManager.getInstance().isVisible()*/mMvSelectedView != null && mMvSelectedView.getVisibility() != View.VISIBLE) {
-                /*MvSelectedManager.getInstance().showMvSelectedView();*/
-                mMvSelectedView.show();
+            if (mMvSelectedView != null) {
+                if (mMvSelectedView.getVisibility() != View.VISIBLE) {
+                    mMvSelectedView.show();
+                } else {
+                    mMvSelectedView.hide();
+                }
             }
+
             mMVCtrlWidget.hide();
         }
     }

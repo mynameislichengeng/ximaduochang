@@ -38,6 +38,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Message;
 import android.text.Html;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,10 +52,12 @@ import android.widget.TextView;
  * [功能说明]mv已点界面
  */
 public class MvSelectedView extends FrameLayout implements IPlayListListener, IFavoriteListListener {
-    
+
+    private final String TAG = MvSelectedView.class.getSimpleName();
+
     private SlideRightIn mSlideRightIn;
     private SlideRightOut mSlideRightOut;
-    
+
     private TextView mNumTv;
     private MvSelectedListView mListView;
     private MvSelectedListAdapter mAdapter;
@@ -70,20 +73,20 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         inflater.inflate(R.layout.mv_selected, this, true);
         init();
     }
-    
+
     /**
      * [功能说明]初始化
      */
     private void init() {
 //        PlayListManager.getInstance().registerListener(this);
-        
+
         mEmptyHint = (ImageView) findViewById(R.id.mv_selected_empty_hint_iv);
         mNumTv = (TextView) findViewById(R.id.mv_selected_num_tv);
         mListView = (MvSelectedListView) findViewById(R.id.mv_selected_list);
         mListView.setEmptyView(mEmptyHint);
-        
+
         updateCount();
-        
+
         // 滑进动画
         mSlideRightIn = new SlideRightIn();
         // TODO set translation x
@@ -96,6 +99,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
                 setVisibility(View.VISIBLE);
                 MainViewManager.getInstance().hideStatusBarSelectedNum();
             }
+
             /**
              * {@inheritDoc}
              */
@@ -109,7 +113,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
                 }
             }
         });
-        
+
         // 滑出动画
         mSlideRightOut = new SlideRightOut();
         mSlideRightOut.setAnimListener(new AnimatorListenerAdapter() {
@@ -122,117 +126,133 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
                 MainViewManager.getInstance().showStatusBarSelectedNum();
             }
         });
-        
+
         setVisibility(View.GONE);
-        
+
         updateData();
-        
+
         EvLog.i("MvSelectedView mDatas.size:" + mDatas.size());
         mAdapter = new MvSelectedListAdapter(getContext(), mListView, mDatas);
         mListView.setAdapter(mAdapter);
-        
+
         mListView.setOnItemClickCallback(new OnItemClickCallback() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
-                    long id, int itemState) {
+                                    long id, int itemState) {
                 final KmPlayListItem item = new KmPlayListItem();
-                boolean ret = PlayListManager.getInstance().getCopyItemByPos(position,item);
-                if ((ret ==  false) || (item == null)) {
+                boolean ret = PlayListManager.getInstance().getCopyItemByPos(position, item);
+                if ((ret == false) || (item == null)) {
                     return;
                 }
-                
+
                 try {
                     if (itemState == OrderedListView.ITEM_STATE_DELETE) {
                         PlayListManager.getInstance().delSongByUser(item.getSerialNum());
+                        mListView.resetItemState();
+                        mListView.invalidate();
+                        operateSelectItem(parent, view, position, id);
 //                        LogAnalyzeManager.onEvent(getContext(), EventConst.ID_CLICK_SELECTED_LIST_VIEW_DELETE_SONG);
-                    } else if (itemState == OrderedListView.ITEM_STATE_TOP) {    
-                        PlayListManager.getInstance().addSong(item.getCustomerid(),  item.getSongId(), true);
+                    } else if (itemState == OrderedListView.ITEM_STATE_TOP) {
+                        PlayListManager.getInstance().addSong(item.getCustomerid(), item.getSongId(), true);
+
+
+                        mListView.resetItemState();
+                        mListView.invalidate();
+                        operateSelectItem(parent, view, position, id);
 //                        LogAnalyzeManager.onEvent(getContext(), EventConst.ID_CLICK_SELECTED_LIST_VIEW_TOP_SONG);
                     } else if (itemState == OrderedListView.ITEM_STATE_CUT_SONG) {
                         cutSong();
+//                        operateSelectItem(parent, view, position, id);
+                        mListView.resetItemState();
+                        mListView.invalidate();
 //                        LogAnalyzeManager.onEvent(getContext(), EventConst.ID_CLICK_SELECTED_LIST_VIEW_CUT_SONG);
-                     } else if (itemState == OrderedListView.ITEM_STATE_FAVORITE) {
-                        
+                    } else if (itemState == OrderedListView.ITEM_STATE_FAVORITE) {
+
                         if (FavoriteListManager.getInstance().isAlreadyExists(item.getSongId())) {
                             if (FavoriteListManager.getInstance().delSong(item.getSongId())) {
+
+                                mListView.resetItemState();
+                                mListView.invalidate();
+                                operateSelectItem(parent, view, position, id);
 //                                LogAnalyzeManagerUtil.onEventFavoriteAction(mContext, 
 //                                        EventConst.ID_CLICK_SELECTED_LIST_VIEW_FAVORITE, false);
-                            }   
+                            }
+
+                            mListView.resetItemState();
+                            mListView.invalidate();
+                            operateSelectItem(parent, view, position, id);
                             return;
                         } else if (FavoriteListManager.getInstance().addSong(item.getSongId())) {
+
+                            mListView.resetItemState();
+                            mListView.invalidate();
+                            operateSelectItem(parent, view, position, id);
 //                            LogAnalyzeManagerUtil.onEventFavoriteAction(mContext, 
 //                                    EventConst.ID_CLICK_SELECTED_LIST_VIEW_FAVORITE, true);
-                        }              
+                        }
+                    } else {
+                        mListView.resetItemState();
+                        mListView.invalidate();
+                        operateSelectItem(parent, view, position, id);
+
                     }
                 } catch (Exception e) {
-                    
+
                 }
             }
         });
-        
+
         mListView.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    LogAnalyzeManager.getInstance().onPageStart(PageName.MV_SELECTED_LIST);
-//                } else {
-//                    LogAnalyzeManager.getInstance().onPageStart(PageName.MV_VIEW);
-//                }
                 if (mAdapter != null) {
                     mAdapter.refreshSelectedState(hasFocus, mListView.getSelectedItemPosition());
                 }
             }
         });
-        
+
         mListView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
-                    int position, long id) {
-                mListView.restoreFavoriteIcon();
-                
-                KmPlayListItem item = (KmPlayListItem) parent.getAdapter().getItem(position);
-                
-                if (item == null) {
-                    return;
-                }
-                
-                if (FavoriteListManager.getInstance().isAlreadyExists(item.getSongId())) {
-                    mListView.highlightFavoriteIcon();
-                }
+                                       int position, long id) {
+                operateSelectItem(parent, view, position, id);
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { 
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        
+
     }
-    
-//    private PlayCtrlHandler mPlayCtrlHandler;
-    
-    /**
-     * [功能说明]设置播控handler
-     * @param handler
-     */
-  /*  public void setPlayCtrlHandler(PlayCtrlHandler handler) {
-        mPlayCtrlHandler = handler;
-    }*/
-    
+
+    private void operateSelectItem(AdapterView<?> parent, View view,
+                                   int position, long id) {
+        mListView.restoreFavoriteIcon();
+
+        KmPlayListItem item = (KmPlayListItem) parent.getAdapter().getItem(position);
+
+        if (item == null) {
+            return;
+        }
+
+        if (FavoriteListManager.getInstance().isAlreadyExists(item.getSongId())) {
+            mListView.highlightFavoriteIcon();
+        }
+    }
+
     /**
      * [切歌动作]
      */
     private void cutSong() {
         PlayCtrlHandler.getInstance().sendEmptyMessage(PlayCtrlHandler.PLAY_CTRL_MSG_CUT_SONG);
-//        if (mPlayCtrlHandler != null) {
-//            mPlayCtrlHandler.sendEmptyMessage(PlayCtrlHandler.PLAY_CTRL_MSG_CUT_SONG);
-//        }    
     }
-    
+
     private void updateCount() {
         int count = PlayListManager.getInstance().getCount();
         String content = getContext().getResources().getString(R.string.mv_selected_list_title, count);
         mNumTv.setText(Html.fromHtml(content));
     }
-    
+
     private void updateData() {
         if (mDatas == null) {
             mDatas = new ArrayList<KmPlayListItem>();
@@ -240,6 +260,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         mDatas.clear();
         mDatas.addAll(PlayListManager.getInstance().getList());
     }
+
     /**
      * [功能说明]显示
      */
@@ -249,7 +270,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         }
         mSlideRightIn.start(this);
     }
-    
+
     /**
      * [功能说明]隐藏
      */
@@ -259,17 +280,19 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         }
         mSlideRightOut.start(this);
     }
-    
+
     /**
      * [功能说明]是否可见
+     *
      * @return true 可见  false 不可见
      */
     public boolean isVisible() {
         return getVisibility() == View.VISIBLE;
     }
-    
+
     /**
      * [功能说明]是否处于动画中
+     *
      * @return true 是 false 不是
      */
     public boolean isOnAnim() {
@@ -283,7 +306,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         }
         return isOnSlideInAnim || isOnSlideOutAnim;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -305,7 +328,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         }*/
         return super.dispatchKeyEvent(event);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -323,19 +346,19 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         if (mDatas == null) {
             mDatas = new ArrayList<KmPlayListItem>();
         }
-        
+
         updateCount();
-        
+
         mDatas.clear();
         List<KmPlayListItem> datas = PlayListManager.getInstance().getList();
         if (datas != null) {
             mDatas.addAll(PlayListManager.getInstance().getList());
         }
-        
+
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
-        
+
         if (mListView == null) {
             return;
         }
@@ -349,7 +372,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
             mListView.restoreFavoriteIcon();
         }
     }
-    
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -359,7 +382,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
         updateCount();
         mAdapter.notifyDataSetChanged();
     }
-    
+
     @Override
     protected void onDetachedFromWindow() {
 //        EvLog.d("zxh", "mv selected view on detached to window");
@@ -396,7 +419,7 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
                 if (mListView == null || mAdapter == null) {
                     return;
                 }
-                KmPlayListItem song =  (KmPlayListItem) mAdapter.getItem(mListView.getSelectedItemPosition());
+                KmPlayListItem song = (KmPlayListItem) mAdapter.getItem(mListView.getSelectedItemPosition());
                 if (song == null) {
                     return;
                 }
@@ -406,6 +429,10 @@ public class MvSelectedView extends FrameLayout implements IPlayListListener, IF
                     mListView.restoreFavoriteIcon();
                 }
             }
-        }); 
+        });
+    }
+
+    private void log(String msg) {
+        Log.d("gsp", TAG + ">>>" + msg);
     }
 }

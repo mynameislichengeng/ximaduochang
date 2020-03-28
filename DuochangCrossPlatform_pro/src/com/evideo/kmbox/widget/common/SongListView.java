@@ -339,8 +339,7 @@ public class SongListView extends ListView implements android.widget.AdapterView
 
             case MotionEvent.ACTION_DOWN:
 //                log("onTouchEvent(MotionEvent ev)---MotionEvent.ACTION_DOWN");
-//                float x = ev.getX();
-//                float y = ev.getY();
+
 //                log("onTouchEvent(MotionEvent ev)---position-down位置--x: " + x + ", y:" + y);
                 down_x = ev.getX();
                 down_y = ev.getY();
@@ -357,6 +356,12 @@ public class SongListView extends ListView implements android.widget.AdapterView
                         log("\n----选择了----favoriteButton按钮\n");
                         if (mItemState != ITEM_STATE_FAVORITE) {
                             mItemState = ITEM_STATE_FAVORITE;
+                            invalidate();
+                            return true;
+                        }
+                    } else {
+                        if (mItemState != ITEM_STATE_NORMAL) {
+                            mItemState = ITEM_STATE_NORMAL;
                             invalidate();
                             return true;
                         }

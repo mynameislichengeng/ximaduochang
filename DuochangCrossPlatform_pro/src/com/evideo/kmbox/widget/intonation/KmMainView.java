@@ -141,6 +141,12 @@ public class KmMainView {
         currentSong = KmPlayerCtrl.getInstance().getPlayingSong();
         playCtrlWidget = new PlayCtrlWidget(mContext);
         EXIT_X_MAX = mContext.getResources().getDimensionPixelOffset(R.dimen.px100);
+        mVideoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -428,7 +434,7 @@ public class KmMainView {
                     }
                 }
                 operateShowControllerDialog();
-                return true;
+                return false;
         }
         return false;
 

@@ -245,8 +245,10 @@ public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View arg0) {
         // TODO Auto-generated method stub
+
         switch (arg0.getId()) {
             case R.id.dialog_playctrl_orgswitch:
+                log("R.id.dialog_playctrl_orgswitch");
                 PlayCtrlWidget.this.dismiss();
                 if (mListener != null) {
                     mListener.onClickPlayCtrlBtn(PLAYCTRL_INDEX_SWITCH_TRACK, arg0);
@@ -268,6 +270,7 @@ public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
                 }
                 break;
             case R.id.dialog_playctrl_playlist:
+                log("R.id.dialog_playctrl_playlist: 已点列表");
                 PlayCtrlWidget.this.dismiss();
                 if (mListener != null) {
                     mListener.onClickPlayCtrlBtn(PLAYCTRL_INDEX_PLAY_LIST, arg0);
@@ -275,6 +278,7 @@ public class PlayCtrlWidget extends Dialog implements View.OnClickListener {
                 }
                 break;
             case R.id.dialog_playctrl_playpause:
+                log("R.id.dialog_playctrl_playpause: 暂停");
                 PlayCtrlWidget.this.dismiss();
                 if (mListener != null) {
                     UmengAgentUtil.onEventPlayPause(getContext(), EventConst.ID_CLICK_PLAY_CTRL_PLAY_PAUSE);
