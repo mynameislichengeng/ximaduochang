@@ -16,9 +16,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
@@ -37,6 +39,7 @@ import com.evideo.kmbox.model.chargeproxy.ChargePrice;
 import com.evideo.kmbox.model.chargeproxy.ChargeProxy;
 import com.evideo.kmbox.model.datacenter.UrlList;
 import com.evideo.kmbox.model.device.DeviceConfigManager;
+import com.evideo.kmbox.recode.exit.ExitUtil;
 import com.evideo.kmbox.util.BitmapUtil;
 import com.evideo.kmbox.util.EvLog;
 import com.evideo.kmbox.util.TimeUtil;
@@ -51,7 +54,9 @@ import java.util.List;
 /**
  * [功能说明]
  */
-public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPriceListener,View.OnClickListener {
+public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPriceListener, View.OnClickListener {
+
+    private final String TAG = ContinuePayDialog.class.getSimpleName();
     private LinearLayout mPayButtonFirstLineShowRect = null;
     private List<ChargeProductInfo> mPriceList = null;
     private TextView mRemainTimeTx = null;
@@ -59,16 +64,20 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
     private AnimLoadingView mGetPriceLoadingView = null;
     private static final int MAX_PRICE_NUM_SHOW_ONE_LINE = 3;
     private static final int POINTS_BY_ONE_YUAN = 100;//1元等于100分
-    private static final int MILLSSECODE_BY_ONE_MINUTE = 60*1000;//1分钟等于60*1000毫秒
+    private static final int MILLSSECODE_BY_ONE_MINUTE = 60 * 1000;//1分钟等于60*1000毫秒
     private UpdateValidTimeRunnable mRunnable = null;
     private Context mContext = null;
     private int[] img = new int[]{R.drawable.pay_include_selector
-    		,R.drawable.pay_include_selector
-    		,R.drawable.pay_include_selector
-    		,R.drawable.pay_include_selector
-    		,R.drawable.pay_include_selector};
+            , R.drawable.pay_include_selector
+            , R.drawable.pay_include_selector
+            , R.drawable.pay_include_selector
+            , R.drawable.pay_include_selector};
     private LinearLayout mEditViewLayout = null;
+
+
     private EditText mEditView = null;
+
+
     /**
      * @param context
      */
@@ -83,29 +92,31 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
     }
 
     private void init() {
-        mPaySerialNoTx = (TextView)findViewById(R.id.pay_serialno_tx);
-        mRemainTimeTx = (TextView)findViewById(R.id.remain_time_tx);
+
+        mPaySerialNoTx = (TextView) findViewById(R.id.pay_serialno_tx);
+        mRemainTimeTx = (TextView) findViewById(R.id.remain_time_tx);
         mPayButtonFirstLineShowRect = (LinearLayout) findViewById(R.id.price_rect);
-        mGetPriceLoadingView = (AnimLoadingView)findViewById(R.id.get_price_hint);
+        mGetPriceLoadingView = (AnimLoadingView) findViewById(R.id.get_price_hint);
         mEditViewLayout = (LinearLayout) findViewById(R.id.redem_edit_layout);
         mEditViewLayout.setVisibility(View.INVISIBLE);
-        mEditView = (EditText)findViewById(R.id.redem_edit);
+        mEditView = (EditText) findViewById(R.id.redem_edit);
         mEditView.setOnFocusChangeListener(new OnFocusChangeListener() {
-        	
-			@Override
-			public void onFocusChange(View arg0, boolean hasFocus) {
-				if (hasFocus) {
-					mEditView.setFocusable(true);
-					mEditView.setFocusableInTouchMode(true);
-					mEditView.requestFocus();
-					InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-				    imm.showSoftInput(mEditView, 0); 
-				}
-			}
-		});
-        
+
+            @Override
+            public void onFocusChange(View arg0, boolean hasFocus) {
+                if (hasFocus) {
+                    mEditView.setFocusable(true);
+                    mEditView.setFocusableInTouchMode(true);
+                    mEditView.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(mEditView, 0);
+                }
+            }
+        });
+
+
     }
-    
+
     @Override
     public void show() {
         super.show();
@@ -136,14 +147,14 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
         if (mGetPriceLoadingView != null && mGetPriceLoadingView.getVisibility() != View.GONE) {
             mGetPriceLoadingView.setVisibility(View.GONE);
         }
-        
+
         if (mPriceList == null || mPriceList.size() == 0) {
             mPriceList = ChargePrice.getInstance().getPriceList();
         }
-        
+
         int size = mPriceList.size();
         BitmapFactory.Options options = new BitmapFactory.Options();
-        BitmapFactory.decodeResource(mContext.getResources(),R.drawable.paybtn_selected,options);
+        BitmapFactory.decodeResource(mContext.getResources(), R.drawable.paybtn_selected, options);
         int height = options.outHeight;
         int width = options.outWidth;
         int marginBetweenBtn = BaseApplication.getInstance().getResources().getDimensionPixelSize(R.dimen.px_12);
@@ -151,44 +162,44 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
         mPayButtonFirstLineShowRect.removeAllViews();
         if (size > 0) {
             for (int i = 0; i < mPriceList.size(); i++) {
-            	final ContinuePayBtn continuePayBtn = new ContinuePayBtn(mContext);
+                final ContinuePayBtn continuePayBtn = new ContinuePayBtn(mContext);
                 continuePayBtn.setBtnImageResource(img[i]);
-            	if (i== 0) {
-            		continuePayBtn.setBtnImageResource(R.drawable.pay_include_selected);
-            		continuePayBtn.requestFocus();
-                	continuePayBtn.setFocusable(true);
-					continuePayBtn.setFocusableInTouchMode(true);
-				}else {
-					continuePayBtn.setBtnImageResource(img[i]);
-				}
-            	continuePayBtn.setBtnBackground(R.drawable.btn_pay_selector);
-            	continuePayBtn.setBtnClickListener(this);
-            	continuePayBtn.setFlag(mPriceList.get(i).productId);
-            	continuePayBtn.setNextFocusUpId(mEditView.getId());
-            	continuePayBtn.setProductNameText(mPriceList.get(i).productName);
-            	continuePayBtn.setPriceNowText(String.valueOf((float)mPriceList.get(i).productNowPrice/POINTS_BY_ONE_YUAN));
-            	continuePayBtn.setPriceText(String.valueOf(mPriceList.get(i).productPrice/POINTS_BY_ONE_YUAN));
-                mPayButtonFirstLineShowRect.addView(continuePayBtn,param);
+                if (i == 0) {
+                    continuePayBtn.setBtnImageResource(R.drawable.pay_include_selected);
+                    continuePayBtn.requestFocus();
+                    continuePayBtn.setFocusable(true);
+                    continuePayBtn.setFocusableInTouchMode(true);
+                } else {
+                    continuePayBtn.setBtnImageResource(img[i]);
+                }
+                continuePayBtn.setBtnBackground(R.drawable.btn_pay_selector);
+                continuePayBtn.setBtnClickListener(this);
+                continuePayBtn.setFlag(mPriceList.get(i).productId);
+                continuePayBtn.setNextFocusUpId(mEditView.getId());
+                continuePayBtn.setProductNameText(mPriceList.get(i).productName);
+                continuePayBtn.setPriceNowText(String.valueOf((float) mPriceList.get(i).productNowPrice / POINTS_BY_ONE_YUAN));
+                continuePayBtn.setPriceText(String.valueOf(mPriceList.get(i).productPrice / POINTS_BY_ONE_YUAN));
+                mPayButtonFirstLineShowRect.addView(continuePayBtn, param);
                 param.leftMargin = marginBetweenBtn;
                 final int temp = i;
                 continuePayBtn.setBtnOnFocusChangeListener(new OnFocusChangeListener() {
-					
-					@Override
-					public void onFocusChange(View view, boolean hasFocus) {
-					    continuePayBtn.setBtnImageResource(hasFocus?R.drawable.pay_include_selected:R.drawable.pay_include_unselected);
-					}
-				});
+
+                    @Override
+                    public void onFocusChange(View view, boolean hasFocus) {
+                        continuePayBtn.setBtnImageResource(hasFocus ? R.drawable.pay_include_selected : R.drawable.pay_include_unselected);
+                    }
+                });
             }
         }
-        if (mPriceList.size() < 5){
+        if (mPriceList.size() < 5) {
             int temp = 5 - mPriceList.size();
-            for (int i = 0; i < temp;i++){
+            for (int i = 0; i < temp; i++) {
                 ContinuePayBtn continuePayBtn = new ContinuePayBtn(mContext);
-                mPayButtonFirstLineShowRect.addView(continuePayBtn,param);
+                mPayButtonFirstLineShowRect.addView(continuePayBtn, param);
                 continuePayBtn.setVisibility(View.INVISIBLE);
             }
         }
-        
+
         if (ChargeProxy.getInstance().isAuthed()) {
             updateValidRemainTime();
             mRemainTimeTx.setVisibility(View.VISIBLE);
@@ -205,7 +216,7 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
         }
         BaseApplication.getHandler().postDelayed(mRunnable, MILLSSECODE_BY_ONE_MINUTE);
     }
-    
+
     @Override
     public void dismiss() {
         super.dismiss();
@@ -213,9 +224,9 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
             BaseApplication.getHandler().removeCallbacks(mRunnable);
         }
         if (!TextUtils.isEmpty(mEditView.getText())) {
-        	mEditView.setText("");
-		}
-        
+            mEditView.setText("");
+        }
+
     }
 
     public class UpdateValidTimeRunnable implements Runnable {
@@ -226,41 +237,41 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
             BaseApplication.getHandler().postDelayed(mRunnable, MILLSSECODE_BY_ONE_MINUTE);
         }
     }
-    
+
     private void updateValidRemainTime() {
         long time = ChargeProxy.getInstance().getValidTime();
-        long eclipseTime = (System.currentTimeMillis() - KmApplication.getInstance().getPayValidTimeSetTimestamp())/(60*1000);
+        long eclipseTime = (System.currentTimeMillis() - KmApplication.getInstance().getPayValidTimeSetTimestamp()) / (60 * 1000);
         EvLog.i("getValidTime:" + time + ",eclipseTime:" + eclipseTime);
         String serialNum = ChargeProxy.getInstance().getTradeNo();
         if (!TextUtils.isEmpty(serialNum)) {
-        	 mPaySerialNoTx.setText(BaseApplication.getInstance().getResources().getString(R.string.charge_serialnum_hint,serialNum));
-		}
-        String formatTime = TimeUtil.formatTimeByMinute(time-eclipseTime);
-        String text = BaseApplication.getInstance().getResources().getString(R.string.charge_valid_time_hint,formatTime);
+            mPaySerialNoTx.setText(BaseApplication.getInstance().getResources().getString(R.string.charge_serialnum_hint, serialNum));
+        }
+        String formatTime = TimeUtil.formatTimeByMinute(time - eclipseTime);
+        String text = BaseApplication.getInstance().getResources().getString(R.string.charge_valid_time_hint, formatTime);
         if (!TextUtils.isEmpty(formatTime)) {
-        	mRemainTimeTx.setText(Html.fromHtml(text));
-        }else {
-        	mPaySerialNoTx.setText("");
-        	mRemainTimeTx.setText("");
-		}
+            mRemainTimeTx.setText(Html.fromHtml(text));
+        } else {
+            mPaySerialNoTx.setText("");
+            mRemainTimeTx.setText("");
+        }
     }
-    
-    
+
+
     private void showPriceInfo() {
         if (mGetPriceLoadingView != null && mGetPriceLoadingView.getVisibility() == View.VISIBLE) {
             mGetPriceLoadingView.setVisibility(View.GONE);
         }
-        
+
         int size = ChargePrice.getInstance().getPriceList().size();
         if (size > 0) {
             showPayPriceRect();
         }
     }
-    
-    
+
+
     @Override
     public void onGetPriceSuccess() {
-    	mEditViewLayout.setVisibility(View.INVISIBLE);
+        mEditViewLayout.setVisibility(View.INVISIBLE);
         showPriceInfo();
     }
 
@@ -271,27 +282,28 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
                 mGetPriceLoadingView.setVisibility(View.VISIBLE);
             }
             mGetPriceLoadingView.showLoadFail(R.string.get_pay_price_failed);
-        } 
+        }
     }
-    
+
     public interface ICommonPayClickListener {
         public void onClickPayBtn(ChargeProductInfo info);
     }
-    
+
     private ICommonPayClickListener mClickListener = null;
-    
+
     public void setPayBtnClickListener(ICommonPayClickListener listener) {
         mClickListener = listener;
     }
-    
+
     @Override
     public void onClick(View arg0) {
+        log("---onClick()--");
         if (arg0 == null) {
             return;
         }
         int id = (Integer) arg0.getTag();
         EvLog.i("onClick id:" + id);
-        for (int i = 0; i < mPriceList.size();i++) {
+        for (int i = 0; i < mPriceList.size(); i++) {
             if (id == mPriceList.get(i).productId) {
                 if (mClickListener != null) {
                     mClickListener.onClickPayBtn(mPriceList.get(i));
@@ -300,5 +312,35 @@ public class ContinuePayDialog extends BaseDialog implements ChargePrice.IGetPri
             }
         }
     }
-   
+
+    private float x_start = 0;
+
+    @Override
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
+        log("--onTouchEvent()--");
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x_start = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                float move_x = event.getX() - x_start;
+                if (x_start < ExitUtil.getExitXMax(mContext)) {
+                    if (move_x > ExitUtil.getExitMoveX()) {
+                        this.dismiss();
+                        return true;
+                    }
+                }
+                break;
+
+
+        }
+        return super.onTouchEvent(event);
+    }
+
+    private void log(String msg) {
+        Log.d("gsp", TAG + ">>>" + msg);
+    }
+
 }

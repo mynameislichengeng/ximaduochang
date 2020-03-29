@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dp20">20dp</dimen>
+    <dimen name="dp40">40dp</dimen>
+    <dimen name="dp50">50dp</dimen>
     <string name="app_name">ChargeProxy</string>
     <string name="error_get_pay_url">获取支付二维码地址失败，请稍候重试</string>
     <string name="error_info">授权异常</string>
@@ -15,13 +18,9 @@
     <string name="report_dc_pay_result_failed_tx">通知服务器支付结果失败</string>
     <string name="report_revify_code_failed">验证欢唱码失败</string>
     <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+        
     </style>
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        
     </style>
 </resources>

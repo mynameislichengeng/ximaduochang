@@ -283,9 +283,8 @@ public class HomePageView extends AbsBaseView implements OnClickListener,
     private ImageView mHuodongViewPager = null;
     //    private RepeatTimerTask mRepeatTimerTask = null;
     private ArrayList<ImageView> imageViewContainer = null;
-    private static final int HUODONG_UPDATE_INTERVAL = 5000;
     private int mHuodongIndex = -1;
-    private int mMyDuration = 800;          //持续时间  
+    private int mMyDuration = 800;          //持续时间
     private FixedSpeedScroller mScroller;
     //    private MaskFocusAnimLinearLayout mHuodongLayout = null;
     private List<HuodongLocalInfo> mDatas = null;
@@ -341,7 +340,7 @@ public class HomePageView extends AbsBaseView implements OnClickListener,
     public void sendHandlerHuadong() {
         removeHandlerHuadong();
 //        log("--sendHandlerHuadong()--");
-        myHandle.sendEmptyMessageDelayed(HOME_PAGE_APP_CAROUSEL, 15000);
+        myHandle.sendEmptyMessageDelayed(HOME_PAGE_APP_CAROUSEL, 4000);
     }
 
     public void removeHandlerHuadong() {

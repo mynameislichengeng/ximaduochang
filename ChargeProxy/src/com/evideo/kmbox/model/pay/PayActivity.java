@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,21 +17,24 @@ import com.evideo.kmbox.presenter.CommuPresenter.CommuCallback;
 import com.evideo.kmbox.util.EvLog;
 
 
-
 public class PayActivity extends Activity {
+
+    private final String TAG = PayActivity.class.getSimpleName();
     private String mPrice = "";
     private int mProductId = 0;
     private String mTradeNo = "";
     private CommuPresenter mReportPresenter = null;
     private ReportPaySuccessCommu mReportCommu = null;
-    
+
     private QueryTradeNoCommu mQueryTradeNoCommu = null;
     private CommuPresenter mQueryTradeNoPresenter = null;
 
     private TextView mGetTradeNoTx = null;
     private String mGetTradeNoFailedText = "";
     public static PayActivity payActivity = null;
-    
+
+    private int EXIT_X_MAX;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +43,10 @@ public class PayActivity extends Activity {
         mProductId = getIntent().getIntExtra("productId", 0);
         mPrice = getIntent().getStringExtra("Pprice");
 
-        Log.i("gsp", "onCreate: 获取的参数数据是"+ mTradeNo+" mProductId  "+mProductId+" mPrice "+mPrice);
-        mGetTradeNoTx = (TextView)findViewById(R.id.get_trade_no_tx);
+        Log.i("gsp", "onCreate: 获取的参数数据是" + mTradeNo + " mProductId  " + mProductId + " mPrice " + mPrice);
+        mGetTradeNoTx = (TextView) findViewById(R.id.get_trade_no_tx);
         mGetTradeNoFailedText = getResources().getString(R.string.get_trade_no_failed_tx);
-        
+        EXIT_X_MAX = (int) getResources().getDimension(R.dimen.dp40);
         if (TextUtils.isEmpty(mTradeNo)) {
             queryTradeNo(mProductId);
 
@@ -53,16 +57,17 @@ public class PayActivity extends Activity {
 
     private void beginPay(String serialNum) {
     }
-    
-    public class QueryTradeNoCommu implements CommuCallback{
+
+    public class QueryTradeNoCommu implements CommuCallback {
         private String mSerialNum = null;
-        
+
         @Override
         public Boolean doCommu(Object... params) throws Exception {
-            int productId = (Integer)params[0];
+            int productId = (Integer) params[0];
             mSerialNum = DeviceCommu.queryTradeNo(String.valueOf(productId));
             return !TextUtils.isEmpty(mSerialNum);
         }
+
         @Override
         public void commuSuccess() {
             mGetTradeNoTx.setVisibility(View.GONE);
@@ -71,6 +76,7 @@ public class PayActivity extends Activity {
             EvLog.i("QueryTradeNoCommu commuSuccess,mTradeNo:" + mTradeNo);
             beginPay(mSerialNum);
         }
+
         @Override
         public void commuFailed(Exception e) {
             mGetTradeNoTx.setVisibility(View.GONE);
@@ -80,12 +86,12 @@ public class PayActivity extends Activity {
             exit(3000);
         }
     }
-    
+
     public void queryTradeNo(int productId) {
         if (mQueryTradeNoCommu == null) {
             mQueryTradeNoCommu = new QueryTradeNoCommu();
         }
-        
+
         if (mQueryTradeNoPresenter != null) {
             mQueryTradeNoPresenter.cancel();
             mQueryTradeNoPresenter = null;
@@ -94,7 +100,7 @@ public class PayActivity extends Activity {
         mQueryTradeNoPresenter.start(productId);
         mGetTradeNoTx.setVisibility(View.VISIBLE);
     }
-    
+
     @Override
     protected void onDestroy() {
         EvLog.i("PayActivity onDestroy");
@@ -108,7 +114,7 @@ public class PayActivity extends Activity {
         }
         super.onDestroy();
     }
-    
+
     public void reportPaySuccess() {
         mGetTradeNoTx.setVisibility(View.VISIBLE);
         mGetTradeNoTx.setText(getResources().getString(R.string.get_valid_time_tx));
@@ -116,7 +122,7 @@ public class PayActivity extends Activity {
         if (mReportCommu == null) {
             mReportCommu = new ReportPaySuccessCommu();
         }
-        
+
         if (mReportPresenter != null) {
             mReportPresenter.cancel();
             mReportPresenter = null;
@@ -125,9 +131,10 @@ public class PayActivity extends Activity {
         mReportPresenter.start(/*mTradeNo,mProductId,mPrice*/);
 
     }
-    
-    public class ReportPaySuccessCommu implements CommuCallback{
+
+    public class ReportPaySuccessCommu implements CommuCallback {
         private long mValidTime = -1;
+
         @Override
         public Boolean doCommu(Object... params) throws Exception {
             EvLog.i("ReportPaySuccessCommu mTradeNo:" + mTradeNo);
@@ -135,6 +142,7 @@ public class PayActivity extends Activity {
             EvLog.i("ReportPaySuccessCommu mTradeNo:局方支付返回的时间是" + mValidTime);
             return mValidTime > 0;
         }
+
         @Override
         public void commuSuccess() {
             mReportPresenter = null;
@@ -142,6 +150,7 @@ public class PayActivity extends Activity {
             ChargeProxy.getInstance().getCharge().sdkPaySuccess(mValidTime, Integer.valueOf(mProductId), mTradeNo);
             exit(0);
         }
+
         @Override
         public void commuFailed(Exception e) {
             mReportPresenter = null;
@@ -149,7 +158,7 @@ public class PayActivity extends Activity {
             exit(0);
         }
     }
-    
+
     private void exit(long delayTime) {
         BaseApplication.getHandler().postDelayed(new Runnable() {
             @Override
@@ -164,8 +173,40 @@ public class PayActivity extends Activity {
         super.onResume();
     }
 
+
+    private float x_start;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        log("--onTouchEvent()--");
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x_start = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                float move_x = event.getX() - x_start;
+                if (x_start < EXIT_X_MAX) {
+                    if (move_x > 10) {
+                        this.finish();
+                        return true;
+                    }
+                }
+                break;
+
+
+        }
+        return super.onTouchEvent(event);
+    }
+
     @Override
     public void finish() {
         super.finish();
+    }
+
+
+    private void log(String msg) {
+        Log.d("gsp", TAG + ">>>" + msg);
     }
 }

@@ -28,7 +28,6 @@ import com.evideo.kmbox.model.charge.IBaseCharge.IChargeAuthResultListener;
 import com.evideo.kmbox.model.charge.IBaseCharge.IChargePayResultListener;
 import com.evideo.kmbox.model.chargeproxy.ChargeProxy;
 import com.evideo.kmbox.model.device.DeviceConfigManager;
-import com.evideo.kmbox.model.device.DeviceName;
 import com.evideo.kmbox.model.loganalyze.LogAnalyzeManager;
 import com.evideo.kmbox.model.playerctrl.list.PlayListManager;
 import com.evideo.kmbox.model.umeng.EventConst;
@@ -106,6 +105,9 @@ public class ChargeViewManager implements IChargePayResultListener,
         }
 
         mPayDialog.show();
+
+
+
         LogAnalyzeManager.onEvent(context, EventConst.ID_CLICK_CHARGE_ORDER);
         return;
     }
@@ -269,7 +271,7 @@ public class ChargeViewManager implements IChargePayResultListener,
                 }
                 if (DeviceConfigManager.getInstance().getRemainVipTime() > 0) {
                     MainViewManager.getInstance().getStatusBar().setChargePayBtnResId(R.drawable.ic_unicom_payed);
-                }else {
+                } else {
                     MainViewManager.getInstance().getStatusBar().setChargePayBtnResId(R.drawable.ic_unicom_pay);
                 }
                 int productId = ChargeProxy.getInstance().getProductId();
@@ -342,7 +344,7 @@ public class ChargeViewManager implements IChargePayResultListener,
             return;
         }
         ChargeProxy.getInstance().setPayResultListener(this);
-        Log.i("gsp", "onClickPayBtn: 开始调用支付代理"+MainViewManager.getInstance().getActivity()+" info"+info);
+        Log.i("gsp", "onClickPayBtn: 开始调用支付代理" + MainViewManager.getInstance().getActivity() + " info" + info);
         ChargeProxy.getInstance().pay(MainViewManager.getInstance().getActivity(), "", info);
 
     }
